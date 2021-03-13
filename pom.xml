@@ -61,6 +61,12 @@
 <!--			<artifactId>spring-security-test</artifactId>-->
 <!--			<scope>test</scope>-->
 <!--		</dependency>-->
+	 <dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-validator</artifactId>
+	  <version>5.3.6.Final</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>
