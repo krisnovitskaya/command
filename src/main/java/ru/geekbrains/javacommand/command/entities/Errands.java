@@ -17,10 +17,6 @@ public class Errands {
     private Long id;
 
     @NotNull
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "status_id")
     private ErrandsStatusType errandsStatusType;
@@ -31,30 +27,10 @@ public class Errands {
     private Employee employee;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "matter_id")
-    private ErrandsMatterType errandsMatterType;
-
-    @NotNull
     @Column(name = "date_start")
     private Timestamp dateStart;
 
     @Column(name = "date_end")
     private Timestamp dateEnd;
-
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
-
-    @Column(name = "comment")
-    private String comment;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private Employee createdBy;
-
-    @NotNull
-    @Column(name = "confirmed_or_rejected_by")
-    private int confirmedBy;
 
 }
