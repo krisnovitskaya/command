@@ -40,6 +40,9 @@
             <li ng-show="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/user_profile">Профиль</a>
             </li>
+            <li ng-show="isUserLoggedIn()==false" class="nav-item">
+                <a class="nav-link" href="#!/auth">Войти</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -56,6 +59,7 @@
         <script src="errands_pending/errands_pending.js"></script>
         <script src="errands_statistics/errands_statistics.js"></script>
         <script src="user_profile/user_profile.js"></script>
+        <script src="auth/auth.js"></script>
 
     </div>
 </main>
