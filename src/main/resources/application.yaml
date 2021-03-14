@@ -18,3 +18,5 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
+jwt:
+  secret: test-by-now
