@@ -1,8 +1,13 @@
 package ru.geekbrains.javacommand.command.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "employees")
 public class Employee implements Serializable {
@@ -11,80 +16,29 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
-    private String middle_name;
+    @Column(name = "middle_name")
+    private String middleName;
 
-    @Column
+    @Column(name = "surname")
     private String surname;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Employee() {
-    }
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private EmployeeDetail employeeDetail;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMiddle_name() {
-        return middle_name;
-    }
-
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
