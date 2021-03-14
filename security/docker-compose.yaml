@@ -1,0 +1,8 @@
+services:
+  auth:
+    image: https://github.com/owpk/command.git
+  database:
+    image: "postgres:${POSTGRES_VERSION}
+    environment:
+      db: psql
+      USER: ${USER}
