@@ -16,10 +16,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 
+import ru.geekbrains.javacommand.command.entities.Role;
+
 /** @author Igor Popovich, email: popovichia@gmail.com */
 @Entity()
 @Table(name = "users")
-public class Users {
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +43,7 @@ public class Users {
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> listRoles;
 
-  public Users() {}
+  public User() {}
 
   public Long getId() {
     return id;
