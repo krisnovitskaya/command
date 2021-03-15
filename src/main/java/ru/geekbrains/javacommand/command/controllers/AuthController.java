@@ -1,10 +1,6 @@
 package ru.geekbrains.javacommand.command.controllers;
 
-import com.geekbrains.geek.market.configs.JwtTokenUtil;
-import com.geekbrains.geek.market.dto.JwtRequest;
-import com.geekbrains.geek.market.dto.JwtResponse;
-import com.geekbrains.geek.market.exceptions.MarketError;
-import com.geekbrains.geek.market.services.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
