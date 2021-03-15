@@ -20,15 +20,15 @@ public class Department implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "master_id")
-    private Employee employee;
+    @OneToOne
+    @JoinColumn(name = "master_id", referencedColumnName = "id")
+    private Employee master;
 
-    @Column(name = "master_department_id")
-    private Department department;
+    @OneToOne
+    @JoinColumn(name = "master_department_id", referencedColumnName = "id")
+    private Department masterDepartment;
 
-
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy ="department" )
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy ="department" )
     private List<Employee> employees;
 
 }

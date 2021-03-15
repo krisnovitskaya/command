@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 @Table(name = "errands")
 @NoArgsConstructor
-public class Errands {
+public class Errand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,7 +19,7 @@ public class Errands {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private ErrandsStatusType errandsStatusType;
+    private ErrandStatusType statusType;
 
     @NotNull
     @ManyToOne

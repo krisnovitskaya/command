@@ -5,20 +5,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "employees_details")
+@Table(name = "place_type")
+@Data
 @NoArgsConstructor
-public class EmployeeDetail {
+public class PlaceType {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "mail")
-    private String mail;
-
-    @OneToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @Column(name = "type")
+    private String type;
 }

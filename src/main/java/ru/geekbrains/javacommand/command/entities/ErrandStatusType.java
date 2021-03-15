@@ -5,20 +5,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "employees_details")
+@Data
+@Table(name = "errands_status_types")
 @NoArgsConstructor
-public class EmployeeDetail {
-
+public class ErrandStatusType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "mail")
-    private String mail;
-
-    @OneToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @Column(name = "name")
+    private String status;
 }
