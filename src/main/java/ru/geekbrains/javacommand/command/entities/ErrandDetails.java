@@ -23,9 +23,6 @@ public class ErrandDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "errandDetails")
-    private Errand errand;
-
     @ManyToOne
     @JoinColumn(name = "matter_id", nullable = false)
     private ErrandMatterType matter;
