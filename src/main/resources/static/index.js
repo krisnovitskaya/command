@@ -45,13 +45,60 @@
 angular.module('app').controller('indexController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8989/errands';
 
+
+    //TODO попробовать позже перенести функционал связанный с безопасностью в контроллер безопасности auth.js.
+    // Не забыть изменить контроллер в index.html в панеле навигации.
     $scope.isUserLoggedIn = function () {
-        //return !!$localStorage.currentUser;
-        return true;  //TODO Исправить после внедрения авторизации
+        return !!$localStorage.currentUser;
     };
 
-    $(document).ready(function() {
-        $('.nav-item').on('click', function() {
+    $scope.getUserRole = function () {
+        tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+        $scope.userRoles = tokenPayload.roles;
+    };
+
+    $scope.isAdmin = function () {
+        $scope.getUserRole();
+        for (let i = 0; i < $scope.userRoles.length; i++) {
+            if (angular.equals("ROLE_ADMIN", $scope.userRoles[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    $scope.isMaster = function () {
+        $scope.getUserRole();
+        for (let i = 0; i < $scope.userRoles.length; i++) {
+            if (angular.equals("ROLE_MASTER", $scope.userRoles[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+        if ($scope.user.username) {
+            $scope.user.username = null;
+        }
+        if ($scope.user.password) {
+            $scope.user.password = null;
+        }
+        $location.url('/auth');
+    };
+
+    $scope.clearUser = function () {
+        delete $localStorage.currentUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
+    //TODO тут заканчивается секция безопасности
+
+
+    //функция подсвечивает пункт меню, на который ткнули
+    //изначально активным выставляю main
+    $(document).ready(function () {
+        $('.nav-item').on('click', function () {
             $('.nav-item').not(this).removeClass('active');
             $(this).toggleClass('active');
         });
