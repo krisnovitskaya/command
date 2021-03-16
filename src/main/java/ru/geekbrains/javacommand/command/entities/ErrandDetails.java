@@ -3,11 +3,6 @@ package ru.geekbrains.javacommand.command.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.Place;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
