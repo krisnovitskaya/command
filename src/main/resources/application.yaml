@@ -1,3 +1,4 @@
+---
 server:
   port: 8989
   servlet:
@@ -13,8 +14,19 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
   h2:
     console:
       enabled: true
       settings:
         web-allow-others: false
+---
+spring:
+  profiles: prod
+  liquibase:
+    change-log: classpath:/db/changelog/master-prod.yaml
+---
+spring:
+  profiles: test
+  liquibase:
+    change-log: classpath:/db/changelog/master-test.yaml
