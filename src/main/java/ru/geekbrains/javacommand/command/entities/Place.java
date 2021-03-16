@@ -2,21 +2,23 @@ package ru.geekbrains.javacommand.command.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table("employees_details")
+@Data
+@Table(name = "places")
 @NoArgsConstructor
-public class EmployeeDetail {
+public class Place {
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn("employees_details")
-    Employee employee;
+    @Column(name = "title")
+    private String title;
 
-    String mail;
+    @ManyToOne
+    @JoinColumn(name = "place_type_id")
+    private PlaceType placeType;
 }

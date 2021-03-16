@@ -37,8 +37,7 @@ public class Employee implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private EmployeeDetail employeeDetail;
+    @OneToOne(cascade =  CascadeType.PERSIST, mappedBy = "employee")
+    private EmployeeDetails employeeDetails;
 
 }
