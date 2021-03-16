@@ -38,6 +38,6 @@ public class Employee implements Serializable {
     private User user;
 
     @OneToOne(cascade =  CascadeType.PERSIST, mappedBy = "employee")
-    private EmployeeDetail employeeDetail;
+    private EmployeeDetails employeeDetails;
 
 }
