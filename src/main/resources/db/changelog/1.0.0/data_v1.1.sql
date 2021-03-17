@@ -5,9 +5,9 @@ values
 
 insert into errands.roles(role_name)
 values
-    ('admin'),
-    ('user'),
-    ('manager');
+    ('ROLE_ADMIN'),
+    ('ROLE_MASTER'),
+    ('ROLE_EMPLOYEE');
 
 insert into errands.errands_status_types (status)
 values
