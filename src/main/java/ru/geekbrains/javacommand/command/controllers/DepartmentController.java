@@ -9,8 +9,4 @@ import ru.geekbrains.javacommand.command.controllers.facade.DepartmentController
 @RestController
 @RequiredArgsConstructor
 public class DepartmentController implements DepartmentControllerApi {
-    @GetMapping("/he")
-    public String hell() {
-        return "HH";
-    }
 }
