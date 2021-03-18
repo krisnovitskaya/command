@@ -1,8 +1,40 @@
+---
+#Common settings
 server:
   port: 8989
   servlet:
     context-path: /errands
+---
+#Prod settings
 spring:
+  profiles: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/errands
+    username: sa
+    password:
+  jpa:
+    database: postgers
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/master-prod.yaml
+
+security:
+  # (SIGN UP)
+  authorization-path: /auth
+  jwt:
+    expiration-time: 24
+    secret-key: cd71ed7de7d444dbe6819eea30b29860e9647d1e3919137e3e5d6d1163bec3e4
+    token-prefix: Bearer
+    token-header: Authorization
+---
+#Test settings
+spring:
+  profiles: test
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
@@ -13,17 +45,19 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
   h2:
     console:
       enabled: true
       settings:
         web-allow-others: false
-
+  liquibase:
+    change-log: classpath:/db/changelog/master-test.yaml
 security:
   # (SIGN UP)
   authorization-path: /auth
   jwt:
-    expiration-time: 24
+    expiration-time: 0.1
     secret-key: testing
     token-prefix: Bearer
     token-header: Authorization
