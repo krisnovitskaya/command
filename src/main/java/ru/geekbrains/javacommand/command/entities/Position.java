@@ -1,20 +1,17 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "positions")
 @NoArgsConstructor
-public class Position {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "positions")
+public class Position extends DefaultEntity{
 
     @Column
     private String position;

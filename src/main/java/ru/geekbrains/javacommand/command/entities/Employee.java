@@ -1,20 +1,17 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+@Entity
 @Data
 @NoArgsConstructor
-@Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "employees")
-public class Employee implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Employee extends DefaultEntity {
 
     @Column(name = "name")
     private String name;
