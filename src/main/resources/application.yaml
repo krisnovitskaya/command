@@ -1,8 +1,31 @@
+---
+#Common settings
 server:
   port: 8989
   servlet:
     context-path: /errands
+---
+#Prod settings
 spring:
+  profiles: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/errands
+    username: sa
+    password:
+  jpa:
+    database: postgers
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/master-prod.yaml
+---
+#Test settings
+spring:
+  profiles: test
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
@@ -13,8 +36,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: none
   h2:
     console:
       enabled: true
       settings:
         web-allow-others: false
+  liquibase:
+    change-log: classpath:/db/changelog/master-test.yaml
