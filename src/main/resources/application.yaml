@@ -18,3 +18,12 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
+
+security:
+  # (SIGN UP)
+  authorization-path: /auth
+  jwt:
+    expiration-time: 24
+    secret-key: testing
+    token-prefix: Bearer
+    token-header: Authorization

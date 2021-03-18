@@ -6,4 +6,5 @@ import ru.geekbrains.javacommand.command.entities.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findRoleByName(String name);
 }
