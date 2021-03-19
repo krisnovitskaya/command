@@ -1,33 +1,31 @@
 package ru.geekbrains.javacommand.command.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.security.auth.message.AuthException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+/**
+ * @author owpk
+ * @author jackwizard88
+ */
+ @Component
 @Slf4j
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
@@ -37,9 +35,19 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Value("${security.jwt.token-prefix}")
     private String TOKEN_PREFIX;
 
-    @Value("${security.jwt.secret-key}")
-    private String SECRET;
+    @Autowired
+    private JWTTokenManager tokenManager;
 
+    /**
+     * JWT фильтр запросов пользователей
+     * {@link JWTAuthorizationFilter#TOKEN_HEADER}
+     * {@link JWTAuthorizationFilter#TOKEN_PREFIX}
+     * @param req
+     * @param res
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
@@ -61,11 +69,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
-
-        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(Base64.getDecoder().decode(SECRET)))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""));
+        DecodedJWT jwt = tokenManager.decodeAndVerifyRawToken(token);
+        if (jwt != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             String user = jwt.getSubject();
             Map<String, Claim> claims = jwt.getClaims();
             if (user != null) {

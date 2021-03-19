@@ -71,6 +71,13 @@
 angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8989/errands';
 
+    $scope.currentUser = function() {
+        return $localStorage.currentUser.username;
+    }
+
+    $scope.isUserLogged = function() {
+        return !!$localStorage.currentUser == null;
+    }
 
     //функция подсвечивает пункт меню, на который ткнули
     //изначально активным выставляю main

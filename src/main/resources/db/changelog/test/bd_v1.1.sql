@@ -1,5 +1,7 @@
 create schema if not exists errands;
 
+-- set search_path to errands;
+
 create table errands.users(
     id                      bigint primary key auto_increment,
     username                varchar(100) not null,

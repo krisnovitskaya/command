@@ -1,10 +1,7 @@
 package ru.geekbrains.javacommand.command.controllers;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,28 +13,25 @@ import ru.geekbrains.javacommand.command.controllers.facade.AuthControllerApi;
 import ru.geekbrains.javacommand.command.dtos.JwtRequest;
 import ru.geekbrains.javacommand.command.dtos.JwtResponse;
 import ru.geekbrains.javacommand.command.exceptions.CommandError;
+import ru.geekbrains.javacommand.command.security.JWTTokenManager;
 import ru.geekbrains.javacommand.command.services.UserService;
 
 import javax.security.auth.message.AuthException;
-import java.util.Base64;
-import java.util.Date;
 
+/**
+ * @author owpk
+ * @see JWTTokenManager
+ * @see ru.geekbrains.javacommand.command.security.JWTAuthorizationFilter
+ * @see ru.geekbrains.javacommand.command.security.ErrandsAppSecurityConfiguration
+ */
 @RestController
 @RequiredArgsConstructor
 public class AuthController
         implements AuthControllerApi {
 
-    @Value("${security.jwt.secret-key}")
-    private String secret;
-
-    @Value("${security.jwt.expiration-time}")
-    private Integer expiresIn;
-
-    @Value("${security.jwt.token-prefix}")
-    private String jwt_prefix;
-
     private final UserService userDetailsService;
     private final AuthenticationManager authenticationManager;
+    private final JWTTokenManager tokenManager;
 
     @Override
     @PostMapping(value = "${security.authorization-path}", consumes = "application/json")
@@ -49,12 +43,8 @@ public class AuthController
                 .loadUserByUsername(authRequest.getUsername()).getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toArray(String[]::new);
 
-        String jwtToken = JWT.create()
-                .withSubject(authRequest.getUsername())
-                .withArrayClaim("role", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn * 3600000))
-                .withIssuer("errands_app")
-                .sign(Algorithm.HMAC512(Base64.getDecoder().decode(secret)));
+        String jwtToken = tokenManager.createToken(claims, authRequest.getUsername());
+
         return ResponseEntity.ok(new JwtResponse(jwtToken));
     }
 

@@ -21,15 +21,12 @@
 
 <body>
 
-<!-- NavBar взят с https://codepen.io/Serhii75/pen/OEQrgM -->
-
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#!/">Программа Командировок</a>
-
     <div class="collapse navbar-collapse" ng-controller="authController" id="navbarCollapse">
         <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
             <li ng-if="isUserLoggedIn()" class="nav-item">
-                <a class="nav-link active" href="#!/main">Главная <span class="sr-only"></span></a>
+                <a class="nav-link active" href="#!/main">Главная<span class="sr-only"></span></a>
             </li>
             <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/errands_create">Создать командировку</a>
@@ -48,6 +45,9 @@
             </li>
             <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="" ng-click="tryToLogout()">Выйти</a>
+            </li>
+            <li ng-if="isUserNotLogged()" class="nav-item">
+                <a class="nav-link" href="#!/auth">Войти</a>
             </li>
         </ul>
     </div>

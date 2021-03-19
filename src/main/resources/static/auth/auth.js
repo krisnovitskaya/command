@@ -28,6 +28,10 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         return !!$localStorage.currentUser;
     };
 
+    $scope.isUserNotLogged = function () {
+        return $localStorage.currentUser == null;
+    }
+
     $scope.clearUser = function () {
         delete $localStorage.currentUser;
         $http.defaults.headers.common.Authorization = '';
