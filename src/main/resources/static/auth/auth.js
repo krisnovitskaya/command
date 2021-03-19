@@ -1,4 +1,4 @@
-angular.module('app').controller('authController', function ($scope, $http, $localStorage) {
+angular.module('app').controller('authController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8989/errands';
 
     $scope.tryToAuth = function () {
@@ -27,6 +27,12 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+        $location.url('/auth');
+    };
+
+    $scope.isUserLoggedIn = function () {
+        return !!$localStorage.currentUser;
+        // return true;
     };
 
     $scope.clearUser = function () {
@@ -34,11 +40,35 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         $http.defaults.headers.common.Authorization = '';
     };
 
-    $scope.isUserLoggedIn = function () {
-        if ($localStorage.currentUser) {
-            return true;
-        } else {
-            return false;
+    $scope.getUserRole = function() {
+        if ($scope.isUserLoggedIn()) {
+            tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
+            $scope.userRoles = tokenPayload.roles;
         }
     };
+
+    $scope.isAdmin = function () {
+        if ($scope.isUserLoggedIn()) {
+            $scope.getUserRole();
+            for (let i = 0; i < $scope.userRoles.length; i++) {
+                if (angular.equals("ROLE_ADMIN", $scope.userRoles[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    $scope.isMaster = function () {
+        if ($scope.isUserLoggedIn()) {
+            $scope.getUserRole();
+            for (let i = 0; i < $scope.userRoles.length; i++) {
+                if (angular.equals("ROLE_MASTER", $scope.userRoles[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
 });

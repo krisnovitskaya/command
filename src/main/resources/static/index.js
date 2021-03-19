@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngStorage'])
+        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ui.bootstrap'])
         .config(config)
         .run(run);
 
@@ -37,6 +37,28 @@
                 controller: 'authController'
             });
 
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                'responseError': function (rejection, $localStorage, $http) {
+                    var defer = $q.defer();
+                    if (rejection.status == 401 || rejection.status == 403) {
+                        console.log('error: 401-403');
+                        $location.path('/auth');
+                        if (!(localStorage.getItem("localUser") === null)) {
+                            delete $localStorage.currentUser;
+                            $http.defaults.headers.common.Authorization = '';
+                        }
+                        console.log(rejection.data);
+                        var answer = JSON.parse(rejection.data);
+                        console.log(answer);
+                        // window.alert(answer.message);
+                    }
+                    defer.reject(rejection);
+                    return defer.promise;
+                }
+            };
+        });
+
     }
 
     function run($rootScope, $http, $localStorage) {
@@ -46,59 +68,8 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $localStorage) {
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8989/errands';
-
-
-    //TODO перенести функционал связанный с безопасностью в контроллер безопасности auth.js.
-    // Не забыть изменить контроллер в index.html в панеле навигации.
-    $scope.isUserLoggedIn = function () {
-        return !!$localStorage.currentUser;
-    };
-
-    $scope.getUserRole = function () {
-        tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
-        $scope.userRoles = tokenPayload.roles;
-    };
-
-    //TODO проверить работоспособность. При отсутствии юзера всеравно показывает пункт меню
-    $scope.isAdmin = function () {
-        $scope.getUserRole();
-        for (let i = 0; i < $scope.userRoles.length; i++) {
-            if (angular.equals("ROLE_ADMIN", $scope.userRoles[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //TODO проверить работоспособность. При отсутствии юзера всеравно показывает пункт меню
-    $scope.isMaster = function () {
-        $scope.getUserRole();
-        for (let i = 0; i < $scope.userRoles.length; i++) {
-            if (angular.equals("ROLE_MASTER", $scope.userRoles[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    $scope.tryToLogout = function () {
-        $scope.clearUser();
-        if ($scope.user.username) {
-            $scope.user.username = null;
-        }
-        if ($scope.user.password) {
-            $scope.user.password = null;
-        }
-        $location.url('/auth');
-    };
-
-    $scope.clearUser = function () {
-        delete $localStorage.currentUser;
-        $http.defaults.headers.common.Authorization = '';
-    };
-    //TODO тут заканчивается секция безопасности
 
 
     //функция подсвечивает пункт меню, на который ткнули
