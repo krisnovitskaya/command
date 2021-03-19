@@ -23,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         String token = request.getHeader(TOKEN_HEADER);
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(Base64.getDecoder().decode(SECRET)))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""));
             String user = jwt.getSubject();

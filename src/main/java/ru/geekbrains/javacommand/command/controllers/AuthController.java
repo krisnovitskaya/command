@@ -49,7 +49,7 @@ public class AuthController
                 .loadUserByUsername(authRequest.getUsername()).getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toArray(String[]::new);
 
-        String jwtToken = jwt_prefix + JWT.create()
+        String jwtToken = JWT.create()
                 .withSubject(authRequest.getUsername())
                 .withArrayClaim("role", claims)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn * 3600000))

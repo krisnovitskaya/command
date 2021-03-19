@@ -52,6 +52,6 @@ security:
   jwt:
     expiration-time: 24
     secret-key: testing
-    token-prefix: Bearer
+    token-prefix: "Bearer "
     token-header: Authorization
 ---
