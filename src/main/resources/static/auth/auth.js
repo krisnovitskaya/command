@@ -27,7 +27,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         if ($scope.user.password) {
             $scope.user.password = null;
         }
-        $location.url('/auth');
+        window.location.url('/auth');
     };
 
     $scope.isUserLoggedIn = function () {
