@@ -21,13 +21,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
-        if ($scope.user.username) {
-            $scope.user.username = null;
-        }
-        if ($scope.user.password) {
-            $scope.user.password = null;
-        }
-        window.location.url('/auth');
+        window.location.href = '#!/auth';
     };
 
     $scope.isUserLoggedIn = function () {
