@@ -42,7 +42,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
     $scope.getUserRole = function() {
         if ($scope.isUserLoggedIn()) {
             tokenPayload = jwtHelper.decodeToken($localStorage.currentUser.token);
-            $scope.userRoles = tokenPayload.roles;
+            $scope.userRoles = tokenPayload.role;
         }
     };
 
