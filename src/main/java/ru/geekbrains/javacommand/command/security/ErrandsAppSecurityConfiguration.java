@@ -46,7 +46,11 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
         http
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/administration/**").hasRole("ADMIN")
+                .antMatchers("/errands_pending/**").access("hasRole('ADMIN') and hasRole('MASTER')")
+                .antMatchers("/errands_statistics/**").authenticated()
+                .antMatchers("/errands_create/**").authenticated()
+                .antMatchers("/main/**").authenticated()
                 .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
                 .anyRequest().permitAll()
                 .and()
