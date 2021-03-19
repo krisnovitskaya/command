@@ -11,7 +11,7 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
 
                     $scope.user.username = null;
                     $scope.user.password = null;
-                    window.location.href = '#!/';
+                    window.location.href = '#!/main';
                     console.log($localStorage.currentUser);
                 }
             }, function errorCallback() {
