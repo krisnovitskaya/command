@@ -14,10 +14,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.controllers.facade.AuthControllerApi;
 import ru.geekbrains.javacommand.command.dtos.JwtRequest;
+import ru.geekbrains.javacommand.command.dtos.JwtResponse;
 import ru.geekbrains.javacommand.command.exceptions.CommandError;
 import ru.geekbrains.javacommand.command.services.UserService;
 
 import javax.security.auth.message.AuthException;
+import java.util.Base64;
 import java.util.Date;
 
 @RestController
@@ -52,8 +54,8 @@ public class AuthController
                 .withArrayClaim("role", claims)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn * 3600000))
                 .withIssuer("errands_app")
-                .sign(Algorithm.HMAC512(secret));
-        return ResponseEntity.ok(jwtToken);
+                .sign(Algorithm.HMAC512(Base64.getDecoder().decode(secret)));
+        return ResponseEntity.ok(new JwtResponse(jwtToken));
     }
 
     @ExceptionHandler({AuthException.class, BadCredentialsException.class, JWTDecodeException.class})

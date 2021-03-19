@@ -4,17 +4,17 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
+                console.log(response.data);
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.currentUser = {username: $scope.user.username, token: response.data.token};
 
                     $scope.user.username = null;
                     $scope.user.password = null;
-
+                    window.location.href = '#!/';
                     console.log($localStorage.currentUser);
                 }
-            }, function errorCallback(response) {
-                window.alert(response.data.message);
+            }, function errorCallback() {
                 $scope.clearUser();
             });
     };
@@ -32,7 +32,6 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
 
     $scope.isUserLoggedIn = function () {
         return !!$localStorage.currentUser;
-        // return true;
     };
 
     $scope.clearUser = function () {
