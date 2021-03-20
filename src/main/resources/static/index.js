@@ -2,13 +2,13 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngStorage'])
+        .module('app', ['ngRoute', 'ngStorage', 'angular-jwt', 'ui.bootstrap'])
         .config(config)
         .run(run);
 
     function config($routeProvider, $httpProvider) {
         $routeProvider
-            .when('/', {
+            .when('/main', {
                 templateUrl: 'main/main.html',
                 controller: 'mainController'
             })
@@ -31,7 +31,33 @@
             .when('/user_profile', {
                 templateUrl: 'user_profile/user_profile.html',
                 controller: 'userProfileController'
+            })
+            .when('/auth', {
+                templateUrl: 'auth/auth.html',
+                controller: 'authController'
             });
+
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                'responseError': function (rejection, $localStorage, $http) {
+                    var defer = $q.defer();
+                    if (rejection.status == 401 || rejection.status == 403) {
+                        console.log('error: 401-403');
+                        $location.path('/auth');
+                        if (!(localStorage.getItem("localUser") === null)) {
+                            delete $localStorage.currentUser;
+                            $http.defaults.headers.common.Authorization = '';
+                        }
+                        console.log(rejection.data);
+                        var answer = JSON.parse(rejection.data);
+                        console.log(answer);
+                        // window.alert(answer.message);
+                    }
+                    defer.reject(rejection);
+                    return defer.promise;
+                }
+            };
+        });
 
     }
 
@@ -42,16 +68,21 @@
     }
 })();
 
-angular.module('app').controller('indexController', function ($scope, $http, $localStorage) {
+angular.module('app').controller('indexController', function ($scope, $http, $localStorage, $location, jwtHelper) {
     const contextPath = 'http://localhost:8989/errands';
 
-    $scope.isUserLoggedIn = function () {
-        //return !!$localStorage.currentUser;
-        return true;  //TODO Исправить после внедрения авторизации
-    };
+    $scope.currentUser = function() {
+        return $localStorage.currentUser.username;
+    }
 
-    $(document).ready(function() {
-        $('.nav-item').on('click', function() {
+    $scope.isUserLogged = function() {
+        return !!$localStorage.currentUser == null;
+    }
+
+    //функция подсвечивает пункт меню, на который ткнули
+    //изначально активным выставляю main
+    $(document).ready(function () {
+        $('.nav-item').on('click', function () {
             $('.nav-item').not(this).removeClass('active');
             $(this).toggleClass('active');
         });

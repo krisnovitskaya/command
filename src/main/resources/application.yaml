@@ -4,9 +4,19 @@ server:
   port: 8989
   servlet:
     context-path: /errands
+#Security
+security:
+  # (SIGN IN)
+  authorization-path: /auth
+  jwt:
+    expiration-time: 24
+    secret-key: testing
+    token-prefix: "Bearer "
+    token-header: Authorization
+spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:errands;MODE=PostgreSQL
+    url: jdbc:h2:mem:errands;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS ERRANDS\;SET SCHEMA=ERRANDS
     username: sa
     password: sa
   jpa:

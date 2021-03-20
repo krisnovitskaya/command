@@ -12,33 +12,42 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
 
-<!-- NavBar взят с https://codepen.io/Serhii75/pen/OEQrgM -->
-
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#!/">Программа Командировок</a>
-
-    <div class="collapse navbar-collapse" ng-controller="indexController" id="navbarCollapse">
+    <div class="collapse navbar-collapse" ng-controller="authController" id="navbarCollapse">
         <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
-            <li class="nav-item">
-                <a class="nav-link" href="#!/">Главная <span class="sr-only"></span></a>
+            <li ng-if="isUserLoggedIn()" class="nav-item">
+                <a class="nav-link active" href="#!/main">Главная<span class="sr-only"></span></a>
             </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
+            <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/errands_create">Создать командировку</a>
             </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
+            <li ng-if="isMaster()" class="nav-item">
                 <a class="nav-link" href="#!/errands_pending">Ожидают действия</a>
             </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
+            <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/errands_statistics">Статистика</a>
             </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
+            <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/user_profile">Профиль</a>
+            </li>
+            <li ng-if="isAdmin()" class="nav-item">
+                <a class="nav-link" href="#!/administration">Администрирование</a>
+            </li>
+            <li ng-if="isUserLoggedIn()" class="nav-item">
+                <a class="nav-link" href="" ng-click="tryToLogout()">Выйти</a>
+            </li>
+            <li ng-if="isUserNotLogged()" class="nav-item">
+                <a class="nav-link" href="#!/auth">Войти</a>
             </li>
         </ul>
     </div>
@@ -56,6 +65,7 @@
         <script src="errands_pending/errands_pending.js"></script>
         <script src="errands_statistics/errands_statistics.js"></script>
         <script src="user_profile/user_profile.js"></script>
+        <script src="auth/auth.js"></script>
 
     </div>
 </main>

@@ -1,6 +1,8 @@
 --Test database creation
 create schema if not exists errands;
 
+-- set search_path to errands;
+
 create table errands.users(
     id                      bigint primary key auto_increment,
     username                varchar(100) not null,
@@ -9,7 +11,7 @@ create table errands.users(
 
 create table errands.roles(
     id                      bigint primary key auto_increment,
-    role_name               varchar(30) not null
+    name               varchar(30) not null
 );
 
 create table errands.users_roles(
@@ -101,6 +103,6 @@ create table errands.errands(
     date_start                  timestamp not null,
     date_end                    timestamp,
     foreign key (status_id) references errands.errands_status_types(id),
-    foreign key (employee_id) references errands.employees(id), 
+    foreign key (employee_id) references errands.employees(id),
     foreign key (errands_details_id) references errands.errands_details(id)
 );
