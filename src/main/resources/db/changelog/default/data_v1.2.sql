@@ -1,5 +1,5 @@
 -- Data for testing
--- users passwords: DLda#|d7~c?Q (bcrypt hash)
+-- users passwords: 100 (bcrypt hash)
 insert into errands.users(username, password)
 values
     ('master1', '$2y$12$ThsVE9vmV/bRHpvX4fVKmuoFVR9uWWqjMDZLjmP/.9Qm9L1sWup5K'),   --id 2

@@ -10,8 +10,8 @@ create table errands.users(
 );
 
 create table errands.roles(
-    id                      bigint primary key auto_increment,
-    name               varchar(30) not null
+    id      bigint primary key auto_increment,
+    name    varchar(30) not null
 );
 
 create table errands.users_roles(
@@ -23,7 +23,7 @@ create table errands.users_roles(
 );
 
 create table errands.positions(
-	id 			bigint primary key auto_increment,
+	id 		bigint primary key auto_increment,
 	position	varchar(255)
 );
 

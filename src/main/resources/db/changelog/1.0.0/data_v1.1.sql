@@ -4,7 +4,7 @@ insert into errands.users(username, password)
 values
     ('admin', '$2y$12$ThsVE9vmV/bRHpvX4fVKmuoFVR9uWWqjMDZLjmP/.9Qm9L1sWup5K');
 
-insert into errands.roles(role_name)
+insert into errands.roles(name)
 values
     ('ROLE_ADMIN'),
     ('ROLE_MASTER'),

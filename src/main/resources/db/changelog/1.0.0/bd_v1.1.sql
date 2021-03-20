@@ -9,7 +9,7 @@ create table errands.users(
 
 create table errands.roles(
     id                      bigint primary key auto_increment,
-    role_name               varchar(30) not null
+    name               varchar(30) not null
 );
 
 create table errands.users_roles(

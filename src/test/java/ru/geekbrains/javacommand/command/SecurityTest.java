@@ -20,7 +20,7 @@ public class SecurityTest {
     private MockMvc mvc;
 
     @Test
-    @WithMockUser(username = "user1", password = "100", roles = "USER")
+    @WithMockUser(username = "master1", password = "100", roles = "MASTER")
     public void givenAuthRequestOnPrivateServiceShouldSucceedWith200() throws Exception {
         mvc.perform(get("/api/v1/test"))
                 .andExpect(status().isOk());
