@@ -1,5 +1,5 @@
 -- Test init database data
--- username: admin password: DLda#|d7~c?Q (bcrypt hash)
+-- username: admin password: 100 (bcrypt hash)
 insert into errands.users(username, password)
 values
     ('admin', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem');
