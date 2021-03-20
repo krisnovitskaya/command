@@ -20,8 +20,6 @@
 
 <body>
 
-<!-- NavBar взят с https://codepen.io/Serhii75/pen/OEQrgM -->
-
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#!/">Программа Командировок/Администрирование списка сотрудников</a>
 
@@ -29,10 +27,10 @@
         <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin">Главная <span class="sr-only"></span></a>
+                <a class="nav-link" ng-href="/admin">Главная</a>
             </li>
             <li ng-show="isUserLoggedIn()" class="nav-item">
-                <a class="nav-link" href="/employee_form">Создать карточку сотрудника</a>
+                <a class="nav-link" ng-href="/employee_form">Создать карточку сотрудника</a>
             </li>
 
         </ul>
@@ -40,32 +38,27 @@
 </nav>
 
 
+<main class="content-wrapper" >
 
-<main class="content-wrapper" ng-controller="EmployeeController">
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Отчество</th>
-                <th scope="col">Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="employee in employeeList">
-                <th scope="row">{{employee.id}}</th>
-                <td>{{employee.surname}}</td>
-                <td>{{employee.name}}</td>
-                <td>{{employee.middleName}}</td>
-                <td>
-                    <button ng-click="edit(employee)" type="submit" class="btn btn-outline-primary">Редактировать</button>
-                    <button ng-click="delete(employee)" type="submit" class="btn btn-outline-danger">Удалить</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container-fluid" ng-controller="EmployeeController">
+        <h3>Cотрудник</h3>
+        <form novalidate ng-submit="createNewEmployee()">
+            <div class="form-group col-md-6">
+                <label for="elementSurname">Фамилия</label>
+                <input class="form-control" type="text" ng-model="surname" id="elementSurname">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="elementName">Имя</label>
+                <input class="form-control" type="text" ng-model="name" id="elementName">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="elementMiddleName">Отчество</label>
+                <input class="form-control" type="text" ng-model="middleName" id="elementMiddleName">
+            </div>
+            <div>
+                <button ng-click="create(name, middleName, surname)" class="btn btn-success" type="submit">Сохранить</button>
+            </div>
+        </form>
     </div>
 
     <div class="container-fluid">
@@ -84,5 +77,6 @@
         </div>
     </div>
 </footer>
+
 </body>
 </html>
