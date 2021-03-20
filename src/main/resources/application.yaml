@@ -1,5 +1,5 @@
 ---
-#Common settings
+#Default(Test) settings
 server:
   port: 8989
   servlet:

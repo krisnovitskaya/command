@@ -1,5 +1,0 @@
-## DataBase script. Test.
----
-databaseChangeLog:
-- includeAll:
-    path: db/changelog/test
