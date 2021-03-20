@@ -35,8 +35,8 @@ create table errands.departments(
 
 
 create table errands.employees_details(
-	id              			bigint primary key auto_increment,
-	mail						varchar(100)
+	id              	bigint primary key auto_increment,
+	mail			varchar(100)
 );
 
 create table errands.employees(
@@ -80,7 +80,7 @@ create table errands.places(
 );
 
 create table errands.errands_details(
-    id							bigint primary key auto_increment,
+    id				bigint primary key auto_increment,
     matter_id                   bigint not null,
     place_id                    bigint not null,
     comment                     varchar(255),
@@ -97,7 +97,7 @@ create table errands.errands(
     id                          bigint primary key auto_increment,
     status_id                   bigint not null,
     employee_id                 bigint not null,
-    errands_details_id			bigint not null,
+    errands_details_id		bigint not null,
     date_start                  timestamp not null,
     date_end                    timestamp,
     foreign key (status_id) references errands.errands_status_types(id),
