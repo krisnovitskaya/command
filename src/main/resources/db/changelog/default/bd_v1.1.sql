@@ -1,3 +1,4 @@
+--Test database creation
 create schema if not exists errands;
 
 create table errands.users(
@@ -28,13 +29,14 @@ create table errands.departments(
     id                          bigint primary key auto_increment,
     title                       varchar(255) not null,
     master_id                   bigint,
-    master_department_id        bigint
+    master_department_id        bigint,
+    foreign key (master_department_id) references errands.departments(id)
 );
 
 
 create table errands.employees_details(
-	id              			bigint primary key auto_increment,
-	mail						varchar(100)
+	id              	bigint primary key auto_increment,
+	mail			varchar(100)
 );
 
 create table errands.employees(
@@ -53,7 +55,6 @@ create table errands.employees(
 );
 
 alter table errands.departments add constraint  fk_master_id foreign key (master_id) references errands.employees (id);
-alter table errands.departments add constraint  fk_master_department_id foreign key (master_department_id) references errands.departments(id);
 
 create table errands.errands_status_types(
     id       bigint primary key auto_increment,
@@ -79,7 +80,7 @@ create table errands.places(
 );
 
 create table errands.errands_details(
-    id							bigint primary key auto_increment,
+    id				bigint primary key auto_increment,
     matter_id                   bigint not null,
     place_id                    bigint not null,
     comment                     varchar(255),
@@ -96,7 +97,7 @@ create table errands.errands(
     id                          bigint primary key auto_increment,
     status_id                   bigint not null,
     employee_id                 bigint not null,
-    errands_details_id			bigint not null,
+    errands_details_id		bigint not null,
     date_start                  timestamp not null,
     date_end                    timestamp,
     foreign key (status_id) references errands.errands_status_types(id),

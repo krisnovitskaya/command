@@ -1,3 +1,4 @@
+--Prod database creation
 create schema if not exists errands;
 
 create table errands.users(
@@ -28,7 +29,8 @@ create table errands.departments(
     id                          bigint primary key auto_increment,
     title                       varchar(255) not null,
     master_id                   bigint,
-    master_department_id        bigint
+    master_department_id        bigint,
+    foreign key (master_department_id) references errands.departments(id)
 );
 
 
@@ -53,7 +55,6 @@ create table errands.employees(
 );
 
 alter table errands.departments add constraint  fk_master_id foreign key (master_id) references errands.employees (id);
-alter table errands.departments add constraint  fk_master_department_id foreign key (master_department_id) references errands.departments(id);
 
 create table errands.errands_status_types(
     id       bigint primary key auto_increment,
