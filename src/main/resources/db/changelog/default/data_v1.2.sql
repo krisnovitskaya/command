@@ -102,7 +102,7 @@ values
     (10, 'Место10');        --id 10
 
 -- id 1 ('LOCAL'), id 2 ('PRIVATE'), id 3 ('LONG')
-insert into errands.errands_details(matter_id, place_id, comment, created_by, confirmed_or_rejected_by, created_at)
+insert into errands.errands_details(matter_id, place_id, comment, created_by, confirmed_or_rejected_by, created)
 values
     (1, 1, 'Комментарий1', 1, 2, '2021-03-18'),     --id 1
     (2, 2, 'Комментарий2', 2, 3, '2021-03-17'),     --id 2
