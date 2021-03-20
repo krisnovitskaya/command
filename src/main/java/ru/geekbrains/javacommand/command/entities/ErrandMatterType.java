@@ -2,19 +2,17 @@ package ru.geekbrains.javacommand.command.entities;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "errands_matter_types")
 @NoArgsConstructor
-public class ErrandMatterType {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "errands_matter_types")
+public class ErrandMatterType extends DefaultEntity{
 
     @Column(name = "name")
     private String matter;

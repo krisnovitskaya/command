@@ -1,19 +1,17 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "places")
 @NoArgsConstructor
-public class Place {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "places")
+public class Place extends DefaultEntity {
 
     @Column(name = "title")
     private String title;

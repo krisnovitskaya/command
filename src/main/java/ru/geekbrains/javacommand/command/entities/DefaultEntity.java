@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 
 @Data
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
 public class DefaultEntity {

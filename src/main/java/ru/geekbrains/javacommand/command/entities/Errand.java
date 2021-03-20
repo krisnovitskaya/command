@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 import javax.persistence.*;
@@ -8,13 +9,10 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-@Table(name = "errands")
 @NoArgsConstructor
-public class Errand {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "errands")
+public class Errand extends DefaultEntity {
 
     @NotNull
     @ManyToOne
