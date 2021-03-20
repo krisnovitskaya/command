@@ -14,13 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import ru.geekbrains.javacommand.command.entities.Role;
-
 /** @author Igor Popovich, email: popovichia@gmail.com */
-@Entity()
+@Entity
+@Data
 @Table(name = "users")
+@NoArgsConstructor
 public class User {
 
   @Id
@@ -43,37 +45,4 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> listRoles;
 
-  public User() {}
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Set<Role> getListRoles() {
-    return listRoles;
-  }
-
-  public void setListRoles(Set<Role> listRoles) {
-    this.listRoles = listRoles;
-  }
 }
