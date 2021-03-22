@@ -8,6 +8,10 @@
 
     function config($routeProvider, $httpProvider) {
         $routeProvider
+            .when('/', {
+                templateUrl: 'main/main.html',
+                controller: 'mainController'
+            })
             .when('/main', {
                 templateUrl: 'main/main.html',
                 controller: 'mainController'
