@@ -43,14 +43,6 @@ create table errands.departments(
     foreign key (master_department_id) references errands.departments(id)
 );
 
-
-create table errands.employees_details(
-    id      	bigint primary key auto_increment,
-    mail	varchar(100),
-    created     timestamp,
-    updated     timestamp
-);
-
 create table errands.employees(
     id              	bigint primary key auto_increment,
     last_name       	varchar(100) not null,
@@ -59,13 +51,20 @@ create table errands.employees(
     position_id     	bigint not null,
     department_id   	bigint not null,
     user_id         	bigint not null,
-    employee_details_id	bigint not null,
     created     timestamp,
     updated     timestamp,
     foreign key (position_id) references errands.positions(id),
     foreign key (department_id) references errands.departments(id),
-    foreign key (user_id) references errands.users(id),
-    foreign key (employee_details_id) references errands.employees_details(id)
+    foreign key (user_id) references errands.users(id)
+);
+
+create table errands.employees_details(
+    id      	bigint primary key auto_increment,
+    mail	    varchar(100),
+    employee_id bigint not null,
+    created     timestamp,
+    updated     timestamp,
+    foreign key (employee_id) references errands.employees (id)
 );
 
 alter table errands.departments add constraint  fk_master_id foreign key (master_id) references errands.employees (id);
@@ -101,8 +100,21 @@ create table errands.places(
     foreign key (place_type_id) references errands.place_types(id)
 );
 
+
+create table errands.errands(
+    id                  bigint primary key auto_increment,
+    status_id           bigint not null,
+    employee_id         bigint not null,
+    date_start          timestamp not null,
+    date_end            timestamp,
+    created             timestamp,
+    updated             timestamp,
+    foreign key (status_id) references errands.errands_status_types(id),
+    foreign key (employee_id) references errands.employees(id)
+);
+
 create table errands.errands_details(
-    id				bigint primary key auto_increment,
+    id				            bigint primary key auto_increment,
     matter_id                   bigint not null,
     place_id                    bigint not null,
     comment                     varchar(255),
@@ -110,22 +122,10 @@ create table errands.errands_details(
     confirmed_or_rejected_by    bigint not null,
     created                     timestamp not null,
     updated                     timestamp,
+    errand_id                   bigint not null,
     foreign key (matter_id) references errands.errands_matter_types(id),
     foreign key (place_id)  references errands.places(id),
     foreign key (created_by) references errands.employees(id),
-    foreign key (confirmed_or_rejected_by)  references errands.employees(id)
-);
-
-create table errands.errands(
-    id                  bigint primary key auto_increment,
-    status_id           bigint not null,
-    employee_id         bigint not null,
-    errands_details_id	bigint not null,
-    date_start          timestamp not null,
-    date_end            timestamp,
-    created             timestamp,
-    updated             timestamp,
-    foreign key (status_id) references errands.errands_status_types(id),
-    foreign key (employee_id) references errands.employees(id),
-    foreign key (errands_details_id) references errands.errands_details(id)
+    foreign key (confirmed_or_rejected_by)  references errands.employees(id),
+    foreign key (errand_id) references errands.errands (id)
 );

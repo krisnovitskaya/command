@@ -21,3 +21,7 @@ values
     ('LOCAL'), 
     ('PRIVATE'),     
     ('LONG');
+
+insert into errands.users_roles(user_id, role_id)
+values
+(1, 1);   -- admin    
