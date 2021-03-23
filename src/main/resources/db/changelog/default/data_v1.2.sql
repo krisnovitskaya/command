@@ -104,11 +104,11 @@ values
     ('email20@net.com', 20);    --id 20
 
 update errands.departments set master_id = 2 where id = 2;
-update errands.departments set master_id = 3 and master_department_id = 2 where id = 3;
-update errands.departments set master_id = 4 and master_department_id = 2 where id = 4;
-update errands.departments set master_id = 5 and master_department_id = 3 where id = 5;
-update errands.departments set master_id = 6 and master_department_id = 4 where id = 6;
-update errands.departments set master_id = 7 and master_department_id = 5 where id = 7;
+update errands.departments set master_id = 3 , master_department_id = 2 where id = 3;
+update errands.departments set master_id = 4 , master_department_id = 2 where id = 4;
+update errands.departments set master_id = 5 , master_department_id = 3 where id = 5;
+update errands.departments set master_id = 6 , master_department_id = 4 where id = 6;
+update errands.departments set master_id = 7 , master_department_id = 5 where id = 7;
 
 insert into errands.place_types(type)
 values

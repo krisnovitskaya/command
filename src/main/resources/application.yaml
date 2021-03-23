@@ -41,15 +41,15 @@ spring:
   profiles: prod
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/errands
-    username: sa
-    password: sa
+    url: jdbc:postgresql://localhost:5432/errands?currentSchema=errands
+    username: postgres
+    password: 32167
   jpa:
-    database: postgers
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
-        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
   liquibase:
     change-log: classpath:/db/changelog/master-prod.yaml
