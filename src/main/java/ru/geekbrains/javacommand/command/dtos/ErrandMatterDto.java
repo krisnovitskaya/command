@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,10 @@ import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrandMatterDto {
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("matter")
     private String matter;
 
     public ErrandMatterDto(ErrandMatterType errandMatterType) {
