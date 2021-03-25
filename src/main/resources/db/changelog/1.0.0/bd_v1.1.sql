@@ -1,129 +1,127 @@
 --Prod database creation
-create schema if not exists errands;
-
-create table errands.users(
-    id          bigint primary key auto_increment,
+create table users(
+    id          bigserial primary key,
     username    varchar(100) not null,
     password    varchar(100) not null,
-    created     timestamp,
-    updated     timestamp
+    created     timestamp default current_timestamp,
+    updated     timestamp default current_timestamp
 );
 
-create table errands.roles(
-    id      bigint primary key auto_increment,
+create table roles(
+    id      bigserial primary key,
     name    varchar(30) not null,
-    created     timestamp,
-    updated     timestamp
+    created     timestamp default current_timestamp,
+    updated     timestamp default current_timestamp
 );
 
-create table errands.users_roles(
+create table users_roles(
     user_id               bigint not null,
     role_id               bigint not null,
     primary key (user_id, role_id),
-    foreign key (user_id) references errands.users(id),
-    foreign key (role_id) references errands.roles(id)
+    foreign key (user_id) references users (id),
+    foreign key (role_id) references roles (id)
 );
 
-create table errands.positions(
-    id 		bigint primary key auto_increment,
+create table positions(
+    id 		bigserial primary key,
     position	varchar(255),
-    created     timestamp,
-    updated     timestamp
+    created     timestamp default current_timestamp,
+    updated     timestamp default current_timestamp
 );
 
-create table errands.departments(
-    id                      bigint primary key auto_increment,
+create table departments(
+    id                      bigserial primary key,
     title                   varchar(255) not null,
     master_id               bigint,
     master_department_id    bigint,
-    created                 timestamp,
-    updated                 timestamp,
-    foreign key (master_department_id) references errands.departments(id)
+    created                 timestamp default current_timestamp,
+    updated                 timestamp default current_timestamp,
+    foreign key (master_department_id) references departments (id)
 );
 
-create table errands.employees(
-    id              	bigint primary key auto_increment,
+create table employees(
+    id              	bigserial primary key,
     last_name       	varchar(100) not null,
     first_name      	varchar(100) not null,
     middle_name     	varchar(100),
     position_id     	bigint not null,
     department_id   	bigint not null,
     user_id         	bigint not null,
-    created     timestamp,
-    updated     timestamp,
-    foreign key (position_id) references errands.positions(id),
-    foreign key (department_id) references errands.departments(id),
-    foreign key (user_id) references errands.users(id)
+    created     timestamp default current_timestamp,
+    updated     timestamp default current_timestamp,
+    foreign key (position_id) references positions (id),
+    foreign key (department_id) references departments (id),
+    foreign key (user_id) references users (id)
 );
 
-create table errands.employees_details(
-    id      	bigint primary key auto_increment,
+create table employees_details(
+    id      	bigserial primary key,
     mail	    varchar(100),
     employee_id bigint not null,
-    created     timestamp,
-    updated     timestamp,
-    foreign key (employee_id) references errands.employees (id)
+    created     timestamp default current_timestamp,
+    updated     timestamp default current_timestamp,
+    foreign key (employee_id) references employees (id)
 );
 
-alter table errands.departments add constraint  fk_master_id foreign key (master_id) references errands.employees (id);
+alter table departments add constraint  fk_master_id foreign key (master_id) references employees (id);
 
-create table errands.errands_status_types(
-    id      bigint primary key auto_increment,
+create table errands_status_types(
+    id      bigserial primary key,
     status  varchar(100),
-    created timestamp,
-    updated timestamp
+    created timestamp default current_timestamp,
+    updated timestamp default current_timestamp
 );
 
-create table errands.errands_matter_types(
-    id      bigint primary key auto_increment,
+create table errands_matter_types(
+    id      bigserial primary key,
     matter  varchar(100),
-    created timestamp,
-    updated timestamp
+    created timestamp default current_timestamp,
+    updated timestamp default current_timestamp
 );
 
-create table errands.place_types(
-    id       bigint primary key auto_increment,
+create table place_types(
+    id       bigserial primary key,
     type     varchar(100),
-    created  timestamp,
-    updated  timestamp
+    created  timestamp default current_timestamp,
+    updated  timestamp default current_timestamp
 );
 
 
-create table errands.places(
-    id              bigint primary key auto_increment,
+create table places(
+    id              bigserial primary key,
     place_type_id   bigint not null,
     title           varchar(255),
-    created         timestamp,
-    updated         timestamp,
-    foreign key (place_type_id) references errands.place_types(id)
+    created         timestamp default current_timestamp,
+    updated         timestamp default current_timestamp,
+    foreign key (place_type_id) references place_types(id)
 );
 
 
-create table errands.errands(
-    id                  bigint primary key auto_increment,
+create table errands(
+    id                  bigserial primary key,
     status_id           bigint not null,
     employee_id         bigint not null,
     date_start          timestamp not null,
     date_end            timestamp,
-    created             timestamp,
-    updated             timestamp,
-    foreign key (status_id) references errands.errands_status_types(id),
-    foreign key (employee_id) references errands.employees(id)
+    created             timestamp default current_timestamp,
+    updated             timestamp default current_timestamp,
+    foreign key (status_id) references errands_status_types(id),
+    foreign key (employee_id) references employees(id)
 );
 
-create table errands.errands_details(
-    id				            bigint primary key auto_increment,
+create table errands_details(
+    id				            bigserial primary key,
     matter_id                   bigint not null,
     place_id                    bigint not null,
     comment                     varchar(255),
     created_by                  bigint not null,
     confirmed_or_rejected_by    bigint not null,
-    created                     timestamp not null,
-    updated                     timestamp,
+    created                     timestamp default current_timestamp,
+    updated                     timestamp default current_timestamp,
     errand_id                   bigint not null,
-    foreign key (matter_id) references errands.errands_matter_types(id),
-    foreign key (place_id)  references errands.places(id),
-    foreign key (created_by) references errands.employees(id),
-    foreign key (confirmed_or_rejected_by)  references errands.employees(id),
-    foreign key (errand_id) references errands.errands (id)
+    foreign key (matter_id) references errands_matter_types(id),
+    foreign key (place_id)  references places(id),
+    foreign key (created_by) references employees(id),
+    foreign key (confirmed_or_rejected_by)  references employees(id),
+    foreign key (errand_id) references errands (id)
 );

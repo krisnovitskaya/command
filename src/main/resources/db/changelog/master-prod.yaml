@@ -1,5 +1,24 @@
 ## DataBase script. Prod.
 ---
 databaseChangeLog:
-- includeAll:
-    path: db/changelog/1.0.0
+    - changeSet:
+          id: create_all_tables
+          author: k
+          changes:
+              - sqlFile:
+                    path: 1.0.0/bd_v1.1.sql
+                    relativeToChangelogFile: true
+    - changeSet:
+          id: start_fill_tables
+          author: k
+          changes:
+              - sqlFile:
+                    path: 1.0.0/data_v1.1.sql
+                    relativeToChangelogFile: true
+    - changeSet:
+          id: fill_all_tables
+          author: k
+          changes:
+              - sqlFile:
+                    path: 1.0.0/data_v1.2.sql
+                    relativeToChangelogFile: true

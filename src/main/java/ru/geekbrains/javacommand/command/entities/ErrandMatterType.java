@@ -14,6 +14,6 @@ import javax.persistence.*;
 @Table(name = "errands_matter_types")
 public class ErrandMatterType extends DefaultEntity{
 
-    @Column(name = "name")
+    @Column(name = "matter")
     private String matter;
 }

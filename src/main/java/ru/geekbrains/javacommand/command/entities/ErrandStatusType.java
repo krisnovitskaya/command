@@ -13,6 +13,6 @@ import javax.persistence.*;
 @Table(name = "errands_status_types")
 public class ErrandStatusType extends DefaultEntity {
 
-    @Column(name = "name")
+    @Column(name = "status")
     private String status;
 }
