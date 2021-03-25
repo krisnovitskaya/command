@@ -36,6 +36,10 @@
                 templateUrl: 'user_profile/user_profile.html',
                 controller: 'userProfileController'
             })
+            .when('/current', {
+                templateUrl: 'current/current.html',
+                controller: 'postController'
+            })
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'

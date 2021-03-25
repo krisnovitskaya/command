@@ -43,6 +43,9 @@
             <li ng-if="isAdmin()" class="nav-item">
                 <a class="nav-link" href="#!/administration">Администрирование</a>
             </li>
+            <li ng-if="isAdmin() || isPost()" class="nav-item">
+                <a class="nav-link" href="#!/current">Текущие командировки</a>
+            </li>
             <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="" ng-click="tryToLogout()">Выйти</a>
             </li>
@@ -66,6 +69,7 @@
         <script src="errands_statistics/errands_statistics.js"></script>
         <script src="user_profile/user_profile.js"></script>
         <script src="auth/auth.js"></script>
+        <script src="current/current.js"></script>
 
     </div>
 </main>

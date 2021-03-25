@@ -64,4 +64,16 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
         }
     }
 
+    $scope.isPost = function () {
+            if ($scope.isUserLoggedIn()) {
+                $scope.getUserRole();
+                for (let i = 0; i < $scope.userRoles.length; i++) {
+                    if (angular.equals("ROLE_POST", $scope.userRoles[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
 });
