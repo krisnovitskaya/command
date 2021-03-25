@@ -1,9 +1,10 @@
 ---
-#Default(Test) settings
 server:
   port: 8989
   servlet:
     context-path: /errands
+---
+#Default(Test) settings
 spring:
   datasource:
     driver-class-name: org.h2.Driver
@@ -23,7 +24,6 @@ spring:
         web-allow-others: false
   liquibase:
     change-log: classpath:/db/changelog/master-default.yaml
-
 ---
 #Security
 security:
@@ -34,20 +34,21 @@ security:
     secret-key: testing
     token-prefix: "Bearer "
     token-header: Authorization
-
 ---
 #Prod settings
 spring:
   profiles: prod
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/errands
-    username: sa
-    password: sa
+    # URL TEMPLATE: [JDBC_PREFIX]://URL_ADDRESS:PORT/DATA_BASE_NAME?[VAR1]&[VAR2]...
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=errands
+    username: postgres
+    password: admin
   jpa:
-    database: postgers
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    show-sql: true
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQL12Dialect
+#    NOT RECOMMENDED IN PRODUCTION PROFILE !!
+#    show-sql: true
     properties:
       hibernate:
         ddl-auto: none
