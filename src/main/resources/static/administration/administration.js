@@ -31,8 +31,8 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.delete = function (employee) {
         $http.delete("api/v1/employee/" + item.id)
             .then(resp => {
-                    let ix = $scope.shoppingItemList.map(item => item.id).indexOf(item.id);
-                    $scope.shoppingItemList.splice(ix, 1);
+                    let ix = $scope.emploeeList.map(item => item.id).indexOf(item.id);
+                    $scope.emploeeList.splice(ix, 1);
                 },
                 resp => {
                     console.error(resp);
