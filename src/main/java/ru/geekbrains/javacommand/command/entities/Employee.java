@@ -13,14 +13,14 @@ import javax.persistence.*;
 @Table(name = "employees")
 public class Employee extends DefaultEntity {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String fistName;
 
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "last_name")
+    private String lastName;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "position_id")
@@ -36,5 +36,10 @@ public class Employee extends DefaultEntity {
 
     @OneToOne(cascade =  CascadeType.PERSIST, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
+
+
+    public String getFIO(){
+        return String.format("%s %s %s", this.getLastName(), this.getFistName(), this.getMiddleName());
+    }
 
 }

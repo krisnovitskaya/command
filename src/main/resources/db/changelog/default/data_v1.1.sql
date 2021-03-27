@@ -1,14 +1,15 @@
 -- Prod init database data
--- username: admin password: DLda#|d7~c?Q (bcrypt hash)
+-- username: admin password: 100
 insert into errands.users(username, password)
 values
-    ('admin', '$2y$12$ThsVE9vmV/bRHpvX4fVKmuoFVR9uWWqjMDZLjmP/.9Qm9L1sWup5K');
+    ('admin', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem');
 
 insert into errands.roles(name)
 values
     ('ROLE_ADMIN'),
     ('ROLE_MASTER'),
-    ('ROLE_EMPLOYEE');
+    ('ROLE_EMPLOYEE'),
+    ('ROLE_POST');
 
 insert into errands.errands_status_types (status)
 values
