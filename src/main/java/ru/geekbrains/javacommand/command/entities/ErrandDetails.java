@@ -31,7 +31,7 @@ public class ErrandDetails extends DefaultEntity {
     private Employee createdBy;
 
     @ManyToOne
-    @JoinColumn(name = "confirmed_or_rejected_by", nullable = false)
+    @JoinColumn(name = "confirmed_or_rejected_by")
     private Employee confirmedOrRejectedBy;
 
 }
