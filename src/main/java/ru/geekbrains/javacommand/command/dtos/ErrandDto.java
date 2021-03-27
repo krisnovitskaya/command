@@ -35,4 +35,5 @@ public class ErrandDto {
         this.dateStart = errand.getDateStart();
         this.dateEnd = errand.getDateEnd();
     }
+
 }

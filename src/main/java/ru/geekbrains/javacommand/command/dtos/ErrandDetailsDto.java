@@ -49,4 +49,5 @@ public class ErrandDetailsDto {
         this.comment = errandDetails.getComment();
         this.createdBy = errandDetails.getCreatedBy();
     }
+
 }

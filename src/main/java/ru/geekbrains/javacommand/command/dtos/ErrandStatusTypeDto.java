@@ -20,4 +20,5 @@ public class ErrandStatusTypeDto {
         this.id = errandStatusType.getId();
         this.status = errandStatusType.getStatus();
     }
+
 }

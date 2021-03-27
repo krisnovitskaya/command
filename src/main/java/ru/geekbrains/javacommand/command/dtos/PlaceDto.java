@@ -28,4 +28,5 @@ public class PlaceDto {
         this.placeType = place.getPlaceType();
     }
 
+
 }

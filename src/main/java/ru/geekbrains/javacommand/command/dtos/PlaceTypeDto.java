@@ -20,4 +20,5 @@ public class PlaceTypeDto {
         this.id = placeType.getId();
         this.type = placeType.getType();
     }
+
 }
