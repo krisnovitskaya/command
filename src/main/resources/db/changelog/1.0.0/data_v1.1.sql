@@ -1,5 +1,5 @@
 -- Prod init database data
--- username: admin password: DLda#|d7~c?Q (bcrypt hash)
+-- username: admin password: 100
 insert into errands.users(username, password)
 values
     ('admin', '$2y$12$ThsVE9vmV/bRHpvX4fVKmuoFVR9uWWqjMDZLjmP/.9Qm9L1sWup5K');
