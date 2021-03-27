@@ -1,4 +1,19 @@
 <div>
     <h1>Создание новой командировки</h1>
     <h3>В разработке</h3>
+
+    <div class="mb-3 text-center">
+        <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto;">
+            <div class="form-group col-md-6">
+                <label for="errandDepartmentId">Отдел сотрудника:</label>
+                <span  class="nullable">
+                        <select class="form-control" ng-model="errand.department_id"  id="errandDepartmentId">
+                            <option value="">---Отдел сотрудника---</option>
+                            <option value="{{d.id}}" ng-options="d in DepartmentsList">{{d.title}}</option>
+                        </select>
+                    </span><br/>
+            </div>
+
+        </form>
+    </div>
 </div>
