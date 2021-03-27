@@ -127,5 +127,5 @@ create table errands.errands(
     updated             timestamp,
     foreign key (status_id) references errands.errands_status_types(id),
     foreign key (employee_id) references errands.employees(id),
-    foreign key (errands_details_id) references errands.errands_details(id)
+    foreign key (errand_details_id) references errands.errands_details(id)
 );

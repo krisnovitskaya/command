@@ -25,6 +25,11 @@ public class Errand extends DefaultEntity {
     private Employee employee;
 
     @NotNull
+    @OneToOne
+    @JoinColumn(name = "errand_details_id")
+    private ErrandDetails errandDetails;
+
+		@NotNull
     @Column(name = "date_start")
     private Timestamp dateStart;
 
