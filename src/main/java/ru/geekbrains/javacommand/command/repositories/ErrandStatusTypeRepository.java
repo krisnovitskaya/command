@@ -6,4 +6,5 @@ import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 
 @Repository
 public interface ErrandStatusTypeRepository extends JpaRepository<ErrandStatusType, Long> {
+
 }

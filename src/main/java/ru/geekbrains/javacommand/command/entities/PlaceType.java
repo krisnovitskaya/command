@@ -15,4 +15,5 @@ public class PlaceType extends DefaultEntity {
 
     @Column(name = "type")
     private String type;
+
 }

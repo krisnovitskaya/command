@@ -32,4 +32,10 @@ public class Errand extends DefaultEntity {
     @Column(name = "date_end")
     private OffsetDateTime dateEnd;
 
+    public Errand(Employee employee, OffsetDateTime dateStart, OffsetDateTime dateEnd){
+        this.employee = employee;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+    }
+
 }

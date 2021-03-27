@@ -1,19 +1,138 @@
-<div>
-    <h1>Создание новой командировки</h1>
-    <h3>В разработке</h3>
+<div class="mb-3 text-center">
+    <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto;">
+        <head>
+            <!--            <link rel="stylesheet" type="text/css" href="style.css">-->
+            <script src="http://code.angularjs.org/1.1.5-angular_ru/angular.min.js"></script>
+            <script src="script.js"></script>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>jQuery UI Datepicker - Default functionality</title>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!--            <link rel="stylesheet" href="/resources/demos/style.css">-->
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script>
+                $.datepicker.regional['ru'] = {
+                    closeText: 'Закрыть',
+                    prevText: 'Предыдущий',
+                    nextText: 'Следующий',
+                    currentText: 'Сегодня',
+                    monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                    monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
+                    dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+                    dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+                    dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+                    weekHeader: 'Не',
+                    dateFormat: 'dd.mm.yy',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: ''
+                };
+                $.datepicker.setDefaults($.datepicker.regional['ru']);
+            </script>
+            <script>
+                $( function() {
+                    $( "#datepickerStart" ).datepicker({
+                      locale: 'ru',
+                      format: 'DD.MM.YYYY',
+                      minDate: 0,
+                      showOn: "button",
+                      buttonImage: "images/calendar1.gif",
+                      buttonImageOnly: true,
+                      buttonText: "Выбрать дату"
+                    });
+                } );
+            </script>
+            <script>
+                $( function() {
+                    $( "#datepickerEnd" ).datepicker({
+                      locale: 'ru',
+                      format: 'DD.MM.YYYY',
+                      minDate: 0,
+                      showOn: "button",
+                      buttonImage: "images/calendar1.gif",
+                      buttonImageOnly: true,
+                      buttonText: "Выбрать дату"
+                    });
+                } );
+            </script>
+        </head>
+        <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Заявка на командировку:</h1>
 
-    <div class="mb-3 text-center">
-        <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto;">
-            <div class="form-group col-md-6">
-                <label for="errandDepartmentId">Отдел сотрудника:</label>
-                <span  class="nullable">
-                        <select class="form-control" ng-model="errand.department_id"  id="errandDepartmentId">
-                            <option value="">---Отдел сотрудника---</option>
-                            <option value="{{d.id}}" ng-options="d in DepartmentsList">{{d.title}}</option>
+        <div class="form-group col-md-6">
+            <label for="errandDepartmentId">Отдел сотрудника:</label>
+            <span  class="nullable">
+                        <select class="form-control" ng-model="errand.department_id"  id="errandDepartmentId" required="">
+                            <option value="">Отдел сотрудника</option>
+                            <option value="{{d.id}}" ng-options="d.title for d in DepartmentsList">{{d.title}}</option>
                         </select>
                     </span><br/>
-            </div>
+        </div>
 
-        </form>
-    </div>
+        <div class="form-group col-md-6">
+            <label for="employeeId">ФИО сотрудника:</label>
+            <span  class="nullable">
+                <select class="form-control" ng-model="errand.employee_id"  id="employeeId"
+                        required="" ng-if="errand.department_id != null" disabled="false"
+                        ng-click="getEmployeesList(d.id)">
+                    <option value="">ФИО сотрудника</option>
+                    <option value="{{e.id}}" ng-options="e.last_name, e.middle_name, e.first_name for e in EmployeesList"> {{e.last_name}} + " " + {{e.middle_name}} + " " + {{e.first_name}}</option>
+                </select>
+            </span><br/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="matterId">Тип командировки:</label>
+            <span  class="nullable">
+                <select class="form-control" ng-model="errandDetails.matter_id"  id="matterId" required="">
+                    <option value="">Тип командировки</option>
+                    <option value="{{m.id}}" ng-options="m.matter for m in ErrandMatterTypesList">{{m.matter}}</option>
+                </select>
+            </span><br/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <p>Начало командировки: <input type="text" ng-model="errand.date_start" id="datepickerStart" required=""></p>
+        </div>
+        <div class="form-group col-md-6">
+            <p>Окончание командировки: <input type="text" ng-model="errand.date_end" id="datepickerEnd" required=""></p>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="placeTypeId">Тип места назначения:</label>
+            <span  class="nullable">
+                <select class="form-control" ng-model="errandDetails.place_type_id"  id="placeTypeId" required="">
+                    <option value="">Тип места назначения</option>
+                    <option value="{{pt.id}}" ng-options="pt.type for pt in PlaceTypesList">{{pt.type}}</option>
+                </select>
+            </span><br/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="placeId">Место назначения:</label>
+            <span  class="nullable">
+                <select class="form-control" ng-model="errandDetails.place_id"  id="placeId" required=""
+                        ng-if="errand.place_type_id != null" disabled="false"
+                        ng-click="getPlacesList(pt.id)">
+                    <option value="">Место назначения</option>
+                    <option value="{{p.id}}" ng-options="p.title for p in PlacesList">{{p.title}}</option>
+                </select>
+            </span><br/>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="comment">Комментарий:</label>
+            <input type="text" ng-model="errandDetails.comment" id="comment" class="form-control"
+                   placeholder="Комментарий" style="margin-bottom: 10px;">
+        </div>
+
+        <div class="form-group col-md-6">
+            <input type="checkbox" ng-model="value" required="">
+            <tt>Подтвердить командировку</tt><br/>
+        </div>
+
+        <button class="btn btn-success" type="submit">Создать командировку</button>
+
+    </form>
 </div>
