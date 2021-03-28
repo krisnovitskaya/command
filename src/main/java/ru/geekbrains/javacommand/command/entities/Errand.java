@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -27,7 +26,7 @@ public class Errand extends DefaultEntity {
 
     @NotNull
     @OneToOne
-    @JoinColumn(name = "errand_details_id")
+    @JoinColumn(name = "errand_detail_id")
     private ErrandDetails errandDetails;
 
 		@NotNull

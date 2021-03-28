@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
-import ru.geekbrains.javacommand.command.dtos.ErrandResponseDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.services.impl.ErrandServiceImpl;
 import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
 
@@ -25,10 +26,10 @@ public class ErrandController implements ErrandControllerApi {
 	private final ErrandMatterTypeService matterTypeService;
 	
 	@Override
-	public ErrandResponseDto finbById(Long id) {
+	public ErrandDto finbById(Long id) {
     return errandServiceImpl.findErrandById(id);
 	}
-
+	
 	@Override
 	public List<ErrandMatterDto> getMatters() {
 		return matterTypeService.findAll();

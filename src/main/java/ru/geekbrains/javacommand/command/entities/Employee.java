@@ -13,14 +13,14 @@ import javax.persistence.*;
 @Table(name = "employees")
 public class Employee extends DefaultEntity {
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "last_name")
+    private String lastName;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "position_id")

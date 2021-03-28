@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "place_type")
+@Table(name = "places_types")
 public class PlaceType extends DefaultEntity {
 
     @Column(name = "type")

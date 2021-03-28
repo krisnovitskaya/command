@@ -6,7 +6,7 @@ package ru.geekbrains.javacommand.command.controllers.facade;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.geekbrains.javacommand.command.dtos.ErrandResponseDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
 import java.util.List;
@@ -21,10 +21,10 @@ public interface ErrandControllerApi {
 	 * @return ErrandResponseDto
 	 */
 	@GetMapping(path = "/findbyid", produces = "application/json;charset=UTF-8")
-	ErrandResponseDto finbById(@RequestParam (name = "id") Long id);
+	ErrandDto finbById(@RequestParam (name = "id") Long id);
 	
 
-	@GetMapping(value = "matters", produces = "application/json;charset=UTF-8")
+	@GetMapping(path = "/matters", produces = "application/json;charset=UTF-8")
 	List<ErrandMatterDto> getMatters();
 
 }

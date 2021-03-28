@@ -6,7 +6,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.ErrandResponseDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
 import ru.geekbrains.javacommand.command.services.ErrandService;
@@ -20,29 +20,46 @@ public class ErrandServiceImpl implements ErrandService {
 	private ErrandRepository errandRepository;
 	
 	@Override
-	public ErrandResponseDto findErrandById(Long id) {
+	public ErrandDto findErrandById(Long id) {
     
-		return convertToErrandResponseDto(errandRepository.findErrandById(id));
+		return convertToErrandDto(errandRepository.findErrandById(id));
 		
 	}
 	
-	private ErrandResponseDto convertToErrandResponseDto(Errand errand) {
+	private ErrandDto convertToErrandDto(Errand errand) {
 		
-		ErrandResponseDto resultErrandResponseDto = null;
+		ErrandDto resultErrandDto = null;
 		if (errand != null) {
-//			resultErrandResponseDto = new ErrandResponseDto(
-//					errand.getId(),
-//					errand.getStatusType().getStatus(),
-//					errand.getEmployee().getName(),
-//					errand.getEmployee().getMiddleName(),
-//					errand.getEmployee().getSurname(),
-//					errand.getEmployee().getPosition().getPosition(),
-//					errand.getEmployee().getDepartment().getTitle(),
-//					errand.getEmployee().getDepartment().getMaster().,					
-//					errand.getEmployee().getName(),
-//			);
+			resultErrandDto = new ErrandDto(
+					errand.getId(),
+					errand.getCreated(),
+					errand.getUpdated(),
+					errand.getStatusType().getStatus(),
+					errand.getDateStart(),
+					errand.getDateEnd(),
+					errand.getEmployee().getFirstName(),
+					errand.getEmployee().getMiddleName(),
+					errand.getEmployee().getLastName(),
+					errand.getEmployee().getPosition().getPosition(),
+					errand.getEmployee().getUser().getUserName(),
+					errand.getEmployee().getDepartment().getTitle(),
+					errand.getEmployee().getDepartment().getMaster().getFirstName(),
+					errand.getEmployee().getDepartment().getMaster().getMiddleName(),
+					errand.getEmployee().getDepartment().getMaster().getLastName(),
+					errand.getEmployee().getDepartment().getMaster().getUser().getUserName(),
+					errand.getErrandDetails().getMatter().getMatter(),
+					errand.getErrandDetails().getPlace().getTitle(),
+					errand.getErrandDetails().getPlace().getPlaceType().getType(),
+					errand.getErrandDetails().getComment(),
+					errand.getErrandDetails().getCreatedBy().getFirstName(),
+					errand.getErrandDetails().getCreatedBy().getMiddleName(),
+					errand.getErrandDetails().getCreatedBy().getLastName(),
+					errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName(),
+					errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName(),
+					errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName()
+			);
 		}
-		return resultErrandResponseDto;
+		return resultErrandDto;
 
 	}
 	
