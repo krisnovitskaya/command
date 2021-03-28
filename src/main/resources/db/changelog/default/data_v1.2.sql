@@ -1,6 +1,6 @@
 -- Data for testing
 -- users passwords: 100 (bcrypt hash)
-insert into errands.users(username, password)
+insert into users(username, password)
 values
     ('master2', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem'),   --id 2
     ('master3', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem'),   --id 3
@@ -22,12 +22,12 @@ values
     ('employee19', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem'), --id 19
     ('employee20', '$2a$12$n6KY4mpI2RdcBQWwyM4msudGmPD6gXxQDjKDQiXojmzykVYhtvaem'); --id 20
 
-insert into errands.users_roles(user_id, role_id)
+insert into users_roles(user_id, role_id)
 values
     (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2),
     (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3), (18, 3), (19, 3), (20, 3);
 
-insert into errands.positions(position)
+insert into positions(position)
 values
     ('position1'),   --id 1
     ('position2'),   --id 2
@@ -41,7 +41,7 @@ values
     ('position10'),  --id 10
     ('position11');  --id 11
 
-insert into errands.departments(title)
+insert into departments(title)
 values
     ('Департамент 1'),    --id 1
     ('Департамент 2'),    --id 2
@@ -57,7 +57,7 @@ values
 
 
 
-insert into errands.employees(last_name, first_name, middle_name, position_id, department_id, user_id)
+insert into employees(last_name, first_name, middle_name, position_id, department_id, user_id)
 values
     ('Админ', 'Админ', 'Админ', 11, 11, 1),                   --id 1
     ('Фамилия2', 'Имя2', 'Отчество2', 2, 2, 2),                --id 2
@@ -80,7 +80,7 @@ values
     ('Фамилия19', 'Имя19', 'Отчество19', 10, 5, 19),          --id 19
     ('Фамилия20', 'Имя20', 'Отчество20', 10, 6, 20);          --id 20
 
-insert into errands.employees_details(mail, employee_id)
+insert into employees_details(mail, employee_id)
 values
     ('email1@net.com', 1),     --id 1
     ('email2@net.com', 2),     --id 2
@@ -103,14 +103,14 @@ values
     ('email19@net.com', 19),    --id 19
     ('email20@net.com', 20);    --id 20
 
-update errands.departments set master_id = 2 where id = 2;
-update errands.departments set master_id = 3 , master_department_id = 2 where id = 3;
-update errands.departments set master_id = 4 , master_department_id = 2 where id = 4;
-update errands.departments set master_id = 5 , master_department_id = 3 where id = 5;
-update errands.departments set master_id = 6 , master_department_id = 4 where id = 6;
-update errands.departments set master_id = 7 , master_department_id = 5 where id = 7;
+update departments set master_id = 2 where id = 2;
+update departments set master_id = 3 , master_department_id = 2 where id = 3;
+update departments set master_id = 4 , master_department_id = 2 where id = 4;
+update departments set master_id = 5 , master_department_id = 3 where id = 5;
+update departments set master_id = 6 , master_department_id = 4 where id = 6;
+update departments set master_id = 7 , master_department_id = 5 where id = 7;
 
-insert into errands.place_types(type)
+insert into places_types(type)
 values
     ('place_type1'),    --id 1
     ('place_type2'),    --id 2 
@@ -123,7 +123,7 @@ values
     ('place_type9'),    --id 9
     ('place_type10');   --id 10
 
-insert into errands.places(place_type_id, title)
+insert into places(place_type_id, title)
 values
     (1, 'Место1'),          --id 1
     (2, 'Место2'),          --id 2
@@ -136,30 +136,33 @@ values
     (9, 'Место9'),          --id 9
     (10, 'Место10');        --id 10
 
-insert into errands.errands(status_id, employee_id, date_start, date_end)
-values
-    (1, 2,  '2021-03-18', '2021-03-19'),        --id 1
-    (2, 2,  '2021-03-18', '2021-03-19'),        --id 2
-    (3, 4,  '2021-03-18', '2021-03-19'),        --id 3
-    (1, 5,  '2021-03-18', '2021-03-19'),        --id 4
-    (2, 13,  '2021-03-18', '2021-03-19'),        --id 5
-    (3, 14,  '2021-03-18', '2021-03-19'),        --id 6
-    (1, 15,  '2021-03-18', '2021-03-19'),        --id 7
-    (2, 20,  '2021-03-18', '2021-03-19'),        --id 8
-    (3, 20,  '2021-03-18', '2021-03-19'),       --id 9
-    (1, 11,  '2021-03-18', '2021-03-19');      --id 10
-
 -- id 1 ('LOCAL'), id 2 ('PRIVATE'), id 3 ('LONG')
-insert into errands.errands_details(errand_id, matter_id, place_id, comment, created_by, confirmed_or_rejected_by, created)
+insert into errands_details(matter_id, place_id, comment, created_by, confirmed_or_rejected_by, created)
 values
-    (1, 1, 1, 'Комментарий1', 2, 2, '2021-03-18'),     --id 1
-    (2, 3, 2, 'Комментарий2', 2, 2, '2021-03-17'),     --id 2
-    (3, 3, 3, 'Комментарий3', 4, 2, '2021-03-16'),     --id 3
-    (4, 1, 4, 'Комментарий4', 5, 2, '2021-03-15'),     --id 4
-    (5, 3, 5, 'Комментарий5', 13, 2, '2021-03-14'),     --id 5
-    (6, 1, 6, 'Комментарий6', 14, 2, '2021-03-13'),    --id 6
-    (7, 1, 7, 'Комментарий7', 15, 2, '2021-03-12'),     --id 7
-    (8, 1, 8, 'Комментарий8', 20, 2, '2021-03-11'),     --id 8
-    (9, 3, 9, 'Комментарий9', 20, 2, '2021-03-10'),     --id 9
-    (10, 2, 10, 'Комментарий10', 1, 2, '2021-03-09');  --id 10
+    (1, 1, 'Комментарий1', 2, 2, '2021-03-18'),     --id 1
+    (3, 2, 'Комментарий2', 2, 2, '2021-03-17'),     --id 2
+    (3, 3, 'Комментарий3', 4, 2, '2021-03-16'),     --id 3
+    (1, 4, 'Комментарий4', 5, 2, '2021-03-15'),     --id 4
+    (3, 5, 'Комментарий5', 13, 2, '2021-03-14'),     --id 5
+    (1, 6, 'Комментарий6', 14, 2, '2021-03-13'),    --id 6
+    (1, 7, 'Комментарий7', 15, 2, '2021-03-12'),     --id 7
+    (1, 8, 'Комментарий8', 20, 2, '2021-03-11'),     --id 8
+    (3, 9, 'Комментарий9', 20, 2, '2021-03-10'),     --id 9
+    (2, 10, 'Комментарий10', 1, 2, '2021-03-09');  --id 10
 
+insert into errands(status_id, employee_id, errand_detail_id, date_start, date_end)
+values
+    (1, 2, 1, '2021-03-18', '2021-03-19'),        --id 1
+    (2, 2, 2, '2021-03-18', '2021-03-19'),        --id 2
+    (3, 4, 3, '2021-03-18', '2021-03-19'),        --id 3
+    (1, 5, 4, '2021-03-18', '2021-03-19'),        --id 4
+    (2, 13, 5, '2021-03-18', '2021-03-19'),        --id 5
+    (3, 14, 6, '2021-03-18', '2021-03-19'),        --id 6
+    (1, 15, 7, '2021-03-18', '2021-03-19'),        --id 7
+    (2, 20, 8, '2021-03-18', '2021-03-19'),        --id 8
+    (3, 20, 9, '2021-03-18', '2021-03-19'),       --id 9
+    (1, 11, 10, '2021-03-18', '2021-03-19');      --id 10
+
+insert into errands(status_id, employee_id, errand_detail_id, date_start, date_end, created, updated)
+values
+    (1, 5, 4, '2021-03-18', '2021-03-19', '2021-03-19', '2021-03-19');        --id 11

@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Employee extends DefaultEntity {
 
     @Column(name = "first_name")
-    private String fistName;
+    private String firstName;
 
     @Column(name = "middle_name")
     private String middleName;
@@ -39,7 +39,7 @@ public class Employee extends DefaultEntity {
 
 
     public String getFIO(){
-        return String.format("%s %s %s", this.getLastName(), this.getFistName(), this.getMiddleName());
+        return String.format("%s %s %s", this.getLastName(), this.getFirstName(), this.getMiddleName());
     }
 
 }
