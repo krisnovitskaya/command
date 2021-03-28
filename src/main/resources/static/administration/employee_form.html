@@ -45,18 +45,45 @@
         <form novalidate ng-submit="createNewEmployee()">
             <div class="form-group col-md-6">
                 <label for="elementSurname">Фамилия</label>
-                <input class="form-control" type="text" ng-model="surname" id="elementSurname">
+                <input class="form-control" type="text" ng-model="employee.surname" id="elementSurname">
             </div>
             <div class="form-group col-md-6">
                 <label for="elementName">Имя</label>
-                <input class="form-control" type="text" ng-model="name" id="elementName">
+                <input class="form-control" type="text" ng-model="employee.name" id="elementName">
             </div>
             <div class="form-group col-md-6">
                 <label for="elementMiddleName">Отчество</label>
-                <input class="form-control" type="text" ng-model="middleName" id="elementMiddleName">
+                <input class="form-control" type="text" ng-model="employee.middleName" id="elementMiddleName">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="employeePositionId">Должность сотрудника</label>
+                <span  class="nullable">
+                        <select class="form-control" ng-model="employee.position_id"  id="employeePositionId" required="">
+                            <option value="">Должность сотрудника</option>
+                            <option value="{{p.id}}" ng-options="p.position for p in positionList">{{p.title}}</option>
+                        </select>
+                    </span><br/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="employeeDepartmentId">Отдел сотрудника</label>
+                <span  class="nullable">
+                        <select class="form-control" ng-model="employee.department_id"  id="employeeDepartmentId" required="">
+                            <option value="">Отдел сотрудника</option>
+                            <option value="{{d.id}}" ng-options="d.title for d in departmentList">{{d.title}}</option>
+                        </select>
+                    </span><br/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="employeeUserId">Аккаунт сотрудника</label>
+                <span  class="nullable">
+                        <select class="form-control" ng-model="employee.user_id"  id="employeeUserId" required="">
+                            <option value="">Аккаунт сотрудника</option>
+                            <option value="{{u.id}}" ng-options="u.title for u in userList">{{u.username}}</option>
+                        </select>
+                    </span><br/>
             </div>
             <div>
-                <button ng-click="create(name, middleName, surname)" class="btn btn-success" type="submit">Сохранить</button>
+                <button ng-click="create(employee)" class="btn btn-success" type="submit">Сохранить</button>
             </div>
         </form>
     </div>

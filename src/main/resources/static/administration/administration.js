@@ -1,7 +1,7 @@
 angular.module('app').controller('administrationController', function ($scope, $http) {
     const contextPath = 'http://localhost:8989/errands';
 
-    $http.get("api/v1/employee/all")
+    $http.get(contextPath + "/api/v1/employees/all")
         .then(resp => {
                 $scope.emploeeList = resp.data;
             },
@@ -9,34 +9,52 @@ angular.module('app').controller('administrationController', function ($scope, $
                 console.error(resp);
             });
 
-    $scope.name = '';
-    $scope.middleName = '';
-    $scope.surname = '';
+    $http.get(contextPath + "/api/v1/departments/all")
+        .then(resp => {
+                $scope.departmentList = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
 
-    $scope.create = function (name, middleName, surname) {
+    $http.get(contextPath + "/api/v1/positions/all")
+        .then(resp => {
+                $scope.positionList = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
 
-        $http.post("api/v1/employee/new", {'name': name, 'middleName' : middleName, 'surname' : surname})
+    $http.get(contextPath + "/api/v1/users/all")
+        .then(resp => {
+                $scope.userList = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
+
+
+
+
+    $scope.employee = null;
+
+    $scope.create = function (employee) {
+
+        $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
             .then(resp => {
-                    $scope.emploeeList.push(resp.data);
+                    $scope.employee = null;
                 },
                 resp => {
                     console.error(resp);
                 });
-
-        $scope.name = '';
-        $scope.middleName = '';
-        $scope.surname = '';
     }
 
     $scope.delete = function (employee) {
-        $http.delete("api/v1/employee/" + item.id)
-            .then(resp => {
-                    let ix = $scope.emploeeList.map(item => item.id).indexOf(item.id);
-                    $scope.emploeeList.splice(ix, 1);
-                },
-                resp => {
-                    console.error(resp);
-                });
+        $http.delete(contextPath + "/api/v1/employees/delete/" + employee.id)
+    }
+
+    $scope.edit = function (employee) {
+        $http.get(contextPath + "/api/v1/employees/edit/" + employee.id)
     }
 
 });
