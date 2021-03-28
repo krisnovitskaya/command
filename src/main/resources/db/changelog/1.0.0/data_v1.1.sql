@@ -8,7 +8,8 @@ insert into roles(name)
 values
     ('ROLE_ADMIN'),
     ('ROLE_MASTER'),
-    ('ROLE_EMPLOYEE');
+    ('ROLE_EMPLOYEE'),
+    ('ROLE_POST');
 
 insert into errands_status_types (status)
 values

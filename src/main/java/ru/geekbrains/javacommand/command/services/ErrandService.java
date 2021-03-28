@@ -3,9 +3,12 @@
  */
 package ru.geekbrains.javacommand.command.services;
 
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
+
+import java.util.List;
+
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 
-/** @author Igor Popovich, email: popovichia@gmail.com */
 public interface ErrandService {
 
 	/**
@@ -14,5 +17,7 @@ public interface ErrandService {
 	 * @return ErrandResponseDto
 	 */
 	ErrandDto findErrandById(Long id);
+
+	List<CurrentErrandDto> getListCurrent();
 
 }

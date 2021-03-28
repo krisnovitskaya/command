@@ -10,14 +10,22 @@ import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
 import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
-/** @author Igor Popovich, email: popovichia@gmail.com */
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ErrandServiceImpl implements ErrandService {
 	
 	@Autowired
-	private ErrandRepository errandRepository;
+	private final ErrandRepository errandRepository;
+
+	@Override
+	public List<CurrentErrandDto> getListCurrent() {
+		return errandRepository.findCurrent().stream().map(CurrentErrandDto::new).collect(Collectors.toList());
+	}
 	
 	@Override
 	public ErrandDto findErrandById(Long id) {

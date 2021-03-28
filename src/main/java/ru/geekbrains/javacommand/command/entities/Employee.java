@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Employee extends DefaultEntity {
 
     @Column(name = "first_name")
-    private String firstName;
+    private String fistName;
 
     @Column(name = "middle_name")
     private String middleName;
@@ -36,5 +36,10 @@ public class Employee extends DefaultEntity {
 
     @OneToOne(cascade =  CascadeType.PERSIST, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
+
+
+    public String getFIO(){
+        return String.format("%s %s %s", this.getLastName(), this.getFistName(), this.getMiddleName());
+    }
 
 }

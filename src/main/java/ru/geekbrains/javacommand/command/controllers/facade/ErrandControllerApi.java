@@ -11,7 +11,6 @@ import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
 import java.util.List;
 
-/** @author Igor Popovich, email: popovichia@gmail.com */
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 	
@@ -22,9 +21,12 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(path = "/findbyid", produces = "application/json;charset=UTF-8")
 	ErrandDto finbById(@RequestParam (name = "id") Long id);
-	
 
-	@GetMapping(path = "/matters", produces = "application/json;charset=UTF-8")
+	/**
+	 * Return All ErrandMatterType as DTO from current DataBase
+	 * @return List<ErrandMatterDto>
+	 */
+	@GetMapping(value = "/matters", produces = "application/json;charset=UTF-8")
 	List<ErrandMatterDto> getMatters();
 
 }

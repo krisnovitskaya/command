@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.services.impl.ErrandServiceImpl;
 import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
+import ru.geekbrains.javacommand.command.services.ErrandService;
 
 import java.util.List;
 
@@ -19,20 +21,20 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ErrandController implements ErrandControllerApi {
-	@Autowired
-	private ErrandServiceImpl errandServiceImpl;
-	
-	@Autowired
-	private final ErrandMatterTypeService matterTypeService;
 	
 	@Override
 	public ErrandDto finbById(Long id) {
-    return errandServiceImpl.findErrandById(id);
+    return errandService.findErrandById(id);
 	}
 	
 	@Override
 	public List<ErrandMatterDto> getMatters() {
 		return matterTypeService.findAll();
 	}
+
+	@Autowired
+  private final ErrandMatterTypeService matterTypeService;
+	@Autowired
+	private final ErrandService errandService;
 
 }
