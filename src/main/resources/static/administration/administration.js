@@ -33,9 +33,6 @@ angular.module('app').controller('administrationController', function ($scope, $
                 console.error(resp);
             });
 
-
-
-
     $scope.employee = null;
 
     $scope.create = function (employee) {
