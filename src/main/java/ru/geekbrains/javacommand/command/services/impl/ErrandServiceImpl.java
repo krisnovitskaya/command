@@ -3,6 +3,7 @@
  */
 package ru.geekbrains.javacommand.command.services.impl;
 
+import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,11 @@ import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import ru.geekbrains.javacommand.command.entities.Department;
+import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.ErrandDetails;
+import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
+import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +30,23 @@ public class ErrandServiceImpl implements ErrandService {
 
 	@Override
 	public List<CurrentErrandDto> getListCurrent() {
+
 		return errandRepository.findCurrent().stream().map(CurrentErrandDto::new).collect(Collectors.toList());
+
 	}
 	
 	@Override
 	public ErrandDto findErrandById(Long id) {
-    
+
 		return convertToErrandDto(errandRepository.findErrandById(id));
+
+	}
+	
+	@Override
+	public Errand saveErrand(ErrandDto errandDto) {
+		
+		Errand errand = convertToErrand(errandDto);
+		return errandRepository.save(errand);
 		
 	}
 	
@@ -69,6 +85,15 @@ public class ErrandServiceImpl implements ErrandService {
 		}
 		return resultErrandDto;
 
+	}
+
+	private Errand convertToErrand(ErrandDto errandDto) {
+		
+		Errand errand = new Errand();
+    errand.setDateStart(OffsetDateTime.now().plusDays(1));
+    errand.setDateEnd(OffsetDateTime.now().plusWeeks(1));
+		return errand;
+		
 	}
 	
 }

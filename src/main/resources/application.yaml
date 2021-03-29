@@ -23,7 +23,11 @@ spring:
         web-allow-others: false
   liquibase:
     change-log: classpath:/db/changelog/master-default.yaml
-
+# Open API documentations
+springdoc:
+    swagger-ui:
+        path: /api-docs.html
+        operationsSorter: method
 ---
 #Security
 security:
