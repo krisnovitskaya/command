@@ -1,27 +1,40 @@
 <div>
-
     <h3>Запрошенные</h3>
 
-<!--    Для реализации раскрывающегося поля необходимо: для кнопки активатора добавить класс "extremum-click";-->
-<!--    В самом поле которое будет сворачиваться добавить класс "extremum-slide"-->
-<!--    В js добавить скрипт-->
-<!--    $(".extremum-click").click(function () {-->
-<!--    $(this).siblings(".extremum-slide").slideToggle("slow");-->
-<!--    });-->
-<!--    в основной style.css уже добавлен стиль .extremum-slide (его можно override в своих страницах)-->
-
     <div class="column_box">
-        <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр</h4>
+        <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
         <div class="extremum-slide">
-            <form novalidate ng-submit="fillTable()">
-                <select class="form-control filter_box" style="width: 180px;" ng-model="filter.category">
-                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}">{{employee.employeeFirstName}} {{employee.employeeLastName}} {{employee.employeeMiddleName}}</option>
+            <form style="width: 460px;" novalidate ng-submit="fillTable()">
+
+                <select id="employee" class="form-control filter_box"
+                        ng-model="filter.employee">
+                    <option value="" disabled selected>ФИО</option>
+                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}">{{employee.employeeFirstName}}
+                        {{employee.employeeLastName}} {{employee.employeeMiddleName}}
+                    </option>
                 </select>
 
-                <br>
-                <input class="btn btn-warning" type="submit" value="Фильтр">
+                <select id="matterType" class="form-control filter_box"
+                        ng-model="filter.errandMatterType">
+                    <option value="" disabled selected>Тип</option>
+                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}">
+                        {{errandMatterType.matter}}
+                    </option>
+                </select>
+
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">С </span>
+                    <input style="margin-right: 10px;" type="text" id="dateStart" ng-model="filter.dateStart" aria-describedby="basic-addon1">
+
+                    <span class="input-group-text" id="basic-addon2">По</span>
+                    <input type="text" id="dateEnd" ng-model="filter.dateEnd" aria-describedby="basic-addon2">
+                </div>
+
+                <input class="btn btn-warning" type="submit" value="Применить">
                 <a class="btn btn-warning" ng-click="clearFilter()">Сбросить</a>
-            </form></p>
+            </form>
+            </p>
         </div>
 
         <div class="main_box">

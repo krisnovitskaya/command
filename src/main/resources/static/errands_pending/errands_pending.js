@@ -9,7 +9,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             method: 'GET',
             params: {
                 employee: $scope.filter ? $scope.filter.employee : null,
-                detailMatterType: $scope.filter ? $scope.filter.detailMatterType : null,
+                errandMatterType: $scope.filter ? $scope.filter.errandMatterType : null,
                 dateStart: $scope.filter ? $scope.filter.dateStart : null,
                 dateEnd: $scope.filter ? $scope.filter.dateEnd : null,
                 p: pageIndex
@@ -38,5 +38,9 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     $(".extremum-click").click(function () {
         $(this).siblings(".extremum-slide").slideToggle("slow");
     });
+
+    $( function() {
+        $( "#datepicker" ).datepicker();
+    } );
 
 });

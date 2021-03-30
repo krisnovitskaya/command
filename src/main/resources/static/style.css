@@ -19,6 +19,11 @@ body {
 
 .extremum-slide {
   padding:10px;
+  display:none;
+}
+
+.filter_box {
+  margin-bottom: 10px;
 }
 
 .nav-link:hover {
