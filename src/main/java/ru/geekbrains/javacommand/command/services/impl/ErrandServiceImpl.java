@@ -22,8 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ErrandServiceImpl implements ErrandService {
-	
-	@Autowired
+
 	private final ErrandRepository errandRepository;
 
 	@Override

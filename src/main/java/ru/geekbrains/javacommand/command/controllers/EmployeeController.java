@@ -9,11 +9,13 @@ import ru.geekbrains.javacommand.command.dtos.EmployeeDTO;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.services.DepartmentService;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 import ru.geekbrains.javacommand.command.services.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -22,11 +24,12 @@ public class EmployeeController implements EmployeeControllerApi {
 
     private final EmployeeService employeeService;
     private final UserService userService;
+    private final DepartmentService departmentService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
     public List<EmployeeDTO> getAllEmployeesByMaster(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
-        return employeeService.findAllByMaster(master.getId());
+        return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDTO::new).collect(Collectors.toList());
     }
 }

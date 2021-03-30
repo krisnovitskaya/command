@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface EmployeeService {
     Optional<Employee> findByUser(User user);
-
-    List<EmployeeDTO> findAllByMaster(Long id);
 }

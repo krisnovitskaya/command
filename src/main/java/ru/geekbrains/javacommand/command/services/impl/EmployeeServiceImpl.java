@@ -20,8 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentService departmentService;
 
-    public List<EmployeeDTO> findAllByMaster(Long masterId) {
-        Department department = departmentService.findByMaster(masterId);
+    public List<EmployeeDTO> findAllByMaster(Employee master) {
+        Department department = departmentService.findAllEmployeesByMaster(master);
         return employeeRepository.findAllByDepartment(department);
     }
 
