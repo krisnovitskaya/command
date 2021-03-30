@@ -40,7 +40,8 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     });
 
     $( function() {
-        $( "#datepicker" ).datepicker();
+        $( "#datepickerStart" ).datepicker();
+        $( "#datepickerEnd" ).datepicker();
     } );
 
 });
