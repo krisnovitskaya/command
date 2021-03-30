@@ -36,8 +36,8 @@
                 templateUrl: 'user_profile/user_profile.html',
                 controller: 'userProfileController'
             })
-            .when('/current', {
-                templateUrl: 'current/current.html',
+            .when('/errands_current', {
+                templateUrl: 'errands_current/errands_current.html',
                 controller: 'postController'
             })
             .when('/auth', {
