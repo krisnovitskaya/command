@@ -32,10 +32,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUserName(username);
     }
 
+    @Override
     public User save(User user) {
         return userRepository.save(user);
     }

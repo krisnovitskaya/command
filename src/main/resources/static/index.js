@@ -36,36 +36,14 @@
                 templateUrl: 'user_profile/user_profile.html',
                 controller: 'userProfileController'
             })
-            .when('/current', {
-                templateUrl: 'current/current.html',
+            .when('/errands_current', {
+                templateUrl: 'errands_current/errands_current.html',
                 controller: 'postController'
             })
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             });
-
-        $httpProvider.interceptors.push(function ($q, $location) {
-            return {
-                'responseError': function (rejection, $localStorage, $http) {
-                    var defer = $q.defer();
-                    if (rejection.status == 401 || rejection.status == 403) {
-                        console.log('error: 401-403');
-                        $location.path('/auth');
-                        if (!(localStorage.getItem("localUser") === null)) {
-                            delete $localStorage.currentUser;
-                            $http.defaults.headers.common.Authorization = '';
-                        }
-                        console.log(rejection.data);
-                        var answer = JSON.parse(rejection.data);
-                        console.log(answer);
-                        // window.alert(answer.message);
-                    }
-                    defer.reject(rejection);
-                    return defer.promise;
-                }
-            };
-        });
 
     }
 

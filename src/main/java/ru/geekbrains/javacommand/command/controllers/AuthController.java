@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.controllers.facade.AuthControllerApi;
@@ -48,7 +49,7 @@ public class AuthController
         return ResponseEntity.ok(new JwtResponse(jwtToken));
     }
 
-    @ExceptionHandler({AuthException.class, BadCredentialsException.class, JWTDecodeException.class})
+    @ExceptionHandler({AuthException.class, BadCredentialsException.class, JWTDecodeException.class, AuthenticationException.class})
     public @ResponseBody ResponseEntity<?> authExceptionHandler(Exception e) {
         return new ResponseEntity<>(
                 new CommandError(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), HttpStatus.UNAUTHORIZED);

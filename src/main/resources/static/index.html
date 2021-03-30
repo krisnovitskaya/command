@@ -15,6 +15,10 @@
     <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
     <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -31,7 +35,7 @@
             <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="#!/errands_create">Создать командировку</a>
             </li>
-            <li ng-if="isMaster()" class="nav-item">
+            <li ng-if="isMaster() || isAdmin()" class="nav-item">
                 <a class="nav-link" href="#!/errands_pending">Ожидают действия</a>
             </li>
             <li ng-if="isUserLoggedIn()" class="nav-item">
@@ -44,7 +48,7 @@
                 <a class="nav-link" href="#!/administration">Администрирование</a>
             </li>
             <li ng-if="isAdmin() || isPost()" class="nav-item">
-                <a class="nav-link" href="#!/current">Текущие командировки</a>
+                <a class="nav-link" href="#!/errands_current">Текущие командировки</a>
             </li>
             <li ng-if="isUserLoggedIn()" class="nav-item">
                 <a class="nav-link" href="" ng-click="tryToLogout()">Выйти</a>
@@ -69,7 +73,7 @@
         <script src="errands_statistics/errands_statistics.js"></script>
         <script src="user_profile/user_profile.js"></script>
         <script src="auth/auth.js"></script>
-        <script src="current/current.js"></script>
+        <script src="errands_current/errands_current.js"></script>
 
     </div>
 </main>
