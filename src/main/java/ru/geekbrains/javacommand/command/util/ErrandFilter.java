@@ -15,23 +15,14 @@ public class ErrandFilter {
     public ErrandFilter(Map<String, String> params) {
         spec = Specification.where(null);
 
-        String filterTitle = params.get("title");
-        if (filterTitle != null && !filterTitle.trim().isEmpty()) {
-            spec = spec.and(ErrandSpecifications.titleLike(filterTitle));
+        if (params.containsKey("employee") && !params.get("employee").trim().isEmpty()) {
+            Long employeeId = Long.parseLong(params.get("employee"));
+            spec = spec.and(ErrandSpecifications.employeeIdIs(employeeId));
         }
 
-        if (params.containsKey("min_price") && !params.get("min_price").trim().isEmpty()) {
-            Integer minPrice = Integer.parseInt(params.get("min_price"));
-            spec = spec.and(ErrandSpecifications.priceGreaterOrEqualsThan(minPrice));
-        }
-
-        if (params.containsKey("max_price") && !params.get("max_price").trim().isEmpty()) {
-            Integer maxPrice = Integer.parseInt(params.get("max_price"));
-            spec = spec.and(ErrandSpecifications.priceLesserOrEqualsThan(maxPrice));
-        }
-        if (params.containsKey("category") && !params.get("category").trim().isEmpty()) {
-            Long categoryId = Long.parseLong(params.get("category"));
-            spec = spec.and(ErrandSpecifications.categoryIdIs(categoryId));
+        if (params.containsKey("errandMatterType") && !params.get("errandMatterType").trim().isEmpty()) {
+            Long errandMatterTypeId = Long.parseLong(params.get("errandMatterType"));
+            spec = spec.and(ErrandSpecifications.errandMatterTypeIdIs(errandMatterTypeId));
         }
 
     }

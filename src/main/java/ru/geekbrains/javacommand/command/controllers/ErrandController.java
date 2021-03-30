@@ -13,6 +13,7 @@ import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,8 @@ public class ErrandController implements ErrandControllerApi {
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
     public PageImpl<ErrandDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
-                                              @RequestParam Map<String, String> params
+                                              @RequestParam Map<String, String> params,
+                                              Principal principal
     ) {
         if (page < 1) {
             page = 1;
