@@ -51,7 +51,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
         }
         return arr;
     }
-
+    //TODO сбрасывает только тип. исправить
     $scope.clearFilter = function () {
         $scope.filter = null;
         $scope.fillTable();
@@ -85,8 +85,8 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     };
     $.datepicker.setDefaults($.datepicker.regional['ru']);
 
-    $scope.fillTable();
     getEmployees();
     getErrandMatterTypes();
+    $scope.fillTable();
 
 });

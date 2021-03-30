@@ -6,16 +6,14 @@
         <div class="extremum-slide">
             <form style="width: 600px;" novalidate ng-submit="fillTable()">
 
-                <select id="employee" class="form-control filter_box"
-                        ng-model="filter.employee">
+                <select id="employee" class="form-control filter_box" ng-model="filter.employee">
                     <option value="" disabled selected>ФИО</option>
                     <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.lastName}}
                         {{employee.firstName}} {{employee.middleName}}
                     </option>
                 </select>
 
-                <select id="matterType" class="form-control filter_box"
-                        ng-model="filter.errandMatterType">
+                <select id="matterType" class="form-control filter_box" ng-model="filter.errandMatterType">
                     <option value="" disabled selected>Тип</option>
                     <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}}">
                         {{errandMatterType.matter}}
