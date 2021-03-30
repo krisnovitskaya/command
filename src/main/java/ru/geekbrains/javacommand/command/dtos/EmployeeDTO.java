@@ -12,11 +12,13 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 @AllArgsConstructor
 public class EmployeeDTO {
 
+    private Long id;
     private String lastName;
     private String firstName;
     private String middleName;
 
     public EmployeeDTO(Employee employee) {
+        this.id = employee.getId();
         this.lastName = employee.getLastName();
         this.firstName = employee.getFirstName();
         this.middleName = employee.getMiddleName();

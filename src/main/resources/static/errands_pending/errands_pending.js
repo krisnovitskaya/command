@@ -26,6 +26,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     }
 
     $scope.fillTable = function (pageIndex = 1) {
+        console.log($scope.filter)
         $http({
             url: contextPath + '/api/v1/errands/pending',
             method: 'GET',
@@ -51,7 +52,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
         }
         return arr;
     }
-    //TODO сбрасывает только тип. исправить
+
     $scope.clearFilter = function () {
         $scope.filter = null;
         $scope.fillTable();
@@ -60,30 +61,6 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     $(".extremum-click").click(function () {
         $(this).siblings(".extremum-slide").slideToggle("slow");
     });
-
-    $( function() {
-        $( "#datepickerStart" ).datepicker();
-        $( "#datepickerEnd" ).datepicker();
-    } );
-
-    $.datepicker.regional['ru'] = {
-        closeText: 'Закрыть',
-        prevText: 'Предыдущий',
-        nextText: 'Следующий',
-        currentText: 'Сегодня',
-        monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-        monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
-        dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
-        dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
-        dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
-        weekHeader: 'Не',
-        dateFormat: 'dd.mm.yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    $.datepicker.setDefaults($.datepicker.regional['ru']);
 
     getEmployees();
     getErrandMatterTypes();

@@ -4,7 +4,7 @@
     <div class="column_box">
         <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
         <div class="extremum-slide">
-            <form style="width: 600px;" novalidate ng-submit="fillTable()">
+            <form autocomplete="off" style="width: 600px;" novalidate ng-submit="fillTable()">
 
                 <select id="employee" class="form-control filter_box" ng-model="filter.employee">
                     <option value="" disabled selected>ФИО</option>
@@ -21,12 +21,13 @@
                 </select>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">с</span>
-                    <input style="margin-right: 10px;" type="text" id="datepickerStart" ng-model="filter.dateStart" aria-describedby="basic-addon1">
+                    <span class="input-group-text" >с</span>
+                    <input class="form-control filter_box" style="margin-right: 10px;" type="date" ng-model="filter.dateStart" >
 
                     <span class="input-group-text" id="basic-addon2">по</span>
-                    <input type="text" id="datepickerEnd" ng-model="filter.dateEnd" aria-describedby="basic-addon2">
+                    <input class="form-control filter_box" type="date" ng-model="filter.dateEnd">
                 </div>
+
 
                 <input class="btn btn-warning" type="submit" value="Применить">
                 <a class="btn btn-warning" ng-click="clearFilter()">Сбросить</a>
