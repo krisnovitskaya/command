@@ -60,24 +60,36 @@
         </head>
         <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Заявка на командировку:</h1>
 
+<!--        <div class="form-group col-md-6" >-->
+<!--            <label for="errandDepartment">Отдел сотрудника:</label>-->
+<!--            <input type="text" ng-model="errand.department_id" value="{{Employee.department.title}}"-->
+<!--                   id="errandDepartment" class="form-control" style="margin-bottom: 10px;" >-->
+<!--        </div>-->
+
+
+
         <div class="form-group col-md-6">
             <label for="errandDepartmentId">Отдел сотрудника:</label>
             <span  class="nullable">
                         <select class="form-control" ng-model="errand.department_id"  id="errandDepartmentId" required="">
-                            <option value="">Отдел сотрудника</option>
-                            <option value="{{d.id}}" ng-options="d.title for d in DepartmentsList">{{d.title}}</option>
+                            <option ng-if ="Employee.position_id == 1" value="">Отдел сотрудника</option>
+                            <option ng-if ="Employee.position_id == 1" value="{{d.id}}" ng-options="d.title for d in DepartmentsList">{{d.title}}</option>
+                            <option ng-if ="Employee.position_id != 1" value="{{Employee.department.id}}">{{Employee.department.title}}</option>
                         </select>
                     </span><br/>
         </div>
 
-        <div class="form-group col-md-6">
+        <div ng-if="errand.department_id != null" disabled="false" class="form-group col-md-6">
             <label for="employeeId">ФИО сотрудника:</label>
             <span  class="nullable">
                 <select class="form-control" ng-model="errand.employee_id"  id="employeeId"
-                        required="" ng-if="errand.department_id != null" disabled="false"
-                        ng-click="getEmployeesList(d.id)">
-                    <option value="">ФИО сотрудника</option>
-                    <option value="{{e.id}}" ng-options="e.last_name, e.middle_name, e.first_name for e in EmployeesList"> {{e.last_name}} + " " + {{e.middle_name}} + " " + {{e.first_name}}</option>
+                        required="" ng-click="getEmployeesList(d.id)">
+<!--                        ng-if="errand.department_id != null" disabled="false"-->
+<!--                        ng-click="getEmployeesList(d.id)">-->
+                    <option value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>
+                    <option ng-if ="Employee.position_id == 1" value="">ФИО сотрудника</option>
+                    <option ng-if ="Employee.position_id == 1" value="{{e.id}}" ng-options="e.last_name, e.middle_name, e.first_name for e in EmployeesList"> {{e.last_name}} + " " + {{e.middle_name}} + " " + {{e.first_name}}</option>
+                     <option ng-if ="Employee.position_id != 1" value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>
                 </select>
             </span><br/>
         </div>
@@ -94,6 +106,14 @@
 
         <div class="form-group col-md-6">
             <p>Начало командировки: <input type="text" ng-model="errand.date_start" id="datepickerStart" required=""></p>
+            <label for="timeStart">Время начала командировки:</label>
+            <span  class="nullable">
+                <select class="form-control" ng-model="errandDetails.date_start"  id="timeStart" required="">
+                    <option value="">08:00</option>
+                    <option value="">00:00</option>
+                    <option value="">24:00</option>
+                </select>
+            </span><br/>
         </div>
         <div class="form-group col-md-6">
             <p>Окончание командировки: <input type="text" ng-model="errand.date_end" id="datepickerEnd" required=""></p>
@@ -109,11 +129,11 @@
             </span><br/>
         </div>
 
-        <div class="form-group col-md-6">
+        <div  ng-if="errand.place_type_id != null" disabled="false" class="form-group col-md-6">
             <label for="placeId">Место назначения:</label>
             <span  class="nullable">
                 <select class="form-control" ng-model="errandDetails.place_id"  id="placeId" required=""
-                        ng-if="errand.place_type_id != null" disabled="false"
+<!--                        ng-if="errand.place_type_id != null" disabled="false"-->
                         ng-click="getPlacesList(pt.id)">
                     <option value="">Место назначения</option>
                     <option value="{{p.id}}" ng-options="p.title for p in PlacesList">{{p.title}}</option>

@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface EmployeeService {
     List<EmployeeDto> findAllByDepartmentId(Long id);
+  //  EmployeeDto findByUsername(String username);
+    EmployeeDto findByUserId(Long id);
 }

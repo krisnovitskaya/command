@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/api/v1/employees")
@@ -13,4 +14,8 @@ public interface EmployeeControllerApi {
 
     @GetMapping("/get/{department_id}")
     List<EmployeeDto> getEmployeesFromDepartment(@PathVariable(name = "department_id") Long departmentId);
+
+    @GetMapping("/getCurrent")
+    EmployeeDto getEmployee(Principal principal);
+
 }

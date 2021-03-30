@@ -13,13 +13,13 @@ import java.util.List;
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 
-    @GetMapping(value = "matters", produces = "application/json")
+    @GetMapping("/getErrandMatterTypesList")
     List<ErrandMatterDto> getMatters();
 
-    @GetMapping(produces = "application/json")
+    @GetMapping("/getPlaceTypesList")
     List<PlaceTypeDto> getPlaceTypes();
 
-    @GetMapping("/api/v1/errands/get/{placeType_id}")
+    @GetMapping("/getPlacesList/{placeType_id}")
     List<PlaceDto> getPlaces(@PathVariable(name = "placeType_id") Long placeTypeId);
 
     @PostMapping

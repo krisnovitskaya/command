@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.repositories.UserRepository;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUserName(username);
     }
@@ -54,4 +55,9 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         return save(user);
     }
+
+//    @Override
+//    public UserDto findByUsername(String username) {
+//        return new UserDto(userRepository.findByUserName(username));
+//    }
 }

@@ -16,14 +16,14 @@ public class EmployeeDto {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("first_name")
+    private String firstName;
 
     @JsonProperty("middle_name")
     private String middleName;
 
-    @JsonProperty("surname")
-    private String surname;
+    @JsonProperty("last_name")
+    private String lastName;
 
     @JsonProperty("position_id")
     private Position position;
@@ -36,9 +36,9 @@ public class EmployeeDto {
 
     public EmployeeDto(Employee employee){
         this.id = employee.getId();
-        this.name = employee.getName();
+        this.firstName = employee.getFirstName();
         this.middleName = employee.getMiddleName();
-        this.surname = employee.getSurname();
+        this.lastName = employee.getLastName();
         this.position = employee.getPosition();
         this.department = employee.getDepartment();
         this.user = employee.getUser();
