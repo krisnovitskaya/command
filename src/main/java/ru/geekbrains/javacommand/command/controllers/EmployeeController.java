@@ -52,27 +52,4 @@ public class EmployeeController implements EmployeeControllerApi {
         return null;
     }
 
-    private final PositionService positionService;
-    private final DepartmentService departmentService;
-    private final UserService userService;
-
-    @Override
-    public List<PositionDto> getPositions() {
-        return null;
-    }
-
-    @Override
-    public List<DepartmentDto> getDepartments() {
-        return null;
-    }
-
-    @Override
-    public List<UserDto> getUsers() {
-        return null;
-    }
-
-    @Override
-    public EmployeeDto createEmployee(Employee employee) {
-        return null;
-    }
 }

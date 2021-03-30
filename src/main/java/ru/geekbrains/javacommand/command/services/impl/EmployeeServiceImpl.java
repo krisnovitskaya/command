@@ -13,14 +13,13 @@ import ru.geekbrains.javacommand.command.services.EmployeeService;
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
+
     private final EmployeeRepository employeeRepository;
 
     @Override
     public ProfileDto getProfile(String username) {
         return new ProfileDto(employeeRepository.findEmployeeByUsername(username));
     }
-
-    private  final EmployeeRepository employeeRepository;
 
     @Override
     public EmployeeDto saveOrUpdate(Employee employee) {
