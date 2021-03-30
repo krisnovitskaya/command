@@ -14,17 +14,14 @@ import java.time.OffsetDateTime;
 @Table(name = "errands")
 public class Errand extends DefaultEntity {
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "status_id")
     private ErrandStatusType statusType;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @NotNull
     @OneToOne
     @JoinColumn(name = "errand_detail_id")
     private ErrandDetails errandDetails;
@@ -35,5 +32,9 @@ public class Errand extends DefaultEntity {
 
     @Column(name = "date_end")
     private OffsetDateTime dateEnd;
+
+		@NotNull
+		@Column(name = "deleted")
+    private int deleted;
 
 }

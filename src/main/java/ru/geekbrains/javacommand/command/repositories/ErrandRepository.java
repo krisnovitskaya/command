@@ -13,7 +13,10 @@ import java.util.List;
 public interface ErrandRepository extends JpaRepository<Errand, Long> {
 
   Errand findErrandById(Long id);
-
+	
+	@Override
+	Errand save(Errand errand);
+	
   @Query(
       "select e from Errand e join fetch e.employee emp join fetch emp.department"
 			+ " where e.dateStart < current_timestamp and e.dateEnd > current_timestamp"
