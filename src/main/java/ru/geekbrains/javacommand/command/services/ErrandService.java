@@ -17,11 +17,13 @@ public interface ErrandService {
 	/**
 	 *
 	 * @param id
-	 * @return ErrandResponseDto
+	 * @return ErrandDto
 	 */
 	ErrandDto findErrandById(Long id);
 
 	PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size);
+
+	Errand saveErrand(ErrandDto errandDto);
 
 	List<CurrentErrandDto> getListCurrent();
 

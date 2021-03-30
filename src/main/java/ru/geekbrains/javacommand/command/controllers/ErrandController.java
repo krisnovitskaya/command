@@ -15,6 +15,7 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/v1/errands")
@@ -50,4 +51,34 @@ public class ErrandController implements ErrandControllerApi {
     public List<ErrandMatterDto> getErrandMatters() {
         return getMatters();
     }
+	@Override
+	public ResponseEntity<?> finbById(Long id) {
+    return ResponseEntity.ok(errandService.findErrandById(id));
+	}
+
+	@Override
+	public ResponseEntity<?> create(ErrandDto errandDto) {
+    return ResponseEntity.ok(errandService.saveErrand(errandDto));
+	}
+
+	@Override
+	public ResponseEntity<?> updateById(Long id, ErrandDto errandDto) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> deleteById(Long id) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> removeById(Long id) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public List<ErrandMatterDto> getMatters() {
+		return matterTypeService.findAll();
+	}
+
 }

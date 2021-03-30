@@ -8,6 +8,7 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
 import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 import java.util.List;
@@ -28,5 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Optional<Employee> findByUser(User user) {
         return employeeRepository.findByUser(user);
+    }
+    @Override
+    public ProfileDto getProfile(String username) {
+        return new ProfileDto(employeeRepository.findEmployeeByUsername(username));
     }
 }

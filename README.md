@@ -15,6 +15,8 @@ application.yaml содержит два раздела/профиля:
 ВАЖНО! Для PostgreSQL профиля prod необходимо самостоятельно создать базу данных
 errands на сервере СУБД.
 Пример команды: "CREATE DATABASE errands;"
-Строка подключения к базе данных в файле application.yaml
-- url: jdbc:postgresql://localhost:5432/errands
-Для хранения структуры данных используется схема public базы данных errands. 
+Строка подключения к базе данных в файле application.yaml url: jdbc:postgresql://localhost:5432/errands
+Для хранения структуры данных используется схема public базы данных errands.
+
+# 2. Документация API
+Описание API доступно по ссылке http(s)://адрес-сервера:порт/errands/api-docs.html
