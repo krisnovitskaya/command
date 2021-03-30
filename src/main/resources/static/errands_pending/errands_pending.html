@@ -9,8 +9,8 @@
                 <select id="employee" class="form-control filter_box"
                         ng-model="filter.employee">
                     <option value="" disabled selected>ФИО</option>
-                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.employeeLastName}}
-                        {{employee.employeeFirstName}} {{employee.employeeMiddleName}}
+                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.lastName}}
+                        {{employee.firstName}} {{employee.middleName}}
                     </option>
                 </select>
 

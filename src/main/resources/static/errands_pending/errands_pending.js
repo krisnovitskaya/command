@@ -9,8 +9,8 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             method: 'GET'
         })
             .then(function (response) {
-                console.log('employees loaded');
                 $scope.Employees = response.data;
+                console.log($scope.Employees.length + ' employees loaded');
             });
     }
 
@@ -20,8 +20,8 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             method: 'GET'
         })
             .then(function (response) {
-                console.log('types loaded');
                 $scope.ErrandMatterTypes = response.data;
+                console.log($scope.ErrandMatterTypes.length + ' types loaded');
             });
     }
 
