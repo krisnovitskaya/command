@@ -25,16 +25,6 @@ public class ErrandController implements ErrandControllerApi {
     private final ErrandMatterTypeService matterTypeService;
     private final ErrandService errandService;
 
-    @Override
-    public ErrandDto findById(Long id) {
-        return errandService.findErrandById(id);
-    }
-
-    @Override
-    public List<ErrandMatterDto> getMatters() {
-        return matterTypeService.findAll();
-    }
-
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
     public PageImpl<ErrandDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
@@ -51,12 +41,14 @@ public class ErrandController implements ErrandControllerApi {
     public List<ErrandMatterDto> getErrandMatters() {
         return getMatters();
     }
-	@Override
-	public ResponseEntity<?> finbById(Long id) {
-    return ResponseEntity.ok(errandService.findErrandById(id));
-	}
 
-	@Override
+    @Override
+    public ResponseEntity<?> findById(Long id) {
+        return ResponseEntity.ok(errandService.findErrandById(id));
+    }
+
+
+    @Override
 	public ResponseEntity<?> create(ErrandDto errandDto) {
     return ResponseEntity.ok(errandService.saveErrand(errandDto));
 	}

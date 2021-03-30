@@ -17,9 +17,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -36,7 +34,6 @@ public class EmployeeController implements EmployeeControllerApi {
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
         return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDTO::new).collect(Collectors.toList());
     }
-    private final EmployeeService employeeService;
 
     @Override
     public ProfileDto getProfile(Principal principal) {
