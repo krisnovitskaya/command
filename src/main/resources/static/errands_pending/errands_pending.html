@@ -17,7 +17,7 @@
                 <select id="matterType" class="form-control filter_box"
                         ng-model="filter.errandMatterType">
                     <option value="" disabled selected>Тип</option>
-                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}">
+                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}}">
                         {{errandMatterType.matter}}
                     </option>
                 </select>
@@ -50,7 +50,7 @@
                 <tbody>
 
                 <tr ng-repeat="e in ErrandsPage.content">
-                    <td>{{e.employeeFirstName}} {{e.employeeLastName}} {{e.employeeMiddleName}}</td>
+                    <td>{{e.employeeLastName}} {{e.employeeFirstName}} {{e.employeeMiddleName}}</td>
                     <td>{{e.detailMatterType}}</td>
                     <td>{{e.dateStart}}</td>
                     <td>{{e.dateEnd}}</td>

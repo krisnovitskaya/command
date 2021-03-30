@@ -3,6 +3,28 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
 
     const PAGINATION_DIAPASON = 2;
 
+    getEmployees = function() {
+        $http({
+            url: contextPath + '/api/v1/employees/by_master',
+            method: 'GET'
+        })
+            .then(function (response) {
+                console.log('employees loaded');
+                $scope.Employees = response.data;
+            });
+    }
+
+    getErrandMatterTypes = function() {
+        $http({
+            url: contextPath + '/api/v1/errands/types',
+            method: 'GET'
+        })
+            .then(function (response) {
+                console.log('types loaded');
+                $scope.ErrandMatterTypes = response.data;
+            });
+    }
+
     $scope.fillTable = function (pageIndex = 1) {
         $http({
             url: contextPath + '/api/v1/errands/pending',
@@ -64,5 +86,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     $.datepicker.setDefaults($.datepicker.regional['ru']);
 
     $scope.fillTable();
+    // getEmployees();
+    getErrandMatterTypes();
 
 });
