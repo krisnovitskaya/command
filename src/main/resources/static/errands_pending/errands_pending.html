@@ -4,7 +4,7 @@
     <div class="column_box">
         <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
         <div class="extremum-slide">
-            <form style="width: 460px;" novalidate ng-submit="fillTable()">
+            <form style="width: 600px;" novalidate ng-submit="fillTable()">
 
                 <select id="employee" class="form-control filter_box"
                         ng-model="filter.employee">
@@ -22,12 +22,11 @@
                     </option>
                 </select>
 
-
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">С </span>
+                    <span class="input-group-text" id="basic-addon1">с</span>
                     <input style="margin-right: 10px;" type="text" id="datepickerStart" ng-model="filter.dateStart" aria-describedby="basic-addon1">
 
-                    <span class="input-group-text" id="basic-addon2">По</span>
+                    <span class="input-group-text" id="basic-addon2">по</span>
                     <input type="text" id="datepickerEnd" ng-model="filter.dateEnd" aria-describedby="basic-addon2">
                 </div>
 
@@ -58,9 +57,9 @@
                     <td>{{e.departmentTitle}}</td>
                     <td>{{e.detailPlace}}</td>
                     <td>
-                        <button class="btn btn-primary" ng-click="details(e.id)">Детали</button>
-                        <button class="btn btn-success" ng-click="addToCart(e.id)">Подтвердить</button>
-                        <button class="btn btn-danger" ng-click="addToCart(e.id)">Отклонить</button>
+                        <button class="btn btn-primary" ng-click="errandDetails(e.id)">Детали</button>
+                        <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>
+                        <button class="btn btn-danger" ng-click="rejectErrand(e.id)">Отклонить</button>
                     </td>
                 </tr>
                 </tbody>
