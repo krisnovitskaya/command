@@ -10,6 +10,9 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,6 +28,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto saveOrUpdate(Employee employee) {
         Employee newEmployee = employeeRepository.save(employee);
         return new EmployeeDto(newEmployee);
+    }
+
+    @Override
+    public List<EmployeeDto> findAll() {
+        return employeeRepository.findAll().stream().map(EmployeeDto::new).collect(Collectors.toList());
     }
 
 }

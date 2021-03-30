@@ -34,22 +34,23 @@ public class EmployeeController implements EmployeeControllerApi {
 
     @Override
     public List<PositionDto> getPositions() {
-        return null;
+        return positionService.findAll();
     }
 
     @Override
     public List<DepartmentDto> getDepartments() {
-        return null;
+        return departmentService.findAll();
     }
 
     @Override
     public List<UserDto> getUsers() {
-        return null;
+        return userService.findAll();
     }
 
     @Override
     public EmployeeDto createEmployee(Employee employee) {
-        return null;
+        employee.setId(null);
+        return employeeService.saveOrUpdate(employee);
     }
 
 }
