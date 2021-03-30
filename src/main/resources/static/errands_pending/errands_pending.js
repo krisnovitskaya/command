@@ -63,4 +63,6 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     };
     $.datepicker.setDefaults($.datepicker.regional['ru']);
 
+    $scope.fillTable();
+
 });

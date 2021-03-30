@@ -20,7 +20,7 @@ public interface ErrandControllerApi {
 	 * @return ErrandResponseDto
 	 */
 	@GetMapping(path = "/findbyid", produces = "application/json;charset=UTF-8")
-	ErrandDto finbById(@RequestParam (name = "id") Long id);
+	ErrandDto findById(@RequestParam (name = "id") Long id);
 
 	/**
 	 * Return All ErrandMatterType as DTO from current DataBase
