@@ -14,7 +14,8 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
                     window.location.href = '#!/main';
                     console.log($localStorage.currentUser);
                 }
-            }, function errorCallback() {
+            }, function errorCallback(response) {
+                window.alert(response.data.message);
                 $scope.clearUser();
             });
     };
