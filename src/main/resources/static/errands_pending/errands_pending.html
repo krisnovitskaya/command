@@ -1,4 +1,77 @@
 <div>
-    <h1>Командировки ожидающие подтверждения</h1>
-    <h3>В разработке</h3>
+    <h3>Запрошенные</h3>
+
+    <div class="column_box">
+        <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
+        <div class="extremum-slide">
+            <form style="width: 600px;" novalidate ng-submit="fillTable()">
+
+                <select id="employee" class="form-control filter_box"
+                        ng-model="filter.employee">
+                    <option value="" disabled selected>ФИО</option>
+                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}">{{employee.employeeFirstName}}
+                        {{employee.employeeLastName}} {{employee.employeeMiddleName}}
+                    </option>
+                </select>
+
+                <select id="matterType" class="form-control filter_box"
+                        ng-model="filter.errandMatterType">
+                    <option value="" disabled selected>Тип</option>
+                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}">
+                        {{errandMatterType.matter}}
+                    </option>
+                </select>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">с</span>
+                    <input style="margin-right: 10px;" type="text" id="datepickerStart" ng-model="filter.dateStart" aria-describedby="basic-addon1">
+
+                    <span class="input-group-text" id="basic-addon2">по</span>
+                    <input type="text" id="datepickerEnd" ng-model="filter.dateEnd" aria-describedby="basic-addon2">
+                </div>
+
+                <input class="btn btn-warning" type="submit" value="Применить">
+                <a class="btn btn-warning" ng-click="clearFilter()">Сбросить</a>
+            </form>
+            </p>
+        </div>
+
+        <div class="main_box">
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>ФИО сотрудника</td>
+                    <td>Тип</td>
+                    <td>дата начала</td>
+                    <td>дата окончания</td>
+                    <td>подразделение</td>
+                    <td>куда</td>
+                    <td></td>
+                </tr>
+                <tbody>
+
+                <tr ng-repeat="e in ErrandsPage.content">
+                    <td>{{e.employeeFirstName}} {{e.employeeLastName}} {{e.employeeMiddleName}}</td>
+                    <td>{{e.detailMatterType}}</td>
+                    <td>{{e.dateStart}}</td>
+                    <td>{{e.dateEnd}}</td>
+                    <td>{{e.departmentTitle}}</td>
+                    <td>{{e.detailPlace}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="errandDetails(e.id)">Детали</button>
+                        <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>
+                        <button class="btn btn-danger" ng-click="rejectErrand(e.id)">Отклонить</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" ng-repeat="pageIndex in PaginationArray">
+                        <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
