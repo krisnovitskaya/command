@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

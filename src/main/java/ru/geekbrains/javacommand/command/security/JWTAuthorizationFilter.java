@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author owpk
  * @author jackwizard88
  */
- @Component
+@Component
 @Slf4j
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
@@ -61,8 +61,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(req, res);
-        } catch (BadCredentialsException | JWTDecodeException | IOException | ServletException e) {
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getLocalizedMessage());
+        } catch (IOException | ServletException e) {
             log.error("jwt filter error: {}", e.getMessage());
         }
     }

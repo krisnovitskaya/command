@@ -43,7 +43,8 @@ public class JWTTokenManager {
         return JWT.create()
                 .withSubject(username)
                 .withArrayClaim("role", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn * 3600000))
+//                .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn * 3600000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiresIn))
                 .withIssuer("errands_app")
                 .sign(Algorithm.HMAC256(secret));
     }

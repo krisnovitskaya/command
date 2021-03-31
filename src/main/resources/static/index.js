@@ -45,6 +45,29 @@
                 controller: 'authController'
             });
 
+
+        $httpProvider.interceptors.push(function ($q, $location) {
+            const contextPath = 'http://localhost:8989/errands';
+            return {
+                'responseError': function (rejection, $localStorage, $http, $scope) {
+                    var defer = $q.defer();
+                    if (rejection.status == 401 || rejection.status == 403) {
+                        console.log('error: 401 - 403 44');
+                        console.log('redirecting: ' + contextPath + '/auth');
+                        if (!(localStorage.getItem("ngStorage-currentUser") === null)) {
+                            console.log('deleting user credentials from storage...');
+                            $http.defaults.headers.common.Authorization = '';
+                            localStorage.setItem("ngStorage-currentUser") = null;
+                        }
+                        console.log(rejection.data);
+                        var answer = JSON.parse(rejection.data);
+                        console.log(answer);
+                    }
+                    defer.reject(rejection);
+                    return defer.promise;
+                }
+            };
+        });
     }
 
     function run($rootScope, $http, $localStorage) {

@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.exceptions;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

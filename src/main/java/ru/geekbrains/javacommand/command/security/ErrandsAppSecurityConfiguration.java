@@ -24,6 +24,7 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private JWTAuthorizationFilter authorizationFilter;
+    private ExpiredTokenExceptionHandler chainExceptionHandler;
 
     @Value("${security.authorization-path}")
     private String SIGN_IN_URL;
@@ -43,12 +44,19 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
         this.authorizationFilter = authorizationFilter;
     }
 
+    @Autowired
+    public void setChainExceptionHandler(ExpiredTokenExceptionHandler chainExceptionHandler) {
+        this.chainExceptionHandler = chainExceptionHandler;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // antMatcher path includes context-path, so /errands/api... - wrong, /api... - right
         http
+                .addFilterBefore(chainExceptionHandler, UsernamePasswordAuthenticationFilter.class)
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/errands/api/v1/**").authenticated()
+                .antMatchers("/api/v1/**").authenticated()
                 .antMatchers("/api/v1/post/**").hasAnyRole("ADMIN", "POST")
                 .antMatchers("/api/v1/administration/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/errands_pending/**").hasAnyRole("ADMIN", "MASTER")
