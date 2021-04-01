@@ -11,6 +11,7 @@ import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
@@ -46,16 +47,22 @@ public class ErrandController implements ErrandControllerApi {
             page = 1;
         }
         //TODO по мне это костыль, но я пока не придумал как сделать элегантнее
-        //get masterEmployee from Principal
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
-        Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
-
         //Prepare Spec Filter
         ErrandFilter errandFilter = new ErrandFilter(params);
         Specification<Errand> spec = errandFilter.getSpec();
 
+        //get masterEmployee from Principal
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
+
+        for (Role role : user.getListRoles()) {
+            if (role.getName().equals("ROLE_ADMIN")) {
+                return errandService.findAll(spec, page - 1, 5);
+            }
+        }
         //Force Add departmentId to FilterSpec
         spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
+
         return errandService.findAll(spec, page - 1, 5);
     }
 
