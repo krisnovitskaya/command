@@ -1,11 +1,7 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,11 +15,6 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
-import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
-import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 
 @Service
 @RequiredArgsConstructor
