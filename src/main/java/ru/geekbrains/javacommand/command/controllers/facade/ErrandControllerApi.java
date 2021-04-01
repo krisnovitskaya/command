@@ -10,6 +10,8 @@ import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
-	
+
+	@GetMapping(value = "/specs", produces = "application/json;charset=UTF-8")
+	ResponseEntity<?> findBySpecification(@RequestParam Map<String, String> specs);
+
 	/**
 	 * Find entity Errand by id
 	 * @param id
@@ -26,7 +31,7 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(path = "/findbyid",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> finbById(@RequestParam (name = "id") Long id);
+	ResponseEntity<?> findById(@RequestParam (name = "id") Long id);
 
 	/**
 	 * Create entity Errand

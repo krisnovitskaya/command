@@ -14,19 +14,26 @@ import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequiredArgsConstructor
 public class ErrandController implements ErrandControllerApi {
-	
-	@Autowired
-  private final ErrandMatterTypeService matterTypeService;
-	@Autowired
+
+	//Autowired by @RequiredArgsConstructor
+  	private final ErrandMatterTypeService matterTypeService;
 	private final ErrandService errandService;
 
 	@Override
-	public ResponseEntity<?> finbById(Long id) {
+	public ResponseEntity<?> findBySpecification(Map<String, String> specs) {
+		System.out.println(specs);
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<?> findById(Long id) {
     return ResponseEntity.ok(errandService.findErrandById(id));
 	}
 
