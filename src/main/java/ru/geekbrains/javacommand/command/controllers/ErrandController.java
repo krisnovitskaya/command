@@ -39,7 +39,7 @@ public class ErrandController implements ErrandControllerApi {
 
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
-    public PageImpl<ErrandDto> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
+    public PageImpl<ErrandDto> getAllErrands(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                               @RequestParam Map<String, String> params,
                                               Principal principal
     ) {
