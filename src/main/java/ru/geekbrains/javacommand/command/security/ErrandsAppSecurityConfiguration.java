@@ -53,6 +53,8 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .antMatchers("/api/v1/administration/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/errands_pending/**").hasAnyRole("ADMIN", "MASTER")
                 .antMatchers("/db/**").hasRole("ADMIN")
+                .antMatchers("/administration/**").hasRole("ADMIN")
+                .antMatchers("/errands/errands_pending/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .headers().frameOptions().disable()

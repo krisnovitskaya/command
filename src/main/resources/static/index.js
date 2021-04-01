@@ -49,7 +49,7 @@
             return {
                 'responseError': function (rejection, $localStorage, $http) {
                     var defer = $q.defer();
-                    if (rejection.status == 403) {
+                    if (rejection.status == 401 || rejection.status == 403) {
                         $location.path('/main');
                         if (!(localStorage.getItem("localUser") === null)) {
                             delete $localStorage.currentUser;
