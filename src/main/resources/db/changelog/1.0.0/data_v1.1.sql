@@ -19,9 +19,9 @@ values
 
 insert into errands_matter_types (matter)
 values
-    ('LOCAL'), 
-    ('PRIVATE'),     
-    ('LONG');
+    ('МЕСТНАЯ'),
+    ('ЛИЧНАЯ'),
+    ('ДАЛЬНЯЯ');
 
 insert into users_roles (user_id, role_id)
 values
