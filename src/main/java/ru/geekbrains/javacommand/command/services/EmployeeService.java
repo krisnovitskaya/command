@@ -10,6 +10,9 @@ import java.util.Optional;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 
 public interface EmployeeService {
+
+    List<EmployeeDTO> findAll();
+
     Optional<Employee> findByUser(User user);
 
     ProfileDto getProfile(String name);

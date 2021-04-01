@@ -13,6 +13,7 @@ import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<EmployeeDTO> findAllByMaster(Employee master) {
         Department department = departmentService.findAllEmployeesByMaster(master);
-        return employeeRepository.findAllByDepartment(department);
+        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDTO::new).collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> findAll() {
+        return employeeRepository.findAll().stream().map(EmployeeDTO::new).collect(Collectors.toList());
     }
 
     @Override
