@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 
-	@GetMapping(value = "/specs", produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> findBySpecification(@RequestParam Map<String, String> specs);
+	@GetMapping(produces = "application/json;charset=UTF-8")
+	ResponseEntity<?> getAllErrands(@RequestParam Map<String, String> specs);
 
 	/**
 	 * Find entity Errand by id

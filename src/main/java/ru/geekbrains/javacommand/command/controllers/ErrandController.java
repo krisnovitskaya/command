@@ -5,11 +5,15 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
+import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 
@@ -25,11 +29,13 @@ public class ErrandController implements ErrandControllerApi {
 	//Autowired by @RequiredArgsConstructor
   	private final ErrandMatterTypeService matterTypeService;
 	private final ErrandService errandService;
+	private final ModelMapper modelMapper;
 
 	@Override
-	public ResponseEntity<?> findBySpecification(Map<String, String> specs) {
-		System.out.println(specs);
-		return null;
+	public ResponseEntity<?> getAllErrands(Map<String, String> specs) {
+		Page<Errand> errands = errandService.getAllErrands((r, cq, cb) ->
+			cb.greaterThanOrEqualTo(r.get("employee").get("firstName"), "Имя2"),2, 3);
+		return ResponseEntity.ok(errands);
 	}
 
 	@Override
