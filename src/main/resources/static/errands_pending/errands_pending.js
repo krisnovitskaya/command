@@ -26,7 +26,6 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     }
 
     $scope.fillTable = function (pageIndex = 1) {
-        console.log($scope.filter)
         $http({
             url: contextPath + '/api/v1/errands/pending',
             method: 'GET',

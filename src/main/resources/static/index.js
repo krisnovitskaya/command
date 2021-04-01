@@ -45,6 +45,25 @@
                 controller: 'authController'
             });
 
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                'responseError': function (rejection, $localStorage, $http) {
+                    var defer = $q.defer();
+                    if (rejection.status == 403) {
+                        $location.path('/main');
+                        if (!(localStorage.getItem("localUser") === null)) {
+                            delete $localStorage.currentUser;
+                            $http.defaults.headers.common.Authorization = '';
+                        }
+                        var answer = JSON.parse(rejection.data);
+                        console.log(answer);
+                    }
+                    defer.reject(rejection);
+                    return defer.promise;
+                }
+            };
+        });
+
     }
 
     function run($rootScope, $http, $localStorage) {

@@ -4,7 +4,6 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
     $scope.tryToAuth = function () {
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
-                console.log(response.data);
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.currentUser = {username: $scope.user.username, token: response.data.token};

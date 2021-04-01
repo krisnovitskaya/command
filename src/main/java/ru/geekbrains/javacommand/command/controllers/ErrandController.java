@@ -2,6 +2,7 @@ package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +40,7 @@ public class ErrandController implements ErrandControllerApi {
 
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
+    @Secured({"ROLE_MASTER", "ROLE_ADMIN"})
     public PageImpl<ErrandDto> getAllErrands(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                               @RequestParam Map<String, String> params,
                                               Principal principal
