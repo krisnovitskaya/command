@@ -14,7 +14,8 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
                     window.location.href = '#!/main';
                     console.log($localStorage.currentUser);
                 }
-            }, function errorCallback() {
+            }, function errorCallback(response) {
+                window.alert(response.data.message);
                 $scope.clearUser();
             });
     };
@@ -63,5 +64,17 @@ angular.module('app').controller('authController', function ($scope, $http, $loc
             return false;
         }
     }
+
+    $scope.isPost = function () {
+            if ($scope.isUserLoggedIn()) {
+                $scope.getUserRole();
+                for (let i = 0; i < $scope.userRoles.length; i++) {
+                    if (angular.equals("ROLE_POST", $scope.userRoles[i])) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
 });

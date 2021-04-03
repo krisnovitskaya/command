@@ -9,10 +9,14 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    @Query("select e from Employee e where e.user.userName = ?1")
+    Employee findEmployeeByUsername(String username);
+
     @Query("select e from Employee e where e.department.id = ?1")
     List<Employee> findAllByDepartmentId(Long id);
-  //  Employee  findByUsername(String username);
+
     @Query("select e from Employee e where e.user.id = ?1")
     Employee findByUserId(Long id);
-
 }
+
+

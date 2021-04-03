@@ -17,15 +17,6 @@ body {
   background-color: #ccc;
 }
 
-.extremum-slide {
-  padding:10px;
-  display:none;
-}
-
-.filter_box {
-  margin-bottom: 10px;
-}
-
 .nav-link:hover {
   transition: all 0.4s;
 }

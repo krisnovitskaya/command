@@ -13,6 +13,6 @@ import javax.persistence.*;
 @Table(name = "positions")
 public class Position extends DefaultEntity{
 
-    @Column
+    @Column(name = "position")
     private String position;
 }

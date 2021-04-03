@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.*;
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -15,15 +14,17 @@ import java.time.OffsetDateTime;
 @Table(name = "errands")
 public class Errand extends DefaultEntity {
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "status_id")
     private ErrandStatusType statusType;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @OneToOne
+    @JoinColumn(name = "errand_detail_id")
+    private ErrandDetails errandDetails;
 
     @NotNull
     @Column(name = "date_start")
@@ -32,8 +33,13 @@ public class Errand extends DefaultEntity {
     @Column(name = "date_end")
     private OffsetDateTime dateEnd;
 
-    public Errand(Employee employee, OffsetDateTime dateStart, OffsetDateTime dateEnd){
+    @NotNull
+    @Column(name = "deleted")
+    private int deleted;
+
+    public Errand(Employee employee, ErrandDetails errandDetails, OffsetDateTime dateStart, OffsetDateTime dateEnd){
         this.employee = employee;
+        this.errandDetails = errandDetails;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
     }

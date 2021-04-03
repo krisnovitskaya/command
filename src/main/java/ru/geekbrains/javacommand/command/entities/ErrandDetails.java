@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /** Created by Andrey Krylov 14.03.2021 */
 
@@ -16,18 +17,21 @@ import javax.persistence.*;
 public class ErrandDetails extends DefaultEntity {
 
     @ManyToOne
-    @JoinColumn(name = "matter_id", nullable = false)
+    @NotNull
+    @JoinColumn(name = "matter_id")
     private ErrandMatterType matter;
 
     @ManyToOne
-    @JoinColumn(name = "place_id", nullable = false)
+    @NotNull
+    @JoinColumn(name = "place_id")
     private Place place;
 
     @Column(name = "comment")
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
+    @NotNull
+    @JoinColumn(name = "created_by")
     private Employee createdBy;
 
     @ManyToOne

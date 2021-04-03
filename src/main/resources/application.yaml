@@ -23,7 +23,11 @@ spring:
         web-allow-others: false
   liquibase:
     change-log: classpath:/db/changelog/master-default.yaml
-
+# Open API documentations
+springdoc:
+    swagger-ui:
+        path: /api-docs.html
+        operationsSorter: method
 ---
 #Security
 security:
@@ -41,7 +45,7 @@ spring:
   profiles: prod
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/errands?currentSchema=errands
+    url: jdbc:postgresql://localhost:5432/errands
     username: postgres
     password: 32167
   jpa:

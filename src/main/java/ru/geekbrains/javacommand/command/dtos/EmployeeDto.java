@@ -40,8 +40,8 @@ public class EmployeeDto {
         this.middleName = employee.getMiddleName();
         this.lastName = employee.getLastName();
         this.position = employee.getPosition();
-        this.department = employee.getDepartment();
-        this.user = employee.getUser();
+//        this.department = employee.getDepartment();
+//        this.user = employee.getUser();
     }
 
 }

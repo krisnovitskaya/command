@@ -25,7 +25,7 @@ public class DepartmentDto {
     public DepartmentDto(Department department){
         this.id = department.getId();
         this.title = department.getTitle();
-        this.employees = department.getEmployees().stream().collect(Collectors.toList());
+       // this.employees = department.getEmployees().stream().collect(Collectors.toList());
     }
 
 }

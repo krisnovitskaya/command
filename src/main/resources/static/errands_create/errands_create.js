@@ -4,15 +4,12 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
    $scope.fillTable = function () {
         $http({
             url: contextPath + '/api/v1/employees/getCurrent',
-            method: 'GET',
-//            params:{
-//                  token: $localStorage.currentUser.token
-//            }
+            method: 'GET'
         })
             .then(function (response) {
                 console.log("Получение даных текущего сотрудника");
                 $scope.Employee = response.data;
-                console.log(response.data);
+               // console.log(response.data);
             });
     };
 
@@ -22,9 +19,10 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                     method: 'GET'
                 })
                     .then(function (response) {
+                        console.log("Получение списка отделов");
                         $scope.DepartmentsList = response.data;
-                        $scope.log("Получение списка отделов");
-                        console.log(response.data);
+                       // console.log(response.data);
+                        console.log($scope.DepartmentsList.length + ' Departments loaded');
                     });
     };
 
@@ -34,21 +32,21 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                         method: 'GET'
                     })
                         .then(function (response) {
+                            console.log("Получение списка сотрудников отделов");
                             $scope.EmployeesList = response.data;
-                            $scope.log("Получение списка сотрудников отделов");
-                            console.log(response.data);
+                           // console.log(response.data);
                         });
         };
 
          $scope.getErrandMatterTypesList = function () {
                         $http({
-                            url: contextPath + '/api/v1/errands/getErrandMatterTypesList',
+                            url: contextPath + '/api/v1/errands/matters',
                             method: 'GET'
                         })
                             .then(function (response) {
+                                console.log("Получение списка типов командировок");
                                 $scope.ErrandMatterTypesList = response.data;
-                                $scope.log("Получение списка типов командировок");
-                                console.log(response.data);
+                               // console.log(response.data);
                             });
             };
 
@@ -58,9 +56,9 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                                method: 'GET'
                         })
                         .then(function (response) {
+                                 console.log("Получение списка типов места назначения");
                                  $scope.PlaceTypesList = response.data;
-                                 $scope.log("Получение списка типов места назначения");
-                                 console.log(response.data);
+                              //   console.log(response.data);
                         });
          };
 
@@ -70,9 +68,9 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                                  method: 'GET'
                         })
                         .then(function (response) {
+                                  console.log("Получение списка мест");
                                   $scope.PlacesList = response.data;
-                                  $scope.log("Получение списка мест");
-                                  console.log(response.data);
+                                  //console.log(response.data);
                                  });
          };
 
@@ -85,9 +83,8 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                      });
          };
 
-
-
     $scope.fillTable();
+   // $scope.getEmployeesList();
     $scope.getDepartmentsList();
     $scope.getErrandMatterTypesList();
     $scope.getPlaceTypesList();

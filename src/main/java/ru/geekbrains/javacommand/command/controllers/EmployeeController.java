@@ -1,15 +1,14 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 import ru.geekbrains.javacommand.command.services.UserService;
-import ru.geekbrains.javacommand.command.services.impl.EmployeeServiceImpl;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,12 +20,20 @@ public class EmployeeController implements EmployeeControllerApi {
     private final UserService userService;
 
     @Override
+    public ProfileDto getProfile(Principal principal) {
+        return employeeService.getProfile(principal.getName());
+    }
+
+    @Override
     public List<EmployeeDto> getEmployeesFromDepartment(Long departmentId) {
         return employeeService.findAllByDepartmentId(departmentId);
     }
 
     @Override
     public EmployeeDto getEmployee(Principal principal) {
-        return employeeService.findByUserId( userService.findByUsername(principal.getName()).get().getId());
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+        EmployeeDto employeeDto = employeeService.findByUserId(user.getId());
+       // System.out.println("pos " + employeeDto.getPosition() + " name " +employeeDto.getFirstName() + employeeDto.getLastName());
+        return employeeService.findByUserId(user.getId());
     }
 }
