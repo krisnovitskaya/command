@@ -27,22 +27,22 @@ public class EmployeeDto {
     private String lastName;
 
     @JsonProperty("position_id")
-    private Position position;
+    private Long positionId;
 
     @JsonProperty("department_id")
-    private Department department;
+    private Long departmentId;
 
     @JsonProperty("user_id")
-    private User user;
+    private Long userId;
 
     public EmployeeDto(Employee employee) {
         this.id = employee.getId();
         this.firstName = employee.getFirstName();
         this.middleName = employee.getMiddleName();
         this.lastName = employee.getLastName();
-        this.position = employee.getPosition();
-        this.department = employee.getDepartment();
-        this.user = employee.getUser();
+        this.positionId = employee.getPosition().getId();
+        this.departmentId = employee.getDepartment().getId();
+        this.userId = employee.getUser().getId();
     }
 
 }

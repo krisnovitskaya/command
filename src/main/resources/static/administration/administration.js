@@ -1,37 +1,39 @@
-angular.module('app').controller('administrationController', function ($scope, $http) {
+angular.module('app').controller('administrationController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8989/errands';
 
+    $scope.getAllEmployees = function() {
     $http.get(contextPath + "/api/v1/employees/all")
         .then(resp => {
-                $scope.emploeeList = resp.data;
+                $scope.employeeList = resp.data;
             },
             resp => {
                 console.error(resp);
             });
+    }
 
-    $http.get(contextPath + "/api/v1/departments/all")
-        .then(resp => {
-                $scope.departmentList = resp.data;
-            },
-            resp => {
-                console.error(resp);
-            });
-
-    $http.get(contextPath + "/api/v1/positions/all")
-        .then(resp => {
-                $scope.positionList = resp.data;
-            },
-            resp => {
-                console.error(resp);
-            });
-
-    $http.get(contextPath + "/api/v1/users/all")
-        .then(resp => {
-                $scope.userList = resp.data;
-            },
-            resp => {
-                console.error(resp);
-            });
+    // $http.get(contextPath + "/api/v1/departments/all")
+    //     .then(resp => {
+    //             $scope.departmentList = resp.data;
+    //         },
+    //         resp => {
+    //             console.error(resp);
+    //         });
+    //
+    // $http.get(contextPath + "/api/v1/positions/all")
+    //     .then(resp => {
+    //             $scope.positionList = resp.data;
+    //         },
+    //         resp => {
+    //             console.error(resp);
+    //         });
+    //
+    // $http.get(contextPath + "/api/v1/users/all")
+    //     .then(resp => {
+    //             $scope.userList = resp.data;
+    //         },
+    //         resp => {
+    //             console.error(resp);
+    //         });
 
     $scope.employee = null;
 
@@ -53,5 +55,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.edit = function (employee) {
         $http.get(contextPath + "/api/v1/employees/edit/" + employee.id)
     }
+
+    $scope.getAllEmployees();
 
 });

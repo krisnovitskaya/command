@@ -33,6 +33,11 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
+    public List<EmployeeDto> getEmployees() {
+        return employeeService.findAll();
+    }
+
+    @Override
     public List<PositionDto> getPositions() {
         return positionService.findAll();
     }

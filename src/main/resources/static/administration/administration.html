@@ -1,6 +1,7 @@
-<div class="mb-3 text-center">
+<div class="mb-3 text-center" ng-controller="administrationController">
 
     <button class="btn btn-success" type="submit">Создать карточку сотрудника</button>
+    <br/><br/>
 
         <table class="table table-striped">
             <thead>
@@ -13,14 +14,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="employee in employeeList">
-                <th scope="row">{{employee.id}}</th>
-                <td>{{employee.surname}}</td>
-                <td>{{employee.name}}</td>
-                <td>{{employee.middleName}}</td>
+            <tr ng-repeat="emp in employeeList">
+                <td>{{emp.id}}</td>
+                <td>{{emp.first_name}}</td>
+                <td>{{emp.middle_name}}</td>
+                <td>{{emp.last_name}}</td>
                 <td>
-                    <button ng-click="edit(employee)" type="submit" class="btn btn-outline-primary">Редактировать</button>
-                    <button ng-click="delete(employee)" type="submit" class="btn btn-outline-danger">Удалить</button>
+                    <button ng-click="edit()" type="submit" class="btn btn-outline-primary">Редактировать</button>
+                    <button ng-click="delete()" type="submit" class="btn btn-outline-danger">Удалить</button>
                 </td>
             </tr>
             </tbody>

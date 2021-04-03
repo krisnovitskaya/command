@@ -26,7 +26,7 @@ public class ErrandController implements ErrandControllerApi {
 	private final ErrandService errandService;
 
 	@Override
-	public ResponseEntity<?> finbById(Long id) {
+	public ResponseEntity<?> findById(Long id) {
     return ResponseEntity.ok(errandService.findErrandById(id));
 	}
 
