@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
-import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
+import ru.geekbrains.javacommand.command.repositories.*;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
-import ru.geekbrains.javacommand.command.repositories.PositionRepository;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 import java.util.List;
@@ -23,6 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ProfileDto getProfile(String username) {
@@ -53,6 +52,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                         String.format("Отдел с id = %s не найден", employeeDto.getDepartmentId()))
                 )
         );
+        newEmployee.setUser(userRepository.findById(employeeDto.getUserId())
+            .orElseThrow(() -> new ResourceNotFoundException(
+                String.format("Учётная запись с id = %s не найдена", employeeDto.getUserId()))
+            )
+        );
+        employeeRepository.save(newEmployee);
     }
 
     @Override

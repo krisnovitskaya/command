@@ -31,6 +31,16 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
+    $scope.getAllUsers = function() {
+        $http.get(contextPath + "/api/v1/users/all")
+            .then(resp => {
+                    $scope.userList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
     $scope.employee = null;
 
     $scope.create = function (employee) {
@@ -55,5 +65,6 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.getAllEmployees();
     $scope.getAllDepartments();
     $scope.getAllPositions();
+    $scope.getAllUsers();
 
 });

@@ -31,6 +31,8 @@ public class EmployeeDto {
 
     @JsonProperty("department_id")
     private Long departmentId;
+    @JsonProperty("user_id")
+    private Long userId;
 
     public EmployeeDto(Employee employee) {
         this.id = employee.getId();
@@ -39,6 +41,7 @@ public class EmployeeDto {
         this.lastName = employee.getLastName();
         this.positionId = employee.getPosition().getId();
         this.departmentId = employee.getDepartment().getId();
+        this.userId = employee.getUser().getId();
     }
 
 }
