@@ -43,6 +43,10 @@
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
+            })
+            .when('/employee_form', {
+                templateUrl: 'administration/employee_form.html',
+                controller: 'administrationController'
             });
 
     }

@@ -10,7 +10,7 @@ public interface EmployeeService {
 
     ProfileDto getProfile(String name);
 
-    EmployeeDto saveOrUpdate(Employee employee);
+    void saveOrUpdate(EmployeeDto employeeDto);
 
     List<EmployeeDto> findAll();
 

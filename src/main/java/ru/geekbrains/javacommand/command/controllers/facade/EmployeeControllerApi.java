@@ -23,15 +23,6 @@ public interface EmployeeControllerApi {
     @GetMapping(value = "/all", produces = "application/json")
     List<EmployeeDto> getEmployees();
 
-    @GetMapping(value = "/positions", produces = "application/json")
-    List<PositionDto> getPositions();
-
-    @GetMapping(value = "/departments", produces = "application/json")
-    List<DepartmentDto> getDepartments();
-
-    @GetMapping(value = "/users", produces = "application/json")
-    List<UserDto> getUsers();
-
     @PostMapping
-    EmployeeDto createEmployee(@RequestBody Employee employee);
+    void createEmployee(@RequestBody EmployeeDto employeeDto);
 }

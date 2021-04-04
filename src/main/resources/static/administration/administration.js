@@ -11,35 +11,31 @@ angular.module('app').controller('administrationController', function ($scope, $
             });
     }
 
-    // $http.get(contextPath + "/api/v1/departments/all")
-    //     .then(resp => {
-    //             $scope.departmentList = resp.data;
-    //         },
-    //         resp => {
-    //             console.error(resp);
-    //         });
-    //
-    // $http.get(contextPath + "/api/v1/positions/all")
-    //     .then(resp => {
-    //             $scope.positionList = resp.data;
-    //         },
-    //         resp => {
-    //             console.error(resp);
-    //         });
-    //
-    // $http.get(contextPath + "/api/v1/users/all")
-    //     .then(resp => {
-    //             $scope.userList = resp.data;
-    //         },
-    //         resp => {
-    //             console.error(resp);
-    //         });
+    $scope.getAllDepartments = function() {
+        $http.get(contextPath + "/api/v1/departments/all")
+            .then(resp => {
+                    $scope.departmentList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.getAllPositions = function() {
+        $http.get(contextPath + "/api/v1/positions/all")
+            .then(resp => {
+                    $scope.positionList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
 
     $scope.employee = null;
 
     $scope.create = function (employee) {
 
-        $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
+        $http.post(contextPath + "/api/v1/employees", $scope.employee = employee)
             .then(resp => {
                     $scope.employee = null;
                 },
@@ -57,5 +53,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.getAllEmployees();
+    $scope.getAllDepartments();
+    $scope.getAllPositions();
 
 });

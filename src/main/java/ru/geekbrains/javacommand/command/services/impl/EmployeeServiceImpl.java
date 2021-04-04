@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
+import ru.geekbrains.javacommand.command.repositories.PositionRepository;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final PositionRepository positionRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Override
     public ProfileDto getProfile(String username) {
@@ -25,9 +30,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto saveOrUpdate(Employee employee) {
-        Employee newEmployee = employeeRepository.save(employee);
-        return new EmployeeDto(newEmployee);
+    public void saveOrUpdate(EmployeeDto employeeDto) {
+        Employee newEmployee;
+        if (employeeDto.getId() == null) {
+            newEmployee = new Employee();
+        } else {
+            newEmployee = employeeRepository.findById(employeeDto.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            String.format("Сотрудник с id = %s не найден", employeeDto.getId()))
+                    );
+        }
+        newEmployee.setFirstName(employeeDto.getFirstName());
+        newEmployee.setMiddleName(employeeDto.getMiddleName());
+        newEmployee.setLastName(employeeDto.getLastName());
+        newEmployee.setPosition(positionRepository.findById(employeeDto.getPositionId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Должность с id = %s не найдена", employeeDto.getPositionId()))
+                )
+        );
+        newEmployee.setDepartment(departmentRepository.findById(employeeDto.getDepartmentId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Отдел с id = %s не найден", employeeDto.getDepartmentId()))
+                )
+        );
     }
 
     @Override

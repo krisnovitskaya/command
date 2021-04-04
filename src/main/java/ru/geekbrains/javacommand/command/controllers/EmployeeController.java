@@ -23,9 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeController implements EmployeeControllerApi {
     private final EmployeeService employeeService;
-    private final PositionService positionService;
-    private final DepartmentService departmentService;
-    private final UserService userService;
 
     @Override
     public ProfileDto getProfile(Principal principal) {
@@ -38,24 +35,8 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
-    public List<PositionDto> getPositions() {
-        return positionService.findAll();
-    }
-
-    @Override
-    public List<DepartmentDto> getDepartments() {
-        return departmentService.findAll();
-    }
-
-    @Override
-    public List<UserDto> getUsers() {
-        return userService.findAll();
-    }
-
-    @Override
-    public EmployeeDto createEmployee(Employee employee) {
-        employee.setId(null);
-        return employeeService.saveOrUpdate(employee);
+    public void createEmployee(EmployeeDto employeeDto) {
+        employeeService.saveOrUpdate(employeeDto);
     }
 
 }
