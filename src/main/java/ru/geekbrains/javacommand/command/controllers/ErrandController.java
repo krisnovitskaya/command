@@ -8,13 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
-import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,23 +32,23 @@ public class ErrandController implements ErrandControllerApi {
 	}
 
 	@Override
-	public ResponseEntity<?> create(ErrandDto errandDto) {
-    return ResponseEntity.ok(errandService.saveErrand(errandDto));
+	public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
+    return ResponseEntity.ok(errandService.createErrand(errandCreateDtoList));
 	}
 
 	@Override
-	public ResponseEntity<?> updateById(Long id, ErrandDto errandDto) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
+		return ResponseEntity.ok(errandService.updateErrand(errandUpdateDtoList));
 	}
 
 	@Override
-	public ResponseEntity<?> deleteById(Long id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> deleteByIds(List<Long> idsList) {
+		return ResponseEntity.ok(errandService.deleteErrand(idsList));
 	}
 
 	@Override
-	public ResponseEntity<?> removeById(Long id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> removeByIds(List<Long> idsList) {
+		return ResponseEntity.ok(errandService.removeErrand(idsList));
 	}
 	
 	@Override

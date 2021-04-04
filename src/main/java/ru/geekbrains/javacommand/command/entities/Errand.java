@@ -22,8 +22,8 @@ public class Errand extends DefaultEntity {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToOne
-    @JoinColumn(name = "errand_detail_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "errand_details_id")
     private ErrandDetails errandDetails;
 
 		@NotNull
