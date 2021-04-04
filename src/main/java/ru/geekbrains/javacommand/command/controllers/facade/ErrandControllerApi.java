@@ -45,7 +45,7 @@ public interface ErrandControllerApi {
 	 * @param errandUpdateDtoList
 	 * @return ResponseEntity
 	 */
-	@PutMapping(path = "/updatebyid",
+	@PutMapping(path = "/update",
 			consumes = "application/json;charset=UTF-8",
 			produces = "application/json;charset=UTF-8")
 	ResponseEntity<?> update(@RequestBody List<ErrandUpdateDto> errandUpdateDtoList);
