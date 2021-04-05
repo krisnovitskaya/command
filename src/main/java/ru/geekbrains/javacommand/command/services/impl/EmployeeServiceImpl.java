@@ -37,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<Employee> findByUser(User user) {
         return employeeRepository.findByUser(user);
     }
+    
     @Override
     public ProfileDto getProfile(String username) {
         return new ProfileDto(employeeRepository.findEmployeeByUsername(username));

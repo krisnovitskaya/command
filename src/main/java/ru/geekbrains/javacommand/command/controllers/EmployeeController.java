@@ -43,6 +43,7 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
+    @GetMapping(value = "/profile", produces = "application/json")
     public ProfileDto getProfile(Principal principal) {
         return employeeService.getProfile(principal.getName());
     }
