@@ -2,7 +2,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto1;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
@@ -28,9 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final DepartmentService departmentService;
 
-    public List<EmployeeDto> findAllByMaster(Employee master) {
+    public List<EmployeeDto1> findAllByMaster(Employee master) {
         Department department = departmentService.findAllEmployeesByMaster(master);
-        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDto::new).collect(Collectors.toList());
+        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDto1::new).collect(Collectors.toList());
     }
 
     @Override
@@ -43,32 +43,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void saveOrUpdate(EmployeeDto employeeDto) {
+    public void saveOrUpdate(EmployeeDto1 employeeDto1) {
         Employee newEmployee;
-        if (employeeDto.getId() == null) {
+        if (employeeDto1.getId() == null) {
             newEmployee = new Employee();
         } else {
-            newEmployee = employeeRepository.findById(employeeDto.getId())
+            newEmployee = employeeRepository.findById(employeeDto1.getId())
                     .orElseThrow(() -> new ResourceNotFoundException(
-                            String.format("Сотрудник с id = %s не найден", employeeDto.getId()))
+                            String.format("Сотрудник с id = %s не найден", employeeDto1.getId()))
                     );
         }
-        newEmployee.setFirstName(employeeDto.getFirstName());
-        newEmployee.setMiddleName(employeeDto.getMiddleName());
-        newEmployee.setLastName(employeeDto.getLastName());
-        newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
-        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()));
-        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
+        newEmployee.setFirstName(employeeDto1.getFirstName());
+        newEmployee.setMiddleName(employeeDto1.getMiddleName());
+        newEmployee.setLastName(employeeDto1.getLastName());
+        newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto1.getPositionName()));
+        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto1.getDepartmentName()));
+        newEmployee.setUser(userRepository.findByUserName(employeeDto1.getUserName())
             .orElseThrow(() -> new ResourceNotFoundException(
-                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
+                String.format("Учётная запись с userName = %s не найдена", employeeDto1.getUserName()))
             )
         );
         employeeRepository.save(newEmployee);
     }
 
     @Override
-    public List<EmployeeDto> findAll() {
-        return employeeRepository.findAll().stream().map(EmployeeDto::new).collect(Collectors.toList());
+    public List<EmployeeDto1> findAll() {
+        return employeeRepository.findAll().stream().map(EmployeeDto1::new).collect(Collectors.toList());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package ru.geekbrains.javacommand.command.services;
 
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto1;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
@@ -14,9 +14,9 @@ public interface EmployeeService {
 
     ProfileDto getProfile(String name);
 
-    void saveOrUpdate(EmployeeDto employeeDto);
+    void saveOrUpdate(EmployeeDto1 employeeDto1);
 
-    List<EmployeeDto> findAll();
+    List<EmployeeDto1> findAll();
 
     void deleteEmployee(Long id);
 
