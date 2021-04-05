@@ -7,6 +7,8 @@ import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,5 +72,13 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(value = "/matters", produces = "application/json;charset=UTF-8")
 	List<ErrandMatterDto> getMatters();
+
+	/**
+	 *
+	 * @param params
+	 * @return report file
+	 */
+	@GetMapping(value = "/report")
+	ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
 
 }
