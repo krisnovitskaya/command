@@ -9,7 +9,7 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto1 {
 
     @JsonProperty("id")
     private Long id;
@@ -32,7 +32,7 @@ public class EmployeeDto {
     @JsonProperty("user_name")
     private String userName;
 
-    public EmployeeDto(Employee employee) {
+    public EmployeeDto1(Employee employee) {
         this.id = employee.getId();
         this.firstName = employee.getFirstName();
         this.middleName = employee.getMiddleName();

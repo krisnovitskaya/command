@@ -5,11 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 
 import java.security.Principal;
-import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.dtos.PositionDto;
-import ru.geekbrains.javacommand.command.dtos.UserDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
+
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto1;
 
 import java.util.List;
 
@@ -21,10 +18,10 @@ public interface EmployeeControllerApi {
     ProfileDto getProfile(Principal principal);
 
     @GetMapping(value = "/all", produces = "application/json")
-    List<EmployeeDto> getEmployees();
+    List<EmployeeDto1> getEmployees();
 
     @PostMapping
-    void createEmployee(@RequestBody EmployeeDto employeeDto);
+    void createEmployee(@RequestBody EmployeeDto1 employeeDto1);
 
     @DeleteMapping(value = "/delete/{id}")
     void deleteEmployee(@PathVariable("id") Long id);
