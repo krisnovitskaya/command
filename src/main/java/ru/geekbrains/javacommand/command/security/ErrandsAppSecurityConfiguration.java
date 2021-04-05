@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
  * @author owpk
@@ -45,12 +47,17 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+
+        http.addFilterBefore(filter, CsrfFilter.class)
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers("/errands/api/v1/**").authenticated()
                 .antMatchers("/api/v1/post/**").hasAnyRole("ADMIN", "POST")
                 .antMatchers("/api/v1/administration/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/errands/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/errands_pending/**").hasAnyRole("ADMIN", "MASTER")
                 .antMatchers("/db/**").hasRole("ADMIN")
                 .anyRequest().permitAll()

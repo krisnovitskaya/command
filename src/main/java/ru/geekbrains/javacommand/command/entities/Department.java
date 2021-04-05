@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,12 @@ public class Department extends DefaultEntity {
 
     @OneToOne
     @JoinColumn(name = "master_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonIgnore
     private Employee master;
 
     @OneToOne
     @JoinColumn(name = "master_department_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonIgnore
     private Department masterDepartment;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy ="department" )
