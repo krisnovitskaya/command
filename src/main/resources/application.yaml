@@ -47,7 +47,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/errands
     username: postgres
-    password: waagh!
+    password: 32167
   jpa:
     hibernate:
       ddl-auto: none
