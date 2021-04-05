@@ -56,4 +56,4 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
   liquibase:
-    changeLogFile: src/main/resources/db/changelog/master-prod.yaml
+    changeLogFile: classpath:/db/changelog/master-prod.yaml
