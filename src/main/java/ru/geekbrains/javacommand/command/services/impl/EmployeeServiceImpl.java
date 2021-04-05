@@ -7,9 +7,9 @@ import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 
 import java.util.List;
 import java.util.Optional;

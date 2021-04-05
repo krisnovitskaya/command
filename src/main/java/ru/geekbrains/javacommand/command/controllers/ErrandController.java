@@ -1,7 +1,10 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +19,14 @@ import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.services.UserService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandMatterTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.UserService;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +70,16 @@ public class ErrandController implements ErrandControllerApi {
         spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
 
         return errandService.findAll(spec, page - 1, 5);
+    }
+
+    @GetMapping(value = "/report")
+    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=report.xlsx");
+        headers.add("Content-Type", "application/vnd.ms-excel");
+
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(errandService.findAllForReport(new ErrandFilter(params).getSpec())));
     }
 
     @GetMapping(value = "/types", produces = "application/json")

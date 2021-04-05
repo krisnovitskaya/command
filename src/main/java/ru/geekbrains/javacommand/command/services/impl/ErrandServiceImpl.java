@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
+import java.io.ByteArrayInputStream;
 import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,10 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
-import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.util.PageImpl;
+import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +58,11 @@ public class ErrandServiceImpl implements ErrandService {
 		errandDtoPage.setTotalElements(errandPage.getTotalElements());
 
 		return errandDtoPage;
+	}
+
+	@Override
+	public ByteArrayInputStream findAllForReport(Specification<Errand> spec){
+		return ReportErrandExporterExcel.errandsToExcel(errandRepository.findAll(spec));
 	}
 
 	private ErrandDto convertToErrandDto(Errand errand) {

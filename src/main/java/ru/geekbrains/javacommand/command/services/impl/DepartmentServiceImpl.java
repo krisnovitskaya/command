@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
 
 import java.lang.module.ResolutionException;
 

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.repositories.ErrandMatterTypeRepository;
-import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandMatterTypeService;
 
 import java.util.List;
 import java.util.stream.Collectors;

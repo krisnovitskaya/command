@@ -10,9 +10,9 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-import ru.geekbrains.javacommand.command.services.UserService;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
+import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
 import java.security.Principal;
 import java.util.List;

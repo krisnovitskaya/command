@@ -1,11 +1,12 @@
 /*
  * License Headers.
  */
-package ru.geekbrains.javacommand.command.services;
+package ru.geekbrains.javacommand.command.services.contracts;
 
 import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
@@ -26,5 +27,7 @@ public interface ErrandService {
 	Errand saveErrand(ErrandDto errandDto);
 
 	List<CurrentErrandDto> getListCurrent();
+
+	ByteArrayInputStream findAllForReport(Specification<Errand> spec);
 
 }
