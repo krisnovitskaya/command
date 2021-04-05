@@ -6,6 +6,9 @@ package ru.geekbrains.javacommand.command.services.impl;
 import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -27,6 +30,11 @@ public class ErrandServiceImpl implements ErrandService {
 	
 	@Autowired
 	private final ErrandRepository errandRepository;
+
+	@Override
+	public Page<Errand> getAllErrands(Specification<Errand> specification, int page, int size) {
+		return errandRepository.findAll(specification, PageRequest.of(page, size));
+	}
 
 	@Override
 	public List<CurrentErrandDto> getListCurrent() {

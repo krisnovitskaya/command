@@ -3,6 +3,8 @@
  */
 package ru.geekbrains.javacommand.command.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
 import java.util.List;
@@ -23,4 +25,5 @@ public interface ErrandService {
 	
 	List<CurrentErrandDto> getListCurrent();
 
+	Page<Errand> getAllErrands(Specification<Errand> specification, int page, int size);
 }

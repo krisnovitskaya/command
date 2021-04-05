@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,6 @@ public class EmployeeDetails extends DefaultEntity{
 
     @OneToOne
     @JoinColumn(name = "employee_id", nullable = false)
+    @JsonBackReference
     private Employee employee;
 }

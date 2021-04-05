@@ -4,7 +4,7 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
 
     $scope.fillTable = function() {
         $http({
-            url: contextPath + '/api/v1/stats',
+            url: contextPath + '/api/v1/errands',
             method: 'GET',
             params: {
                 title: $scope.filter ? $scope.filter.title : null,

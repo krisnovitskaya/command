@@ -35,6 +35,8 @@ public class ErrandController implements ErrandControllerApi {
 	public ResponseEntity<?> getAllErrands(Map<String, String> specs) {
 		Page<Errand> errands = errandService.getAllErrands((r, cq, cb) ->
 			cb.greaterThanOrEqualTo(r.get("employee").get("firstName"), "Имя2"),2, 3);
+		System.out.println(errands);
+
 		return ResponseEntity.ok(errands);
 	}
 
