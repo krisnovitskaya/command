@@ -42,24 +42,33 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.employee = null;
+    $scope.editEmployee = null;
 
     $scope.create = function (employee) {
 
         $http.post(contextPath + "/api/v1/employees", $scope.employee = employee)
             .then(resp => {
                     $scope.employee = null;
+                    $scope.editEmployee = null;
                 },
                 resp => {
                     console.error(resp);
                 });
     }
 
-    $scope.delete = function (employee) {
-        $http.delete(contextPath + "/api/v1/employees/delete/" + employee.id)
+    $scope.delete = function (emp) {
+        $http.delete(contextPath + "/api/v1/employees/delete/" + emp.id)
+            .then(resp => {
+                delete $scope.employeeList[emp.id]
+            },
+                resp => {
+                    console.error(resp);
+                });
     }
 
-    $scope.edit = function (employee) {
-        $http.get(contextPath + "/api/v1/employees/edit/" + employee.id)
+    $scope.edit = function (emp) {
+        $scope.editEmployee = emp;
+
     }
 
     $scope.getAllEmployees();

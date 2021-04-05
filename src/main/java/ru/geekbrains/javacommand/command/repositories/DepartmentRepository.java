@@ -6,4 +6,6 @@ import ru.geekbrains.javacommand.command.entities.Department;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
+
+    Department findDepartmentByTitle(String title);
 }

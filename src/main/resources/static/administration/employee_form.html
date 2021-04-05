@@ -17,8 +17,8 @@
     <div class="form-group col-md-6">
         <label for="employeePositionId">Должность сотрудника</label>
         <span  class="nullable">
-            <select class="form-control" ng-model="employee.position_id"
-                    ng-options="p.id as p.position for p in positionList"  id="employeePositionId">
+            <select class="form-control" ng-model="employee.position_name"
+                    ng-options="p.position as p.position for p in positionList"  id="employeePositionId">
                 <option value="">Должность сотрудника</option>
             </select>
         </span><br/>
@@ -26,8 +26,8 @@
     <div class="form-group col-md-6">
         <label for="employeeDepartmentId">Отдел сотрудника</label>
         <span  class="nullable">
-            <select class="form-control" ng-model="employee.department_id"
-                    ng-options="d.id as d.title for d in departmentList" id="employeeDepartmentId">
+            <select class="form-control" ng-model="employee.department_name"
+                    ng-options="d.title as d.title for d in departmentList" id="employeeDepartmentId">
                 <option value="">Отдел сотрудника</option>
             </select>
         </span><br/>
@@ -35,14 +35,14 @@
     <div class="form-group col-md-6">
         <label for="employeeUserId">Учётная запись сотрудника</label>
         <span  class="nullable">
-            <select class="form-control" ng-model="employee.user_id"
-                    ng-options="u.id as u.userName for u in userList" id="employeeUserId">
+            <select class="form-control" ng-model="employee.user_name"
+                    ng-options="u.userName as u.userName for u in userList" id="employeeUserId">
                 <option value="">Учётная запись сотрудника</option>
             </select>
         </span><br/>
     </div>
 
     <div>
-        <button ng-click="create(employee)" class="btn btn-success" type="submit">Сохранить</button>
+        <button ng-click="create(employee)" class="btn btn-success">Сохранить</button>
     </div>
 </div>

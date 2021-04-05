@@ -25,4 +25,7 @@ public interface EmployeeControllerApi {
 
     @PostMapping
     void createEmployee(@RequestBody EmployeeDto employeeDto);
+
+    @DeleteMapping(value = "/delete/{id}")
+    void deleteEmployee(@PathVariable("id") Long id);
 }

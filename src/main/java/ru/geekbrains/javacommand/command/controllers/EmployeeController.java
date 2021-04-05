@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
@@ -37,6 +38,11 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public void createEmployee(EmployeeDto employeeDto) {
         employeeService.saveOrUpdate(employeeDto);
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeService.deleteEmployee(id);
     }
 
 }

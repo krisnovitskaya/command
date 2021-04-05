@@ -42,19 +42,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setFirstName(employeeDto.getFirstName());
         newEmployee.setMiddleName(employeeDto.getMiddleName());
         newEmployee.setLastName(employeeDto.getLastName());
-        newEmployee.setPosition(positionRepository.findById(employeeDto.getPositionId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("Должность с id = %s не найдена", employeeDto.getPositionId()))
-                )
-        );
-        newEmployee.setDepartment(departmentRepository.findById(employeeDto.getDepartmentId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("Отдел с id = %s не найден", employeeDto.getDepartmentId()))
-                )
-        );
-        newEmployee.setUser(userRepository.findById(employeeDto.getUserId())
+        newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
+        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()));
+        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
             .orElseThrow(() -> new ResourceNotFoundException(
-                String.format("Учётная запись с id = %s не найдена", employeeDto.getUserId()))
+                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
             )
         );
         employeeRepository.save(newEmployee);
@@ -63,6 +55,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeDto> findAll() {
         return employeeRepository.findAll().stream().map(EmployeeDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
     }
 
 }

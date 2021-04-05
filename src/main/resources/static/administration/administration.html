@@ -10,6 +10,9 @@
                 <th scope="col">Фамилия</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Отчество</th>
+                <th scope="col">Отдел</th>
+                <th scope="col">Должность</th>
+                <th scope="col">Аккаунт</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
@@ -19,9 +22,12 @@
                 <td>{{emp.first_name}}</td>
                 <td>{{emp.middle_name}}</td>
                 <td>{{emp.last_name}}</td>
+                <td>{{emp.department_name}}</td>
+                <td>{{emp.position_name}}</td>
+                <td>{{emp.user_name}}</td>
                 <td>
-                    <button ng-click="edit()" type="submit" class="btn btn-outline-primary">Редактировать</button>
-                    <button ng-click="delete()" type="submit" class="btn btn-outline-danger">Удалить</button>
+                    <a class="btn btn-outline-primary" ng-click="edit(emp)" href="#!/employee_form">Редактировать</a>
+                    <button ng-click="delete(emp)" class="btn btn-outline-danger">Удалить</button>
                 </td>
             </tr>
             </tbody>

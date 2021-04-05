@@ -6,4 +6,6 @@ import ru.geekbrains.javacommand.command.entities.Position;
 
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Long> {
+
+    Position findPositionByPosition(String position);
 }
