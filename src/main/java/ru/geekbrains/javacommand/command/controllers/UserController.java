@@ -11,12 +11,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.controllers.facade.UserControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ChangePasswordDto;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.PasswordUpdateError;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.services.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,5 +46,10 @@ public class UserController implements UserControllerApi {
         currentUser.setPassword(encoder.encode(passwordDto.getNewPass()));
         userService.save(currentUser);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public List<UserDto> getUsers() {
+        return userService.findAll();
     }
 }

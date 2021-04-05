@@ -52,6 +52,6 @@ public class AuthController
     @ExceptionHandler({AuthException.class, BadCredentialsException.class, JWTDecodeException.class, AuthenticationException.class})
     public @ResponseBody ResponseEntity<?> authExceptionHandler(Exception e) {
         return new ResponseEntity<>(
-                new CommandError(HttpStatus.UNAUTHORIZED.value(), e.getMessage()), HttpStatus.UNAUTHORIZED);
+                new CommandError(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

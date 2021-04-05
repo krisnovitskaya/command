@@ -1,19 +1,16 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandAboutInfoDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDeleteDto;
@@ -27,6 +24,9 @@ import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
 import ru.geekbrains.javacommand.command.repositories.ErrandMatterTypeRepository;
 import ru.geekbrains.javacommand.command.repositories.ErrandStatusTypeRepository;
 import ru.geekbrains.javacommand.command.repositories.PlaceRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,9 +51,30 @@ public class ErrandServiceImpl implements ErrandService {
 
     return convertToErrandAboutDto(errandRepository.findErrandById(id));
   }
+	
+	@Override
+	public Errand saveErrand(ErrandDto errandDto) {
+		
+		Errand errand = convertToErrand(errandDto);
+		return errandRepository.save(errand);
+		
+	}
 
-  @Override
-  public List<ErrandUpdateDto> createErrands(List<ErrandCreateDto> errandCreateDtoList) {
+	@Override
+	public PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size) {
+		Page<Errand> errandPage = errandRepository.findAll(spec, PageRequest.of(page, size));
+
+		PageImpl<ErrandDto> errandDtoPage = new PageImpl<>();
+		errandDtoPage.setContent(errandPage.getContent().stream().map(this::convertToErrandDto).collect(Collectors.toList()));
+		errandDtoPage.setNumber(errandPage.getNumber());
+		errandDtoPage.setSize(errandPage.getSize());
+		errandDtoPage.setTotalPages(errandPage.getTotalPages());
+		errandDtoPage.setTotalElements(errandPage.getTotalElements());
+
+		return errandDtoPage;
+	}
+
+	private ErrandDto convertToErrandDto(Errand errand) {
 		
 		ArrayList<ErrandUpdateDto> resultErrandUpdateDtoList = new ArrayList<>();
     if (!errandCreateDtoList.isEmpty()) {

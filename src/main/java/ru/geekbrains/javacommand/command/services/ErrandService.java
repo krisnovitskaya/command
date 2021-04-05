@@ -3,6 +3,7 @@
  */
 package ru.geekbrains.javacommand.command.services;
 
+import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
 import java.util.List;
@@ -11,11 +12,10 @@ import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDeleteDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandRemoveDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.util.PageImpl;
 
-/**
- *
- * @author
- */
 public interface ErrandService {
 
 	/**
@@ -57,6 +57,10 @@ public interface ErrandService {
 	 *
 	 * @return List CurrentErrandDto
 	 */
+	PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size);
+
+	Errand saveErrand(ErrandDto errandDto);
+
 	List<CurrentErrandDto> getListCurrent();
 
 }
