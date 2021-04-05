@@ -6,23 +6,30 @@
         <div class="extremum-slide">
             <form autocomplete="off" style="width: 600px;" novalidate ng-submit="fillTable()">
 
-                <select id="employee" class="form-control filter_box" ng-model="filter.employee">
-                    <option value="" disabled selected>ФИО</option>
-                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.lastName}}
-                        {{employee.firstName}} {{employee.middleName}}
-                    </option>
-                </select>
-
-                <select id="matterType" class="form-control filter_box" ng-model="filter.errandMatterType">
-                    <option value="" disabled selected>Тип</option>
-                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}}">
-                        {{errandMatterType.matter}}
-                    </option>
-                </select>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">ФИО</span>
+                    <select id="employee" class="form-control filter_box" ng-model="filter.employee">
+                        <option value="" selected></option>
+                        <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.lastName}}
+                            {{employee.firstName}} {{employee.middleName}}
+                        </option>
+                    </select>
+                </div>
 
                 <div class="input-group mb-3">
-                    <span class="input-group-text" >с</span>
-                    <input class="form-control filter_box" style="margin-right: 10px;" type="date" ng-model="filter.dateStart1" >
+                    <span class="input-group-text">Тип</span>
+                    <select id="matterType" class="form-control filter_box" ng-model="filter.errandMatterType">
+                        <option value=""></option>
+                        <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}}">
+                            {{errandMatterType.matter}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">с</span>
+                    <input class="form-control filter_box" style="margin-right: 10px;" type="date"
+                           ng-model="filter.dateStart1">
 
                     <span class="input-group-text" id="basic-addon2">по</span>
                     <input class="form-control filter_box" type="date" ng-model="filter.dateStart2">
