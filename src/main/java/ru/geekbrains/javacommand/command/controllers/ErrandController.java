@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 
 @RestController
 @RequestMapping("/api/v1/errands")
@@ -67,7 +69,7 @@ public class ErrandController implements ErrandControllerApi {
         return errandService.findAll(spec, page - 1, 5);
     }
 
-    @GetMapping(value = "/types", produces = "application/json")
+    @Override
     public List<ErrandMatterDto> getErrandMatters() {
         return getMatters();
     }
@@ -78,12 +80,12 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> create(List<ErrandDto> errandCreateDtoList) {
+    public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
         return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
     }
 
     @Override
-    public ResponseEntity<?> update(List<ErrandDto> errandUpdateDtoList) {
+    public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
         return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
     }
 

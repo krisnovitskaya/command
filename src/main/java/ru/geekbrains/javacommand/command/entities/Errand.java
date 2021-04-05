@@ -36,6 +36,6 @@ public class Errand extends DefaultEntity {
 
     @NotNull
     @Column(name = "deleted")
-    private boolean deleted;
+    private int deleted;
 
 }
