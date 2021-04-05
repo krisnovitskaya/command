@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +16,19 @@ import ru.geekbrains.javacommand.command.services.EmployeeService;
 import ru.geekbrains.javacommand.command.services.UserService;
 
 import java.security.Principal;
+import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
+import ru.geekbrains.javacommand.command.dtos.PositionDto;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
+import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.services.EmployeeService;
+import ru.geekbrains.javacommand.command.services.PositionService;
+import ru.geekbrains.javacommand.command.services.UserService;
+
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.geekbrains.javacommand.command.dtos.ProfileDto;
-
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -47,4 +57,20 @@ public class EmployeeController implements EmployeeControllerApi {
     public ProfileDto getProfile(Principal principal) {
         return employeeService.getProfile(principal.getName());
     }
+
+    @Override
+    public List<EmployeeDto> getEmployees() {
+        return employeeService.findAll();
+    }
+
+    @Override
+    public void createEmployee(EmployeeDto employeeDto) {
+        employeeService.saveOrUpdate(employeeDto);
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeService.deleteEmployee(id);
+    }
+
 }
