@@ -1,31 +1,25 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
+import ru.geekbrains.javacommand.command.util.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
-import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
-import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 
 @Service
 @RequiredArgsConstructor
 public class ErrandServiceImpl implements ErrandService {
-	
-	@Autowired
+
 	private final ErrandRepository errandRepository;
 
 	@Override
@@ -49,7 +43,21 @@ public class ErrandServiceImpl implements ErrandService {
 		return errandRepository.save(errand);
 		
 	}
-	
+
+	@Override
+	public PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size) {
+		Page<Errand> errandPage = errandRepository.findAll(spec, PageRequest.of(page, size));
+
+		PageImpl<ErrandDto> errandDtoPage = new PageImpl<>();
+		errandDtoPage.setContent(errandPage.getContent().stream().map(this::convertToErrandDto).collect(Collectors.toList()));
+		errandDtoPage.setNumber(errandPage.getNumber());
+		errandDtoPage.setSize(errandPage.getSize());
+		errandDtoPage.setTotalPages(errandPage.getTotalPages());
+		errandDtoPage.setTotalElements(errandPage.getTotalElements());
+
+		return errandDtoPage;
+	}
+
 	private ErrandDto convertToErrandDto(Errand errand) {
 		
 		ErrandDto resultErrandDto = null;

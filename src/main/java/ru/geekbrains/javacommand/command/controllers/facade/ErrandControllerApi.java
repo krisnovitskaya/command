@@ -26,7 +26,7 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(path = "/findbyid",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> finbById(@RequestParam (name = "id") Long id);
+	ResponseEntity<?> findById(@RequestParam (name = "id") Long id);
 
 	/**
 	 * Create entity Errand
