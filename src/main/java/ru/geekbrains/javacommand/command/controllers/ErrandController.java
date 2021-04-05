@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
@@ -25,6 +26,7 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 
@@ -41,8 +43,8 @@ public class ErrandController implements ErrandControllerApi {
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
     public PageImpl<ErrandDto> getAllErrands(@RequestParam(defaultValue = "1", name = "p") Integer page,
-                                              @RequestParam Map<String, String> params,
-                                              Principal principal
+                                             @RequestParam Map<String, String> params,
+                                             Principal principal
     ) {
         if (page < 1) {
             page = 1;
@@ -77,35 +79,29 @@ public class ErrandController implements ErrandControllerApi {
         return ResponseEntity.ok(errandService.findErrandById(id));
     }
 
+    @Override
+    public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
+        return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
+    }
 
-  @Override
-	public ResponseEntity<?> create(ErrandDto errandDto) {
-    return ResponseEntity.ok(errandService.saveErrand(errandDto));
-	}
+    @Override
+    public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
+        return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
+    }
 
-  @Override
-	public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
-    return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
-  }
-  
-	@Override
-	public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
-		return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
-	}
+    @Override
+    public ResponseEntity<?> deleteByIds(List<Long> idsList) {
+        return ResponseEntity.ok(errandService.deleteErrands(idsList));
+    }
 
-	@Override
-	public ResponseEntity<?> deleteByIds(List<Long> idsList) {
-		return ResponseEntity.ok(errandService.deleteErrands(idsList));
-	}
+    @Override
+    public ResponseEntity<?> removeByIds(List<Long> idsList) {
+        return ResponseEntity.ok(errandService.removeErrands(idsList));
+    }
 
-	@Override
-	public ResponseEntity<?> removeByIds(List<Long> idsList) {
-		return ResponseEntity.ok(errandService.removeErrands(idsList));
-	}
-
-	@Override
-	public List<ErrandMatterDto> getMatters() {
-		return matterTypeService.findAll();
-	}
+    @Override
+    public List<ErrandMatterDto> getMatters() {
+        return matterTypeService.findAll();
+    }
 
 }

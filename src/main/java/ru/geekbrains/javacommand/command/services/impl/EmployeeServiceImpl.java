@@ -2,7 +2,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDTO;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
@@ -28,9 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final DepartmentService departmentService;
 
-    public List<EmployeeDTO> findAllByMaster(Employee master) {
+    public List<EmployeeDto> findAllByMaster(Employee master) {
         Department department = departmentService.findAllEmployeesByMaster(master);
-        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDTO::new).collect(Collectors.toList());
+        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDto::new).collect(Collectors.toList());
     }
 
     @Override

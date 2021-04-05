@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDTO;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
@@ -14,18 +14,8 @@ import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.services.DepartmentService;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 import ru.geekbrains.javacommand.command.services.UserService;
-
 import java.security.Principal;
-import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.dtos.PositionDto;
-import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-import ru.geekbrains.javacommand.command.services.PositionService;
-import ru.geekbrains.javacommand.command.services.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +30,7 @@ public class EmployeeController implements EmployeeControllerApi {
     private final DepartmentService departmentService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
-    public List<EmployeeDTO> getAllEmployeesByMaster(Principal principal) {
+    public List<EmployeeDto> getAllEmployeesByMaster(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
 
         for (Role role : user.getListRoles()) {
@@ -50,7 +40,7 @@ public class EmployeeController implements EmployeeControllerApi {
         }
 
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
-        return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDTO::new).collect(Collectors.toList());
+        return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDto::new).collect(Collectors.toList());
     }
 
     @Override
