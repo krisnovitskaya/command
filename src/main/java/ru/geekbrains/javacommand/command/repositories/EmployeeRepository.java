@@ -12,10 +12,11 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+
     @Query("select e from Employee e where e.user.userName = ?1")
     Employee findEmployeeByUsername(String username);
-
+		
+		Employee findEmployeeById(Long id);
     Optional<Employee> findByUser(User user);
-
     List<Employee> findAllByDepartment(Department department);
 }

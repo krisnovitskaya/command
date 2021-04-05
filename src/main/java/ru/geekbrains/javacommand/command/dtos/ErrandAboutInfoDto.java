@@ -4,21 +4,15 @@
 
 package ru.geekbrains.javacommand.command.dtos;
 
-import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /** @author Igor Popovich, email: popovichia@gmail.com */
 @Data
 @AllArgsConstructor
-public class ErrandDto {
+public class ErrandAboutInfoDto {
 
-  private Long id;
-  private OffsetDateTime created;
-  private OffsetDateTime updated;
   private String statusType;
-  private OffsetDateTime dateStart;
-  private OffsetDateTime dateEnd;
   private String employeeFirstName;
   private String employeeMiddleName;
   private String employeeLastName;
@@ -39,5 +33,5 @@ public class ErrandDto {
   private String detailConfirmedOrRejectedByFirstName;
   private String detailConfirmedOrRejectedByMiddleName;
   private String detailConfirmedOrRejectedByLastname;
-	
+
 }

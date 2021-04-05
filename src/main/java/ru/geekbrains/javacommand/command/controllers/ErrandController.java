@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
-import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -26,6 +26,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 
 @RestController
 @RequestMapping("/api/v1/errands")
@@ -77,24 +78,29 @@ public class ErrandController implements ErrandControllerApi {
     }
 
 
-    @Override
+  @Override
 	public ResponseEntity<?> create(ErrandDto errandDto) {
     return ResponseEntity.ok(errandService.saveErrand(errandDto));
 	}
 
+  @Override
+	public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
+    return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
+  }
+  
 	@Override
-	public ResponseEntity<?> updateById(Long id, ErrandDto errandDto) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
+		return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
 	}
 
 	@Override
-	public ResponseEntity<?> deleteById(Long id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> deleteByIds(List<Long> idsList) {
+		return ResponseEntity.ok(errandService.deleteErrands(idsList));
 	}
 
 	@Override
-	public ResponseEntity<?> removeById(Long id) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public ResponseEntity<?> removeByIds(List<Long> idsList) {
+		return ResponseEntity.ok(errandService.removeErrands(idsList));
 	}
 
 	@Override

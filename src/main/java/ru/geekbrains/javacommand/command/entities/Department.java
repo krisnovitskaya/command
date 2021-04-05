@@ -24,7 +24,8 @@ public class Department extends DefaultEntity {
     @JoinColumn(name = "master_department_id", referencedColumnName = "id")
     private Department masterDepartment;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy ="department" )
+    @OneToMany
+		@JoinColumn(name = "department_id")
     private List<Employee> employees;
 
 }
