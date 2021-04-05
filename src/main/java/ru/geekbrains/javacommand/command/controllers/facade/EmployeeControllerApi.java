@@ -6,7 +6,7 @@ import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 
 import java.security.Principal;
 
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto1;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ public interface EmployeeControllerApi {
     ProfileDto getProfile(Principal principal);
 
     @GetMapping(value = "/all", produces = "application/json")
-    List<EmployeeDto1> getEmployees();
+    List<EmployeeDto> getEmployees();
 
     @PostMapping
-    void createEmployee(@RequestBody EmployeeDto1 employeeDto1);
+    void createEmployee(@RequestBody EmployeeDto employeeDto);
 
     @DeleteMapping(value = "/delete/{id}")
     void deleteEmployee(@PathVariable("id") Long id);
