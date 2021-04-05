@@ -20,7 +20,7 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
             .then(function (response) {
                 $scope.ErrandsPage = response.data;
                 console.log(response.data);
-//                $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ErrandsPage.totalPages);
+                $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ErrandsPage.totalPages);
             });
     };
 
