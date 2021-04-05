@@ -4,13 +4,14 @@
 package ru.geekbrains.javacommand.command.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import java.util.List;
 
 @Repository
-public interface ErrandRepository extends JpaRepository<Errand, Long> {
+public interface ErrandRepository extends JpaRepository<Errand, Long>, JpaSpecificationExecutor<Errand> {
 
   Errand findErrandById(Long id);
 	

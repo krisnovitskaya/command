@@ -2,16 +2,19 @@ package ru.geekbrains.javacommand.command.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDTO;
+import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
+import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
 
+    private final DepartmentService departmentService;
+
+    public List<EmployeeDTO> findAllByMaster(Employee master) {
+        Department department = departmentService.findAllEmployeesByMaster(master);
+        return employeeRepository.findAllByDepartment(department).stream().map(EmployeeDTO::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Employee> findByUser(User user) {
+        return employeeRepository.findByUser(user);
+    }
     @Override
     public ProfileDto getProfile(String username) {
         return new ProfileDto(employeeRepository.findEmployeeByUsername(username));
