@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
 import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
+
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
@@ -83,4 +84,12 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(path = "/types", produces = "application/json;charset=UTF-8")
   List<ErrandMatterDto> getErrandMatters();
+
+	/**
+	 *
+	 * @param params
+	 * @return report file
+	 */
+	@GetMapping(value = "/report")
+	ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
 }

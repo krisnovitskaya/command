@@ -1,27 +1,29 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
-import java.util.ArrayList;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.*;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.repositories.ErrandRepository;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.util.PageImpl;
+import ru.geekbrains.javacommand.command.dtos.ErrandDetailsDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
-import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
-import ru.geekbrains.javacommand.command.repositories.ErrandMatterTypeRepository;
-import ru.geekbrains.javacommand.command.repositories.ErrandStatusTypeRepository;
-import ru.geekbrains.javacommand.command.repositories.PlaceRepository;
+import ru.geekbrains.javacommand.command.repositories.*;
+import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.util.PageImpl;
+import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDeleteDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandRemoveDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 
 @Service
 @RequiredArgsConstructor
@@ -207,4 +209,9 @@ public class ErrandServiceImpl implements ErrandService {
     errand.setDateEnd(errandCreateDto.getDateEnd());
     return errand;
   }
+
+		@Override
+    public ByteArrayInputStream findAllForReport(Specification<Errand> spec){
+        return ReportErrandExporterExcel.errandsToExcel(errandRepository.findAll(spec));
+    }
 }

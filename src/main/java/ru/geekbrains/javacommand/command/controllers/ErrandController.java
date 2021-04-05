@@ -1,7 +1,9 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +72,17 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @Override
+    @GetMapping(value = "/report")
+    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=report.xlsx");
+        headers.add("Content-Type", "application/vnd.ms-excel");
+
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(errandService.findAllForReport(new ErrandFilter(params).getSpec())));
+    }
+
+    @GetMapping(value = "/types", produces = "application/json")
     public List<ErrandMatterDto> getErrandMatters() {
         return getMatters();
     }
