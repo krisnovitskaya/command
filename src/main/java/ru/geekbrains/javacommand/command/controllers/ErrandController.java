@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -28,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 
 @RestController
 @RequestMapping("/api/v1/errands")
@@ -80,12 +78,12 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
+    public ResponseEntity<?> create(List<ErrandDto> errandCreateDtoList) {
         return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
     }
 
     @Override
-    public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
+    public ResponseEntity<?> update(List<ErrandDto> errandUpdateDtoList) {
         return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
     }
 

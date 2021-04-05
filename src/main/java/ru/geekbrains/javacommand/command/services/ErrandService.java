@@ -1,15 +1,9 @@
 package ru.geekbrains.javacommand.command.services;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
 import java.util.List;
 
-import ru.geekbrains.javacommand.command.dtos.ErrandAboutInfoDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandDeleteDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandRemoveDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.util.PageImpl;
@@ -18,41 +12,45 @@ public interface ErrandService {
 
     /**
      * @param id
-     * @return ErrandAboutInfoDto
+     * @return ErrandDto
      */
-    ErrandAboutInfoDto findErrandById(Long id);
+    ErrandDto findErrandById(Long id);
 
     /**
-     * @param errandCreateDtoList
-     * @return List ErrandCreateDto
+     * @param errandDtoList
+     * @return List ErrandDto
      */
-    List<ErrandUpdateDto> createErrands(List<ErrandCreateDto> errandCreateDtoList);
+    List<ErrandDto> createErrands(List<ErrandDto> errandDtoList);
 
     /**
-     * @param errandUpdateDtoList
-     * @return List ErrandUpdateDto
+     * @param errandDtoList
+     * @return List ErrandDto
      */
-    List<ErrandUpdateDto> updateErrands(List<ErrandUpdateDto> errandUpdateDtoList);
-
-    /**
-     * @param idsList
-     * @return List ErrandDeleteDto
-     */
-    List<ErrandDeleteDto> deleteErrands(List<Long> idsList);
+    List<ErrandDto> updateErrands(List<ErrandDto> errandDtoList);
 
     /**
      * @param idsList
-     * @return List
+     * @return List ErrandDto
      */
-    List<ErrandRemoveDto> removeErrands(List<Long> idsList);
+    List<ErrandDto> deleteErrands(List<Long> idsList);
 
     /**
-     * @return List CurrentErrandDto
+     * @param idsList
+     * @return List ErrandDto
+     */
+    List<ErrandDto> removeErrands(List<Long> idsList);
+
+    /**
+     * @return List ErrandDto
+     */
+    List<ErrandDto> getListCurrent();
+
+    /**
+     * @param spec
+     * @param page
+     * @param size
+     * @return PageImpl ErrandDto
      */
     PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size);
-
-    Errand saveErrand(ErrandDto errandDto);
-
-    List<CurrentErrandDto> getListCurrent();
 
 }

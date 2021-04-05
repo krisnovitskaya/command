@@ -1,12 +1,9 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.controllers.facade;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.geekbrains.javacommand.command.dtos.ErrandUpdateDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
 import java.util.List;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.geekbrains.javacommand.command.dtos.ErrandCreateDto;
 
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
@@ -38,7 +34,7 @@ public interface ErrandControllerApi {
       path = "/create",
       consumes = "application/json;charset=UTF-8",
       produces = "application/json;charset=UTF-8")
-  ResponseEntity<?> create(@RequestBody List<ErrandCreateDto> errandCreateDtoList);
+  ResponseEntity<?> create(@RequestBody List<ErrandDto> errandCreateDtoList);
 
 	/**
 	 * Update entity Errand by id
@@ -48,7 +44,7 @@ public interface ErrandControllerApi {
 	@PutMapping(path = "/update",
 			consumes = "application/json;charset=UTF-8",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> update(@RequestBody List<ErrandUpdateDto> errandUpdateDtoList);
+	ResponseEntity<?> update(@RequestBody List<ErrandDto> errandUpdateDtoList);
 
 	/**
 	 * Fill deleted field to true for Errand entity by id

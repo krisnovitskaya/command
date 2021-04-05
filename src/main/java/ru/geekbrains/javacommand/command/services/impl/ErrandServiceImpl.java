@@ -34,22 +34,20 @@ public class ErrandServiceImpl implements ErrandService {
     private final PlaceRepository placeRepository;
 
     @Override
-    public List<CurrentErrandDto> getListCurrent() {
+    public List<ErrandDto> getListCurrent() {
         return errandRepository.findCurrent().stream()
-                .map(CurrentErrandDto::new)
+                .map(ErrandDto::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ErrandAboutInfoDto findErrandById(Long id) {
-        return convertToErrandAboutDto(errandRepository.findErrandById(id));
+    public ErrandDto findErrandById(Long id) {
+        return new ErrandDto(errandRepository.findErrandById(id));
     }
 
     @Override
-    public Errand saveErrand(ErrandDto errandDto) {
-        Errand errand = convertToErrand(errandDto);
-        return errandRepository.save(errand);
-
+    public List<ErrandDto> createErrands(List<ErrandDto> errandDtoList) {
+        return null;
     }
 
     @Override
@@ -57,7 +55,7 @@ public class ErrandServiceImpl implements ErrandService {
         Page<Errand> errandPage = errandRepository.findAll(spec, PageRequest.of(page, size));
 
         PageImpl<ErrandDto> errandDtoPage = new PageImpl<>();
-        errandDtoPage.setContent(errandPage.getContent().stream().map(this::convertToErrandDto).collect(Collectors.toList()));
+        errandDtoPage.setContent(errandPage.getContent().stream().map(ErrandDto::new).collect(Collectors.toList()));
         errandDtoPage.setNumber(errandPage.getNumber());
         errandDtoPage.setSize(errandPage.getSize());
         errandDtoPage.setTotalPages(errandPage.getTotalPages());
@@ -66,128 +64,56 @@ public class ErrandServiceImpl implements ErrandService {
         return errandDtoPage;
     }
 
-    private ErrandDto convertToErrandDto(Errand errand) {
+    @Override
+    public List<ErrandDto> updateErrands(List<ErrandDto> errandDtoList) {
 
-        ArrayList<ErrandUpdateDto> resultErrandUpdateDtoList = new ArrayList<>();
-        if (!errandCreateDtoList.isEmpty()) {
-            for (ErrandCreateDto errandCreateDto : errandCreateDtoList) {
-                Errand errand = convertToErrand(errandCreateDto);
-                resultErrandUpdateDtoList.add(convertToErrandUpdateDto(errandRepository.save(errand)));
+        ArrayList<ErrandDto> resultErrandDtoList = new ArrayList<>();
+        if (!errandDtoList.isEmpty()) {
+            for (ErrandDto errandDto : errandDtoList) {
+                Errand errand = convertToErrand(errandDto);
+                resultErrandDtoList.add(new ErrandDto(errandRepository.save(errand)));
             }
         }
-        return resultErrandUpdateDtoList;
+        return resultErrandDtoList;
     }
 
     @Override
-    public List<ErrandUpdateDto> updateErrands(List<ErrandUpdateDto> errandUpdateDtoList) {
-
-        ArrayList<ErrandUpdateDto> resultErrandUpdateDtoList = new ArrayList<>();
-        if (!errandUpdateDtoList.isEmpty()) {
-            for (ErrandUpdateDto errandUpdateDto : errandUpdateDtoList) {
-                Errand errand = convertToErrand(errandUpdateDto);
-                resultErrandUpdateDtoList.add(convertToErrandUpdateDto(errandRepository.save(errand)));
-            }
-        }
-        return resultErrandUpdateDtoList;
-    }
-
-    @Override
-    public List<ErrandDeleteDto> deleteErrands(List<Long> idsList) {
-        ArrayList<ErrandDeleteDto> resultErrandDeleteDtoList = new ArrayList<>();
+    public List<ErrandDto> deleteErrands(List<Long> idsList) {
+        ArrayList<ErrandDto> resultErrandDtoList = new ArrayList<>();
         if (!idsList.isEmpty()) {
             for (Long id : idsList) {
-                ErrandDeleteDto errandDeleteDto = null;
+                ErrandDto errandDto = null;
                 Errand errand = errandRepository.findErrandById(id);
                 if (errand != null) {
-                    errand.setDeleted(1);
+                    errand.setDeleted(true);
                     errandRepository.save(errand);
-                    errandDeleteDto = new ErrandDeleteDto(id, errand.getDeleted());
-                } else {
-                    errandDeleteDto = new ErrandDeleteDto(id, 0);
+                    resultErrandDtoList.add(new ErrandDto(errand));
                 }
-                resultErrandDeleteDtoList.add(errandDeleteDto);
             }
         }
-        return resultErrandDeleteDtoList;
+        return resultErrandDtoList;
     }
 
     @Override
-    public List<ErrandRemoveDto> removeErrands(List<Long> idsList) {
-        ArrayList<ErrandRemoveDto> resultErrandRemoveDtoList = new ArrayList<>();
+    public List<ErrandDto> removeErrands(List<Long> idsList) {
+        ArrayList<ErrandDto> resultErrandDtoList = new ArrayList<>();
         if (!idsList.isEmpty()) {
             for (Long id : idsList) {
-                ErrandRemoveDto errandRemoveDto = null;
+                ErrandDto errandDto = null;
                 Errand errand = errandRepository.findErrandById(id);
                 if (errand != null) {
                     errandRepository.delete(errand);
-                    errandRemoveDto = new ErrandRemoveDto(id);
+                    resultErrandDtoList.add(new ErrandDto(errand));
                 }
-                resultErrandRemoveDtoList.add(errandRemoveDto);
             }
         }
-        return resultErrandRemoveDtoList;
+        return resultErrandDtoList;
     }
 
-    private ErrandAboutInfoDto convertToErrandAboutDto(Errand errand) {
 
-        ErrandAboutInfoDto errandAboutInfoDto = null;
-        if (errand != null) {
-            errandAboutInfoDto =
-                    new ErrandAboutInfoDto(
-                            errand.getStatusType().getStatus(),
-                            errand.getEmployee().getFirstName(),
-                            errand.getEmployee().getMiddleName(),
-                            errand.getEmployee().getLastName(),
-                            errand.getEmployee().getPosition().getPosition(),
-                            errand.getEmployee().getUser().getUserName(),
-                            errand.getEmployee().getDepartment().getTitle(),
-                            errand.getEmployee().getDepartment().getMaster().getFirstName(),
-                            errand.getEmployee().getDepartment().getMaster().getMiddleName(),
-                            errand.getEmployee().getDepartment().getMaster().getLastName(),
-                            errand.getEmployee().getDepartment().getMaster().getUser().getUserName(),
-                            errand.getErrandDetails().getMatter().getMatter(),
-                            errand.getErrandDetails().getPlace().getTitle(),
-                            errand.getErrandDetails().getPlace().getPlaceType().getType(),
-                            errand.getErrandDetails().getComment(),
-                            errand.getErrandDetails().getCreatedBy().getFirstName(),
-                            errand.getErrandDetails().getCreatedBy().getMiddleName(),
-                            errand.getErrandDetails().getCreatedBy().getLastName(),
-                            errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName(),
-                            errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName(),
-                            errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName());
-        }
-        return errandAboutInfoDto;
-    }
+    //TODO написать обратный маппер
+    private <T extends ErrandDto> Errand convertToErrand(T errandDto) {
 
-    private ErrandUpdateDto convertToErrandUpdateDto(Errand errand) {
-        ErrandDetailsDto errandDetailsDto =
-                new ErrandDetailsDto(
-                        errand.getErrandDetails().getMatter().getId(),
-                        errand.getErrandDetails().getPlace().getId(),
-                        errand.getErrandDetails().getComment(),
-                        errand.getErrandDetails().getCreatedBy().getId(),
-                        errand.getErrandDetails().getConfirmedOrRejectedBy().getId());
-        ErrandUpdateDto errandUpdateDto =
-                new ErrandUpdateDto(
-                        errand.getId(),
-                        errand.getStatusType().getId(),
-                        errand.getEmployee().getId(),
-                        errandDetailsDto,
-                        errand.getDateStart(),
-                        errand.getDateEnd(),
-                        errand.getUpdated());
-        return errandUpdateDto;
-    }
-
-    private <T extends ErrandCreateDto> Errand convertToErrand(T errandDto) {
-
-        Errand errand = null;
-        if (errandDto instanceof ErrandCreateDto) {
-            errand = new Errand();
-        }
-        if (errandDto instanceof ErrandUpdateDto) {
-            errand = errandRepository.findErrandById(((ErrandUpdateDto) errandDto).getId());
-        }
         Employee employee = employeeRepository.findEmployeeById(errandDto.getEmployeeId());
         errand.setEmployee(employee);
         ErrandStatusType errandStatusType =

@@ -3,6 +3,7 @@ package ru.geekbrains.javacommand.command.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.*;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -26,15 +27,15 @@ public class Errand extends DefaultEntity {
     @JoinColumn(name = "errand_details_id")
     private ErrandDetails errandDetails;
 
-		@NotNull
+    @NotNull
     @Column(name = "date_start")
     private OffsetDateTime dateStart;
 
     @Column(name = "date_end")
     private OffsetDateTime dateEnd;
 
-		@NotNull
-		@Column(name = "deleted")
-    private int deleted;
+    @NotNull
+    @Column(name = "deleted")
+    private boolean deleted;
 
 }
