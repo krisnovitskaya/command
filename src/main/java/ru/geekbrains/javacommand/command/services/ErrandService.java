@@ -30,28 +30,28 @@ public interface ErrandService {
 	 * @param errandCreateDtoList
 	 * @return List ErrandCreateDto
 	 */
-	List<ErrandUpdateDto> createErrand(List<ErrandCreateDto> errandCreateDtoList);
+	List<ErrandUpdateDto> createErrands(List<ErrandCreateDto> errandCreateDtoList);
 	
 	/**
 	 *
 	 * @param errandUpdateDtoList
 	 * @return List ErrandUpdateDto
 	 */
-	List<ErrandUpdateDto> updateErrand(List<ErrandUpdateDto> errandUpdateDtoList);
+	List<ErrandUpdateDto> updateErrands(List<ErrandUpdateDto> errandUpdateDtoList);
 
 	/**
 	 *
 	 * @param idsList
-	 * @return
+	 * @return List ErrandDeleteDto
 	 */
-	ErrandDeleteDto deleteErrand(List<Long> idsList);
+	List<ErrandDeleteDto> deleteErrands(List<Long> idsList);
 	
 	/**
 	 *
 	 * @param idsList
-	 * @return
+	 * @return List 
 	 */
-	ErrandRemoveDto removeErrand(List<Long> idsList);
+	List<ErrandRemoveDto> removeErrands(List<Long> idsList);
 
 	/**
 	 *

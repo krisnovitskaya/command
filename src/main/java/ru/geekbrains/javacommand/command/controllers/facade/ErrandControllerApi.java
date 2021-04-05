@@ -55,7 +55,7 @@ public interface ErrandControllerApi {
 	 * @param idsList
 	 * @return ResponseEntity
 	 */
-	@DeleteMapping(path = "/deletebyid",
+	@DeleteMapping(path = "/deletebyids",
 			produces = "application/json;charset=UTF-8")
 	ResponseEntity<?> deleteByIds(@RequestBody List<Long> idsList);
 
@@ -64,7 +64,7 @@ public interface ErrandControllerApi {
 	 * @param idsList
 	 * @return ResponseEntity
 	 */
-	@DeleteMapping(path = "/removebyid",
+	@DeleteMapping(path = "/removebyids",
 			produces = "application/json;charset=UTF-8")
 	ResponseEntity<?> removeByIds(@RequestBody List<Long> idsList);
 

@@ -53,7 +53,7 @@ public class ErrandServiceImpl implements ErrandService {
   }
 
   @Override
-  public List<ErrandUpdateDto> createErrand(List<ErrandCreateDto> errandCreateDtoList) {
+  public List<ErrandUpdateDto> createErrands(List<ErrandCreateDto> errandCreateDtoList) {
 		
 		ArrayList<ErrandUpdateDto> resultErrandUpdateDtoList = new ArrayList<>();
     if (!errandCreateDtoList.isEmpty()) {
@@ -66,7 +66,7 @@ public class ErrandServiceImpl implements ErrandService {
   }
 
   @Override
-  public List<ErrandUpdateDto> updateErrand(List<ErrandUpdateDto> errandUpdateDtoList) {
+  public List<ErrandUpdateDto> updateErrands(List<ErrandUpdateDto> errandUpdateDtoList) {
 
     ArrayList<ErrandUpdateDto> resultErrandUpdateDtoList = new ArrayList<>();
 		if (!errandUpdateDtoList.isEmpty()) {
@@ -77,6 +77,43 @@ public class ErrandServiceImpl implements ErrandService {
 		}
     return resultErrandUpdateDtoList;
   }
+
+	@Override
+	public List<ErrandDeleteDto> deleteErrands(List<Long> idsList) {
+		ArrayList<ErrandDeleteDto> resultErrandDeleteDtoList = new ArrayList<>();
+		if (!idsList.isEmpty()) {
+			for (Long id : idsList) {
+				ErrandDeleteDto errandDeleteDto = null;
+        Errand errand = errandRepository.findErrandById(id);
+				if (errand != null) {
+          errand.setDeleted(1);
+					errandRepository.save(errand);
+					errandDeleteDto = new ErrandDeleteDto(id, errand.getDeleted());
+				} else {
+					errandDeleteDto = new ErrandDeleteDto(id, 0);
+				}
+				resultErrandDeleteDtoList.add(errandDeleteDto);
+			}
+		}
+		return resultErrandDeleteDtoList;
+	}
+
+	@Override
+	public List<ErrandRemoveDto> removeErrands(List<Long> idsList) {
+		ArrayList<ErrandRemoveDto> resultErrandRemoveDtoList = new ArrayList<>();
+		if (!idsList.isEmpty()) {
+			for (Long id : idsList) {
+				ErrandRemoveDto errandRemoveDto = null;
+				Errand errand = errandRepository.findErrandById(id);
+				if (errand != null) {
+          errandRepository.delete(errand);
+					errandRemoveDto = new ErrandRemoveDto(id);
+				}
+				resultErrandRemoveDtoList.add(errandRemoveDto);
+			}
+		}
+		return resultErrandRemoveDtoList;
+	}
 
 	private ErrandAboutInfoDto convertToErrandAboutDto(Errand errand) {
 
@@ -108,16 +145,6 @@ public class ErrandServiceImpl implements ErrandService {
     }
     return errandAboutInfoDto;
   }
-
-	@Override
-	public ErrandDeleteDto deleteErrand(List<Long> idsList) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public ErrandRemoveDto removeErrand(List<Long> idsList) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
 
 	private ErrandUpdateDto convertToErrandUpdateDto(Errand errand) {
 		ErrandDetailsDto errandDetailsDto =

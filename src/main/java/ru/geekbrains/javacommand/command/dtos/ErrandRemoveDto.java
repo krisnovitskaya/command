@@ -13,6 +13,5 @@ import lombok.Data;
 public class ErrandRemoveDto {
 
   private Long id;
-  private int deleted;
 	
 }

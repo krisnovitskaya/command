@@ -150,7 +150,7 @@ values
     (3, 9, 'Комментарий9', 20, 2, '2021-03-10'),     --id 9
     (2, 10, 'Комментарий10', 1, 2, '2021-03-09');  --id 10
 
-insert into errands(status_id, employee_id, errand_detail_id, date_start, date_end)
+insert into errands(status_id, employee_id, errand_details_id, date_start, date_end)
 values
     (1, 2, 1, '2021-03-18', '2021-03-19'),        --id 1
     (2, 2, 2, '2021-03-18', '2021-03-19'),        --id 2
@@ -163,6 +163,6 @@ values
     (3, 20, 9, '2021-03-18', '2021-03-19'),       --id 9
     (1, 11, 10, '2021-03-18', '2021-03-19');      --id 10
 
-insert into errands(status_id, employee_id, errand_detail_id, date_start, date_end, created, updated)
+insert into errands(status_id, employee_id, errand_details_id, date_start, date_end, created, updated)
 values
     (1, 5, 4, '2021-03-18', '2021-03-19', '2021-03-19', '2021-03-19');        --id 11

@@ -33,22 +33,22 @@ public class ErrandController implements ErrandControllerApi {
 
 	@Override
 	public ResponseEntity<?> create(List<ErrandCreateDto> errandCreateDtoList) {
-    return ResponseEntity.ok(errandService.createErrand(errandCreateDtoList));
+    return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
 	}
 
 	@Override
 	public ResponseEntity<?> update(List<ErrandUpdateDto> errandUpdateDtoList) {
-		return ResponseEntity.ok(errandService.updateErrand(errandUpdateDtoList));
+		return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
 	}
 
 	@Override
 	public ResponseEntity<?> deleteByIds(List<Long> idsList) {
-		return ResponseEntity.ok(errandService.deleteErrand(idsList));
+		return ResponseEntity.ok(errandService.deleteErrands(idsList));
 	}
 
 	@Override
 	public ResponseEntity<?> removeByIds(List<Long> idsList) {
-		return ResponseEntity.ok(errandService.removeErrand(idsList));
+		return ResponseEntity.ok(errandService.removeErrands(idsList));
 	}
 	
 	@Override
