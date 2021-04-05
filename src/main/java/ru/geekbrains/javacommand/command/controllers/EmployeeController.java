@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto1;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
@@ -29,7 +29,7 @@ public class EmployeeController implements EmployeeControllerApi {
     private final DepartmentService departmentService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
-    public List<EmployeeDto1> getAllEmployeesByMaster(Principal principal) {
+    public List<EmployeeDto> getAllEmployeesByMaster(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
 
         for (Role role : user.getListRoles()) {
@@ -39,7 +39,7 @@ public class EmployeeController implements EmployeeControllerApi {
         }
 
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
-        return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDto1::new).collect(Collectors.toList());
+        return departmentService.findAllEmployeesByMaster(master).getEmployees().stream().map(EmployeeDto::new).collect(Collectors.toList());
     }
 
     @Override
@@ -48,13 +48,13 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
-    public List<EmployeeDto1> getEmployees() {
+    public List<EmployeeDto> getEmployees() {
         return employeeService.findAll();
     }
 
     @Override
-    public void createEmployee(EmployeeDto1 employeeDto1) {
-        employeeService.saveOrUpdate(employeeDto1);
+    public void createEmployee(EmployeeDto employeeDto) {
+        employeeService.saveOrUpdate(employeeDto);
     }
 
     @Override
