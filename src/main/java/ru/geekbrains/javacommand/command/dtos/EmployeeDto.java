@@ -20,8 +20,10 @@ public class EmployeeDto {
     private String middleName;
     @JsonProperty("last_name")
     private String lastName;
-    private String position;
-    private String department;
+    @JsonProperty("position_name")
+    private String positionName;
+    @JsonProperty("department_name")
+    private String departmentName;
     @JsonProperty("user_name")
     private String userName;
     private String mail;
@@ -31,8 +33,8 @@ public class EmployeeDto {
         this.firstName = e.getFirstName();
         this.middleName = e.getMiddleName();
         this.lastName = e.getLastName();
-        this.position = e.getPosition() != null ? e.getPosition().getPosition() : "def";
-        this.department = e.getDepartment() != null ? e.getDepartment().getTitle() : "def";
+        this.positionName = e.getPosition() != null ? e.getPosition().getPosition() : "def";
+        this.departmentName = e.getDepartment() != null ? e.getDepartment().getTitle() : "def";
         this.userName = e.getUser() != null ? e.getUser().getUserName() : "def";
         this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : "def";
     }

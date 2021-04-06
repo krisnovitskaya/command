@@ -5,7 +5,10 @@ import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.javacommand.command.entities.Errand;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.Map;
 
 /**
@@ -57,7 +60,13 @@ public class ErrandsStatisticSpecificationResolver {
         }
     }
 
+    // TODO b_strap dateTIMEpicker
+    // TODO delete default time
     private static OffsetDateTime parseDate(String date) {
-        return OffsetDateTime.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
+                .appendPattern("dd-MM-yyyy HH:mm:ss")
+                .parseDefaulting(ChronoField.OFFSET_SECONDS, 0)
+                .toFormatter();
+        return OffsetDateTime.parse(date + " 00:00:00", FORMATTER);
     }
 }
