@@ -28,7 +28,7 @@ public class ErrandControllerTest {
         .andExpect(
             MockMvcResultMatchers.content()
                 .string(
-                    "[{\"id\":1,\"matter\":\"LOCAL\"},{\"id\":2,\"matter\":\"PRIVATE\"},{\"id\":3,\"matter\":\"LONG\"}]"));
+                    "[{\"id\":1,\"matter\":\"МЕСТНАЯ\"},{\"id\":2,\"matter\":\"ЛИЧНАЯ\"},{\"id\":3,\"matter\":\"ДАЛЬНЯЯ\"}]"));
   }
 
   @Test
