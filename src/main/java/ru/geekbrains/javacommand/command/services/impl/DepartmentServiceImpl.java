@@ -3,6 +3,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
 import ru.geekbrains.javacommand.command.services.DepartmentService;
 import ru.geekbrains.javacommand.command.entities.Department;
@@ -26,5 +27,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department findAllEmployeesByMaster(Employee master) {
         return departmentRepository.findByMaster(master).orElseThrow(() -> new ResolutionException("Department not found"));
+    }
+
+    @Override
+    public Department findDepartmentByDepartmentTitle(String departmentTitle) {
+        return departmentRepository.findDepartmentByTitle(departmentTitle)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Department not found by title: %s", departmentTitle)));
     }
 }

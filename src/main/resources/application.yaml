@@ -57,3 +57,17 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
   liquibase:
     changeLogFile: src/main/resources/db/changelog/master-prod.yaml
+---
+# Gmail Alert
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: errandsemailalert@gmail.com
+    password: 178ueee34
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

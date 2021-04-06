@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.Role;
-import ru.geekbrains.javacommand.command.entities.User;
+import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.services.UserService;
+import ru.geekbrains.javacommand.command.services.*;
+import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 
@@ -39,6 +34,8 @@ public class ErrandController implements ErrandControllerApi {
     private final ErrandService errandService;
     private final EmployeeService employeeService;
     private final UserService userService;
+    private final EmailService emailService;
+    private final DepartmentService departmentService;
 
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
@@ -70,7 +67,7 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @GetMapping(value = "/report")
-    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params){
+    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=report.xlsx");
@@ -92,6 +89,20 @@ public class ErrandController implements ErrandControllerApi {
     @Override
     public ResponseEntity<?> create(List<ErrandDto> errandCreateDtoList) {
         return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
+    }
+
+    @Override
+    public void createErrand(ErrandDto newErrandDto, Principal principal) {
+        var name = principal.getName();
+        var user = userService.findByUsername(name).orElse(new User());
+        var isSimpleEmployee = user.getListRoles().stream()
+                .anyMatch(x -> x.getName().equals("MASTER"));
+        if (isSimpleEmployee) {
+            var dep = departmentService.findDepartmentByDepartmentTitle(newErrandDto.getDepartmentTitle());
+            var master= dep.getMaster();
+            var msg = ErrandEmailMessageAlertHelper.generateMessageWhenCreated(newErrandDto);
+            emailService.sendSimpleMessage(master.getEmployeeDetails().getMail(), "Создана командровка", msg);
+        }
     }
 
     @Override

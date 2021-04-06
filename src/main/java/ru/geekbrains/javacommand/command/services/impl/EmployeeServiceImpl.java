@@ -77,4 +77,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
     }
 
+    @Override
+    public Optional<Employee> findById(Long confirmedOrRejectedById) {
+        return employeeRepository.findById(confirmedOrRejectedById);
+    }
+
 }
