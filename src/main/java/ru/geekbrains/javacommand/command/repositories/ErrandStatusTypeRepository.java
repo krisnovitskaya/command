@@ -7,4 +7,6 @@ import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 @Repository
 public interface ErrandStatusTypeRepository extends JpaRepository<ErrandStatusType, Long> {
 	ErrandStatusType findErrandStatusTypeById(Long id);
+
+	ErrandStatusType findErrandStatusTypeByStatus(String status);
 }

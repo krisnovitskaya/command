@@ -18,6 +18,7 @@ public class ErrandDto {
     private OffsetDateTime dateEnd;
     private Long employeeId;
     private String employeeFIO;
+    private String departmentTitle;
     private String matter;
     private String place;
     private String placeType;
@@ -35,20 +36,21 @@ public class ErrandDto {
         this.dateStart = errand.getDateStart();
         this.dateEnd = errand.getDateEnd();
         this.employeeId = errand.getEmployee().getId();
-        this.employeeFIO = errand.getEmployee().getFirstName() + " "
-                + errand.getEmployee().getLastName() + " "
+        this.employeeFIO = errand.getEmployee().getLastName() + " "
+                + errand.getEmployee().getFirstName() + " "
                 + errand.getEmployee().getMiddleName();
+        this.departmentTitle = errand.getEmployee().getDepartment().getTitle();
         this.matter = errand.getErrandDetails().getMatter().getMatter();
         this.place = errand.getErrandDetails().getPlace().getTitle();
         this.placeType = errand.getErrandDetails().getPlace().getPlaceType().getType();
         this.comment = errand.getErrandDetails().getComment();
         this.createdById = errand.getErrandDetails().getCreatedBy().getId();
-        this.createdByFIO = errand.getErrandDetails().getCreatedBy().getFirstName() + " "
-                + errand.getErrandDetails().getCreatedBy().getLastName() + " "
+        this.createdByFIO = errand.getErrandDetails().getCreatedBy().getLastName() + " "
+                + errand.getErrandDetails().getCreatedBy().getFirstName() + " "
                 + errand.getErrandDetails().getCreatedBy().getMiddleName();
         this.confirmedOrRejectedById = errand.getErrandDetails().getConfirmedOrRejectedBy().getId();
-        this.confirmedOrRejectedByFIO = errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName() + " " +
-                        errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName() + " " +
+        this.confirmedOrRejectedByFIO = errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName() + " " +
+                        errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName() + " " +
                         errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
     }
 
