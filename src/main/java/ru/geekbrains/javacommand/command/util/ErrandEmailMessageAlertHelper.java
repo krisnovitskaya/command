@@ -3,7 +3,7 @@ package ru.geekbrains.javacommand.command.util;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 
 public class ErrandEmailMessageAlertHelper {
-    public static String generateMessageWhenCreated(ErrandDto newErrandDto) {
+    public static String generateEmailMessage(ErrandDto newErrandDto) {
         return  "Статус: '" + newErrandDto.getStatusType() + '\'' + "\n" +
                 "Начало: " + newErrandDto.getDateStart() + "\n" +
                 "Завершение: " + newErrandDto.getDateEnd() + "\n" +
@@ -14,4 +14,5 @@ public class ErrandEmailMessageAlertHelper {
                 "Создана: '" + newErrandDto.getCreatedByFIO() + '\'' + "\n" +
                 "Подтверждена:'" + newErrandDto.getConfirmedOrRejectedByFIO() + '\'' + "\n";
     }
+
 }

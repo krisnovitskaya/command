@@ -94,15 +94,52 @@ public class ErrandController implements ErrandControllerApi {
     @Override
     public void createErrand(ErrandDto newErrandDto, Principal principal) {
         var name = principal.getName();
+        emailAlertWhenErrandCreated(newErrandDto, name);
+    }
+
+    @Override
+    public ResponseEntity<?> updateErrandStatus(Long errandId, String status) {
+        var errand = errandService.findErrandById(errandId);
+        errand.setStatusType(status);
+        errandService.updateErrands(errand);
+        var responseMsg = "Email alert sent";
+        emailAlertWhenErrandUpdated(errand);
+        return ResponseEntity.ok(responseMsg);
+    }
+
+    /**
+     * При создании новой командировки сотрудником, непосредственный начальник
+     * получает оповещение на почту
+     * @see EmailService
+     * @param newErrandDto
+     * @param name
+     * @author owpk
+     */
+    private void emailAlertWhenErrandCreated(ErrandDto newErrandDto, String name) {
         var user = userService.findByUsername(name).orElse(new User());
         var isSimpleEmployee = user.getListRoles().stream()
                 .anyMatch(x -> x.getName().equals("MASTER"));
         if (isSimpleEmployee) {
             var dep = departmentService.findDepartmentByDepartmentTitle(newErrandDto.getDepartmentTitle());
             var master= dep.getMaster();
-            var msg = ErrandEmailMessageAlertHelper.generateMessageWhenCreated(newErrandDto);
+            var msg = ErrandEmailMessageAlertHelper.generateEmailMessage(newErrandDto);
             emailService.sendSimpleMessage(master.getEmployeeDetails().getMail(), "Создана командровка", msg);
         }
+    }
+
+    /**
+     * Создает email сообщение при смене статуса командировки на confirmed или reject, отправляет
+     * оповещения на почту командируемого сотрудника
+     * @see EmailService
+     * @param errand
+     * @author owpk
+     */
+    private void emailAlertWhenErrandUpdated(ErrandDto errand) {
+        var employee = employeeService.findById(errand.getEmployeeId());
+        var emailMsg = ErrandEmailMessageAlertHelper.generateEmailMessage(errand);
+        emailService.sendSimpleMessage(
+                employee.getEmployeeDetails().getMail(),
+                "Статус командировки обновлен", emailMsg);
     }
 
     @Override

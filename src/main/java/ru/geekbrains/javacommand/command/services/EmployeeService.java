@@ -20,5 +20,5 @@ public interface EmployeeService {
 
     void deleteEmployee(Long id);
 
-    Optional<Employee> findById(Long confirmedOrRejectedById);
+    Employee findById(Long id);
 }

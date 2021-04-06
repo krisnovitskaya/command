@@ -58,7 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setMiddleName(employeeDto.getMiddleName());
         newEmployee.setLastName(employeeDto.getLastName());
         newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
-        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()));
+        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
         newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
             .orElseThrow(() -> new ResourceNotFoundException(
                 String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
@@ -78,8 +78,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> findById(Long confirmedOrRejectedById) {
-        return employeeRepository.findById(confirmedOrRejectedById);
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Employee not found with id %s", id)));
     }
 
 }

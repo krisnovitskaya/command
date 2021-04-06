@@ -56,6 +56,11 @@ public interface ErrandControllerApi {
 			produces = "application/json;charset=UTF-8")
 	ResponseEntity<?> update(@RequestBody List<ErrandDto> errandUpdateDtoList);
 
+	@GetMapping(path = "/updateStatus",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<?> updateErrandStatus(@RequestParam Long errandId, @RequestParam String status);
+
 	/**
 	 * Fill deleted field to true for Errand entity by id
 	 * @param idsList
