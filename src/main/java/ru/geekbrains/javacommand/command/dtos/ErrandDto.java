@@ -42,7 +42,7 @@ public class ErrandDto {
         this.departmentTitle = errand.getEmployee().getDepartment().getTitle();
         this.matter = errand.getErrandDetails().getMatter().getMatter();
         this.place = errand.getErrandDetails().getPlace().getTitle();
-        this.placeType = errand.getErrandDetails().getPlace().getPlaceType().getType();
+        this.placeType = errand.getErrandDetails().getPlace().getTitle();
         this.comment = errand.getErrandDetails().getComment();
         this.createdById = errand.getErrandDetails().getCreatedBy().getId();
         this.createdByFIO = errand.getErrandDetails().getCreatedBy().getLastName() + " "
