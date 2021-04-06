@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.UserRepository;
 import ru.geekbrains.javacommand.command.services.RoleService;
 import ru.geekbrains.javacommand.command.services.UserService;
@@ -31,8 +32,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUserName(username);
+    public User findByUsername(String username) {
+        return userRepository.findByUserName(username).orElseThrow(
+                () -> new ResourceNotFoundException("User not found by name: " + username));
     }
 
     @Override
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
+        User user = findByUsername(username);
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), mapRolesToAuthorities(user.getListRoles()));
     }
 
