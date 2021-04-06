@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Errand extends DefaultEntity {
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
+    @JsonBackReference
     private Employee employee;
 
     @OneToOne(cascade = CascadeType.PERSIST)

@@ -32,9 +32,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUserName(username).orElseThrow(
-                () -> new ResourceNotFoundException("User not found by name: " + username));
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUserName(username);
+				/*Есть проблема в приведении типов.
+					.orElseThrow(() -> new ResourceNotFoundException("User not found by name: " + username));
+				*/
     }
 
     @Override
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
+        User user = findByUsername(username).get();
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), mapRolesToAuthorities(user.getListRoles()));
     }
 

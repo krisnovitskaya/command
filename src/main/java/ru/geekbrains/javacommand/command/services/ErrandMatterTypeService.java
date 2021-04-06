@@ -2,6 +2,7 @@ package ru.geekbrains.javacommand.command.services;
 
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
+import java.util.Arrays;
 import java.util.List;
 
 import ru.geekbrains.javacommand.command.entities.ErrandMatterType;

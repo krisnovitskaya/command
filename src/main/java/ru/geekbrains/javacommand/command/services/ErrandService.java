@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.services;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.io.ByteArrayInputStream;
@@ -55,11 +56,14 @@ public interface ErrandService {
     PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size);
 
     /**
-     *
      * @param spec
      * @return ByteArrayInputStream report
      */
     ByteArrayInputStream findAllForReport(Specification<Errand> spec);
 
-    void updateErrands(ErrandDto errand);
+	/**
+	 *
+	 * @param errand
+	 */
+	void updateErrands(ErrandDto errand);
 }

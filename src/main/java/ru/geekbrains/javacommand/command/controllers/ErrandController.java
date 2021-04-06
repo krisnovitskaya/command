@@ -52,7 +52,7 @@ public class ErrandController implements ErrandControllerApi {
         Specification<Errand> spec = errandFilter.getSpec();
 
         //get masterEmployee from Principal
-        User user = userService.findByUsername(principal.getName());
+        User user = userService.findByUsername(principal.getName()).get();
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
 
         for (Role role : user.getListRoles()) {
@@ -116,7 +116,7 @@ public class ErrandController implements ErrandControllerApi {
      * @author owpk
      */
     private void emailAlertWhenErrandCreated(ErrandDto newErrandDto, String name) {
-        var user = userService.findByUsername(name);
+        var user = userService.findByUsername(name).get();
         var isMaster= user.getListRoles().stream()
                 .anyMatch(x -> x.getName().equals("MASTER"));
         if (!isMaster) {

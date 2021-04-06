@@ -44,6 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
+    }
+
     public void saveOrUpdate(EmployeeDto employeeDto) {
         Employee newEmployee;
         if (employeeDto.getId() == null) {

@@ -24,5 +24,4 @@ public interface ErrandRepository extends JpaRepository<Errand, Long>, JpaSpecif
                     + " where e.dateStart < current_timestamp and e.dateEnd > current_timestamp"
                     + " and e.statusType.status = 'CONFIRMED'")
     List<Errand> findCurrent();
-
 }

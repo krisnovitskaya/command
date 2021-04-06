@@ -109,7 +109,6 @@ public class ErrandServiceImpl implements ErrandService {
     }
 
 
-    //TODO написать обратный маппер
     public Errand convertToErrand(ErrandDto errandDto) {
 
         //Ищем командировку по айди, иначе создаем новую
@@ -141,6 +140,7 @@ public class ErrandServiceImpl implements ErrandService {
 
         return errand;
     }
+
 
     @Override
     public ByteArrayInputStream findAllForReport(Specification<Errand> spec) {
