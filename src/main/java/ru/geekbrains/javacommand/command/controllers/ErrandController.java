@@ -117,9 +117,9 @@ public class ErrandController implements ErrandControllerApi {
      */
     private void emailAlertWhenErrandCreated(ErrandDto newErrandDto, String name) {
         var user = userService.findByUsername(name).orElse(new User());
-        var isSimpleEmployee = user.getListRoles().stream()
+        var isMaster= user.getListRoles().stream()
                 .anyMatch(x -> x.getName().equals("MASTER"));
-        if (isSimpleEmployee) {
+        if (!isMaster) {
             var dep = departmentService.findDepartmentByDepartmentTitle(newErrandDto.getDepartmentTitle());
             var master= dep.getMaster();
             var msg = ErrandEmailMessageAlertHelper.generateEmailMessage(newErrandDto);
