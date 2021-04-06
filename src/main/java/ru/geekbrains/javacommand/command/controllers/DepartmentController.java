@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class DepartmentController implements DepartmentControllerApi {
+
     private final DepartmentService departmentService;
 
     @Override

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 
-
 	/**
 	 * Find entity Errand by id
 	 * @param id

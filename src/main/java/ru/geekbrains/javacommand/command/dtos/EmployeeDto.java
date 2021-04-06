@@ -2,13 +2,11 @@ package ru.geekbrains.javacommand.command.dtos;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.geekbrains.javacommand.command.entities.Employee;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @JsonAutoDetect
 public class EmployeeDto {

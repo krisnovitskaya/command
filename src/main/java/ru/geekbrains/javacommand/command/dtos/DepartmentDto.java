@@ -1,13 +1,11 @@
 package ru.geekbrains.javacommand.command.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.geekbrains.javacommand.command.entities.Department;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class DepartmentDto {
     private Long id;
