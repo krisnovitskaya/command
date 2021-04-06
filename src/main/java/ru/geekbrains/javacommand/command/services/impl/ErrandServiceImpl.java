@@ -43,11 +43,9 @@ public class ErrandServiceImpl implements ErrandService {
 	}
 	
 	@Override
-	public Errand saveErrand(ErrandDto errandDto) {
-		
-		Errand errand = convertToErrand(errandDto);
-		return errandRepository.save(errand);
-		
+	public void saveErrand(Errand errand) {
+		//Errand errand = convertToErrand(errandDto);
+		errandRepository.save(errand);
 	}
 
 	@Override

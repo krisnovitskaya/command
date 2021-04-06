@@ -38,4 +38,11 @@ public class ErrandDetails extends DefaultEntity {
     @JoinColumn(name = "confirmed_or_rejected_by", nullable = false)
     private Employee confirmedOrRejectedBy;
 
+    public ErrandDetails(ErrandMatterType matter, Place place, String comment, Employee createdBy){
+        this.matter = matter;
+        this.place = place;
+        this.comment = comment;
+        this.createdBy = createdBy;
+    }
+
 }

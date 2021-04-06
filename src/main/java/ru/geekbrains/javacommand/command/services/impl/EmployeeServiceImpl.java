@@ -23,17 +23,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDto> findAllByDepartmentId(Long id) {
-        List<EmployeeDto> list = employeeRepository.findAllByDepartmentId(id).stream().map(EmployeeDto::new).collect(Collectors.toList());
-        for(EmployeeDto e : list){
-            System.out.println(e.getFirstName());
-            System.out.println(e.getLastName());
-            System.out.println(e.getPosition().getId());
-        }
         return employeeRepository.findAllByDepartmentId(id).stream().map(EmployeeDto::new).collect(Collectors.toList());
     }
 
     @Override
     public EmployeeDto findByUserId(Long id) {
         return new EmployeeDto(employeeRepository.findByUserId(id));
+    }
+
+    @Override
+    public EmployeeDto findById(Long id) {
+        return new EmployeeDto(employeeRepository.findById(id));
+    }
+
+    @Override
+    public Employee convertToEmployee(EmployeeDto employeeDto){
+        Employee employee = new Employee();
+        employee.setId(employeeDto.getId());
+        employee.setLastName(employeeDto.getLastName());
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setMiddleName(employeeDto.getMiddleName());
+        employee.setPosition(employeeDto.getPosition());
+        return employee;
     }
 }

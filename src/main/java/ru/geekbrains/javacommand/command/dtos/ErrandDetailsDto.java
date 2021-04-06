@@ -9,10 +9,6 @@ import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
 import ru.geekbrains.javacommand.command.entities.Place;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

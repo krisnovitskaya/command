@@ -23,7 +23,7 @@ public class Errand extends DefaultEntity {
     private Employee employee;
 
     @OneToOne
-    @JoinColumn(name = "errand_detail_id")
+    @JoinColumn(name = "errand_details_id")
     private ErrandDetails errandDetails;
 
     @NotNull

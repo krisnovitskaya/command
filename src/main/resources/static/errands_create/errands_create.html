@@ -1,169 +1,72 @@
-<div class="mb-3 text-center">
-    <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto;">
-        <head>
-            <!--            <link rel="stylesheet" type="text/css" href="style.css">-->
-            <script src="http://code.angularjs.org/1.1.5-angular_ru/angular.min.js"></script>
-            <script src="script.js"></script>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>jQuery UI Datepicker - Default functionality</title>
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!--            <link rel="stylesheet" href="/resources/demos/style.css">-->
-            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            <script>
-                $.datepicker.regional['ru'] = {
-                    closeText: 'Закрыть',
-                    prevText: 'Предыдущий',
-                    nextText: 'Следующий',
-                    currentText: 'Сегодня',
-                    monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-                    monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
-                    dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
-                    dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
-                    dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
-                    weekHeader: 'Не',
-                    dateFormat: 'dd.mm.yy',
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: ''
-                };
-                $.datepicker.setDefaults($.datepicker.regional['ru']);
-            </script>
-            <script>
-                $( function() {
-                    $( "#datepickerStart" ).datepicker({
-                      locale: 'ru',
-                      format: 'DD.MM.YYYY',
-                      minDate: 0,
-                      showOn: "button",
-                      buttonImage: "images/calendar1.gif",
-                      buttonImageOnly: true,
-                      buttonText: "Выбрать дату"
-                    });
-                } );
-            </script>
-            <script>
-                $( function() {
-                    $( "#datepickerEnd" ).datepicker({
-                      locale: 'ru',
-                      format: 'DD.MM.YYYY',
-                      minDate: 0,
-                      showOn: "button",
-                      buttonImage: "images/calendar1.gif",
-                      buttonImageOnly: true,
-                      buttonText: "Выбрать дату"
-                    });
-                } );
-            </script>
-        </head>
+<div class="mb-3 text-center" xmlns="http://www.w3.org/1999/html">
+    <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto; position: relative">
+
         <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Заявка на командировку:</h1>
 
+
+<div ng-if="Employee.id == 2">
         <div class="form-group col-md-6">
             <label for="errandDepartment">Отдел сотрудника:</label>
-            <select class="form-control" ng-model="errand.department_id"  id="errandDepartment" required="">
+            <select class="form-control" ng-model="errand.department_id" id="errandDepartment" required ng-change="getEmployeesList(errand.department_id)">
                 <option value="">Отдел сотрудника</option>
                 <option value="{{do.id}}" ng-repeat="do in DepartmentsList">{{do.title}}</option>
-<!--                <option ng-if ="Employee.position.id != 1" value="{{Employee.department.id}}">{{Employee.department.title}}</option>-->
             </select>
-
         </div>
-        <div ng-if="errand.department_id != null" disabled="false" class="form-group col-md-6">
+
+        <span ng-if="EmployeesList.length == 0">В отделе нет сотрудников. Пожалуйста, выберите, другой</span>
+        <div ng-if="(EmployeesList.length != 0) && (EmployeesList != null) && (errand.department_id != null)" class="form-group col-md-6">
             <label for="employeeId">ФИО сотрудника:</label>
-            <select class="form-control" ng-model="errand.employee_id"  id="employeeId"
-                    required="" ng-click="getEmployeesList(errand.department_id)>
-                <!--                        ng-if="errand.department_id != null" disabled="false"-->
-                <!--                        ng-click="getEmployeesList(d.id)">-->
-<!--                <option value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>-->
+            <select class="form-control" ng-model="NewErrandDto.employee_id"  id="employeeId" required>
                 <option value="">ФИО сотрудника</option>
-                <option value="{{e.id}}" ng-repeat="e.lastName, e.middleName, e.firstName in EmployeesList"> {{e.lastName}} + " " + {{e.middleName}} + " " + {{e.firstName}}</option>
-<!--                <option ng-if ="Employee.position.id != 1" value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>-->
+                <option value="{{e.id}}" ng-repeat="e in EmployeesList">{{e.last_name}} {{e.first_name}} {{e.middle_name}}</option>
+
             </select>
         </div>
-
-<!--        <div class="form-group col-md-6" >-->
-<!--            <label for="errandDepartment">Отдел сотрудника:</label>-->
-<!--            <input type="text" ng-model="errand.department_id" value="{{Employee.department.title}}"-->
-<!--                   id="errandDepartment" class="form-control" style="margin-bottom: 10px;" >-->
-<!--        </div>-->
-
-<!--        <div class="form-group col-md-6">-->
-<!--            <label for="errandDepartmentId">Отдел сотрудника:</label>-->
-<!--                        <select class="form-control" ng-model="errand.department_id"  id="errandDepartmentId" required="">-->
-<!--                            <option ng-if ="Employee.position.id == 1" value="">Отдел сотрудника</option>-->
-<!--                            <option ng-if ="Employee.position.id == 1" value="{{d.id}}" ng-repeat="d in DepartmentsList">{{d.title}}</option>-->
-<!--                            <option ng-if ="Employee.position.id != 1" value="{{Employee.department.id}}">{{Employee.department.title}}</option>-->
-<!--                        </select>-->
-<!--        </div>-->
-
-<!--        <div ng-if="errand.department_id != null" disabled="false" class="form-group col-md-6">-->
-<!--                <select class="form-control" ng-model="errand.employee_id"  id="employeeId"-->
-<!--                        required="" ng-click="getEmployeesList(d.id)">-->
-<!--&lt;!&ndash;                        ng-if="errand.department_id != null" disabled="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                        ng-click="getEmployeesList(d.id)">&ndash;&gt;-->
-<!--                    <option value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>-->
-<!--                    <option ng-if ="Employee.position.id == 1" value="">ФИО сотрудника</option>-->
-<!--                    <option ng-if ="Employee.position.id == 1" value="{{e.id}}" ng-repeat="e.last_name, e.middle_name, e.first_name in EmployeesList"> {{e.last_name}} + " " + {{e.middle_name}} + " " + {{e.first_name}}</option>-->
-<!--                     <option ng-if ="Employee.position.id != 1" value="{{Employee.id}}"> {{Employee.last_name}} + " " + {{Employee.middle_name}} + " " + {{Employee.first_name}}</option>-->
-<!--                </select>-->
-<!--        </div>-->
+</div>
 
         <div class="form-group col-md-6">
             <label for="matterId">Тип командировки:</label>
-                <select class="form-control" ng-model="errandDetails.matter_id"  id="matterId" required="">
+                <select class="form-control" ng-model="NewErrandDto.matter_id"  id="matterId" required>
                     <option value="">Тип командировки</option>
                     <option value="{{m.id}}" ng-repeat="m in ErrandMatterTypesList">{{m.matter}}</option>
                 </select>
         </div>
 
         <div class="form-group col-md-6">
-            <p>Начало командировки: <input type="text" ng-model="errand.date_start" id="datepickerStart" required=""></p>
-            <label for="timeStart">Время начала командировки:</label>
-            <span  class="nullable">
-                <select class="form-control" ng-model="errandDetails.date_start"  id="timeStart" required="">
-                    <option value="">08:00</option>
-                    <option value="">00:00</option>
-                    <option value="">24:00</option>
-                </select>
-            </span><br/>
+            <p>Начало командировки: <input type="datetime-local" ng-model="NewErrandDto.date_start" id="dateStart" required></p>
         </div>
+
         <div class="form-group col-md-6">
-            <p>Окончание командировки: <input type="text" ng-model="errand.date_end" id="datepickerEnd" required=""></p>
+            <p>Окончание командировки: <input type="datetime-local" ng-model="NewErrandDto.date_end" id="dateEnd" required></p>
         </div>
 
         <div class="form-group col-md-6">
             <label for="placeTypeId">Тип места назначения:</label>
-                <select class="form-control" ng-model="errandDetails.place_type_id"  id="placeTypeId" required="">
+                <select class="form-control" ng-model="errandDetails.place_type_id"  id="placeTypeId" required ng-change="getPlacesList(errandDetails.place_type_id)">
                     <option value="">Тип места назначения</option>
                     <option value="{{pt.id}}" ng-repeat="pt in PlaceTypesList">{{pt.type}}</option>
                 </select>
         </div>
 
-        <div  ng-if="errand.place_type_id != null" disabled="false" class="form-group col-md-6">
+        <span ng-if="PlacesList.length == 0">В месте назначения нет мест. Пожалуйста, выберите, другое</span>
+        <div  ng-if="(PlacesList.length != 0) && (PlacesList != null) && (errandDetails.place_type_id != null)" class="form-group col-md-6">
             <label for="placeId">Место назначения:</label>
-            <span  class="nullable">
-                <select class="form-control" ng-model="errandDetails.place_id"  id="placeId" required=""
-<!--                        ng-if="errand.place_type_id != null" disabled="false"-->
-                        ng-click="getPlacesList(pt.id)">
+                <select class="form-control" ng-model="NewErrandDto.place_id"  id="placeId" required>
                     <option value="">Место назначения</option>
-                    <option value="{{p.id}}" ng-options="p.title for p in PlacesList">{{p.title}}</option>
+                    <option value="{{p.id}}" ng-repeat="p in PlacesList">{{p.title}}</option>
                 </select>
-            </span><br/>
         </div>
 
         <div class="form-group col-md-6">
-            <label for="comment">Комментарий:</label>
-            <input type="text" ng-model="errandDetails.comment" id="comment" class="form-control"
+            <label for="errand.comment">Комментарий:</label>
+            <input type="text" ng-model="NewErrandDto.comment" id="errand.comment" class="form-control"
                    placeholder="Комментарий" style="margin-bottom: 10px;">
         </div>
 
         <div class="form-group col-md-6">
-            <input type="checkbox" ng-model="value" required="">
-            <tt>Подтвердить командировку</tt><br/>
+            Подтвердить командировку: <input type="checkbox" ng-model="checked" onclick="check()" required="true"></br></br>
+            <button ng-disabled="!checked" class="btn btn-success" type="submit">Создать командировку</button>
         </div>
-
-        <button class="btn btn-success" type="submit">Создать командировку</button>
 
     </form>
 </div>

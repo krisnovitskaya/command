@@ -32,8 +32,6 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public EmployeeDto getEmployee(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
-        EmployeeDto employeeDto = employeeService.findByUserId(user.getId());
-       // System.out.println("pos " + employeeDto.getPosition() + " name " +employeeDto.getFirstName() + employeeDto.getLastName());
         return employeeService.findByUserId(user.getId());
     }
 }

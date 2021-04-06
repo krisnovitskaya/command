@@ -9,6 +9,8 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Position;
 import ru.geekbrains.javacommand.command.entities.User;
 
+import java.util.Optional;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,6 +42,16 @@ public class EmployeeDto {
         this.middleName = employee.getMiddleName();
         this.lastName = employee.getLastName();
         this.position = employee.getPosition();
+//        this.department = employee.getDepartment();
+//        this.user = employee.getUser();
+    }
+
+    public EmployeeDto(Optional<Employee> employee){
+        this.id = employee.get().getId();
+        this.firstName = employee.get().getFirstName();
+        this.middleName = employee.get().getMiddleName();
+        this.lastName = employee.get().getLastName();
+        this.position = employee.get().getPosition();
 //        this.department = employee.getDepartment();
 //        this.user = employee.getUser();
     }

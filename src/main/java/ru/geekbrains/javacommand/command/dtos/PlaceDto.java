@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import ru.geekbrains.javacommand.command.entities.Place;
 import ru.geekbrains.javacommand.command.entities.PlaceType;
 
+import java.util.Optional;
+
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,12 @@ public class PlaceDto {
         this.id = place.getId();
         this.title = place.getTitle();
         this.placeType = place.getPlaceType();
+    }
+
+    public PlaceDto(Optional<Place> place){
+        this.id = place.get().getId();
+        this.title = place.get().getTitle();
+        this.placeType = place.get().getPlaceType();
     }
 
 

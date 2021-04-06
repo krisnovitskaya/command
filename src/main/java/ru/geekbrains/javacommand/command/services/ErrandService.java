@@ -19,7 +19,7 @@ public interface ErrandService {
 	 */
 	ErrandDto findErrandById(Long id);
 
-	Errand saveErrand(ErrandDto errandDto);
+	void saveErrand(Errand errand);
 	
 	List<CurrentErrandDto> getListCurrent();
 

@@ -9,7 +9,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
             .then(function (response) {
                 console.log("Получение даных текущего сотрудника");
                 $scope.Employee = response.data;
-               // console.log(response.data);
             });
     };
 
@@ -21,8 +20,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                     .then(function (response) {
                         console.log("Получение списка отделов");
                         $scope.DepartmentsList = response.data;
-                       // console.log(response.data);
-                        console.log($scope.DepartmentsList.length + ' Departments loaded');
                     });
     };
 
@@ -34,7 +31,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                         .then(function (response) {
                             console.log("Получение списка сотрудников отделов");
                             $scope.EmployeesList = response.data;
-                           // console.log(response.data);
                         });
         };
 
@@ -46,7 +42,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                             .then(function (response) {
                                 console.log("Получение списка типов командировок");
                                 $scope.ErrandMatterTypesList = response.data;
-                               // console.log(response.data);
                             });
             };
 
@@ -58,33 +53,31 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                         .then(function (response) {
                                  console.log("Получение списка типов места назначения");
                                  $scope.PlaceTypesList = response.data;
-                              //   console.log(response.data);
                         });
          };
 
          $scope.getPlacesList = function (placeTypeId) {
                         $http({
-                                 url: contextPath + '/api/v1/errands/getPlacesList' + placeTypeId,
+                                 url: contextPath + '/api/v1/errands/getPlacesList/' + placeTypeId,
                                  method: 'GET'
                         })
                         .then(function (response) {
                                   console.log("Получение списка мест");
                                   $scope.PlacesList = response.data;
-                                  //console.log(response.data);
                                  });
          };
 
          $scope.createErrand = function () {
-          $http.post(contextPath + '/api/v1/errands', $scope.errand, $scope.errandDetails)
+          $http.post(contextPath + '/api/v1/errands/createErrand', $scope.NewErrandDto)
                      .then(function (response) {
                          $scope.errand = null;
-                         $scope.errandDetails=null;
+                         $scope.errandDetails = null;
+                         $scope.NewErrandDto = null;
                          alert('Ваша заявка успешно оформлена');
                      });
          };
 
     $scope.fillTable();
-   // $scope.getEmployeesList();
     $scope.getDepartmentsList();
     $scope.getErrandMatterTypesList();
     $scope.getPlaceTypesList();

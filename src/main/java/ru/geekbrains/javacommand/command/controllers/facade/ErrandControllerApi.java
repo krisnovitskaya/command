@@ -4,13 +4,12 @@
 package ru.geekbrains.javacommand.command.controllers.facade;
 
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
+import ru.geekbrains.javacommand.command.dtos.*;
 
+import java.security.Principal;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import ru.geekbrains.javacommand.command.dtos.PlaceDto;
-import ru.geekbrains.javacommand.command.dtos.PlaceTypeDto;
+import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 
@@ -31,11 +30,11 @@ public interface ErrandControllerApi {
 	 * @param errandDto
 	 * @return ResponseEntity<?>
 	 */
-  @PostMapping(
-      path = "/create",
-      consumes = "application/json;charset=UTF-8",
-      produces = "application/json;charset=UTF-8")
-  ResponseEntity<?> create(@RequestBody ErrandDto errandDto);
+//  @PostMapping(
+//      path = "/create",
+//      consumes = "application/json;charset=UTF-8",
+//      produces = "application/json;charset=UTF-8")
+//  ResponseEntity<?> create(@RequestBody ErrandDto errandDto);
 
 	/**
 	 * Update entity Errand by id
@@ -79,7 +78,7 @@ public interface ErrandControllerApi {
 	@GetMapping("/getPlacesList/{placeType_id}")
 	List<PlaceDto> getPlaces(@PathVariable(name = "placeType_id") Long placeTypeId);
 
-	@PostMapping
-	public ErrandDto createErrand(@RequestBody Errand errand, @RequestBody ErrandDetails errandDetails);
+	@PostMapping("/createErrand")
+	public void createErrand(@RequestBody NewErrandDto newErrandDto);
 
 }
