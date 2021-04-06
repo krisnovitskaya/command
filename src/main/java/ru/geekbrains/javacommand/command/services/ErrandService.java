@@ -60,4 +60,6 @@ public interface ErrandService {
      * @return ByteArrayInputStream report
      */
     ByteArrayInputStream findAllForReport(Specification<Errand> spec);
+
+    void updateErrands(ErrandDto errand);
 }

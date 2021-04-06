@@ -11,4 +11,6 @@ public interface DepartmentService {
     List<DepartmentDto> findAll();
 
     Department findAllEmployeesByMaster(Employee master);
+
+    Department findDepartmentByDepartmentTitle(String departmentTitle);
 }

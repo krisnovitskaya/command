@@ -1,6 +1,8 @@
 package ru.geekbrains.javacommand.command.dtos;
 
 import java.time.OffsetDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -8,6 +10,7 @@ import ru.geekbrains.javacommand.command.entities.Errand;
 
 @Data
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrandDto {
 
     private Long id;
@@ -50,8 +53,8 @@ public class ErrandDto {
                 + errand.getErrandDetails().getCreatedBy().getMiddleName();
         this.confirmedOrRejectedById = errand.getErrandDetails().getConfirmedOrRejectedBy().getId();
         this.confirmedOrRejectedByFIO = errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName() + " " +
-                        errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName() + " " +
-                        errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
+                errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName() + " " +
+                errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
     }
 
 }

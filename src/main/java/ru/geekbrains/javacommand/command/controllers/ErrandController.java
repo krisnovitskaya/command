@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.Role;
-import ru.geekbrains.javacommand.command.entities.User;
+import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.services.UserService;
+import ru.geekbrains.javacommand.command.services.*;
+import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 
@@ -39,6 +34,8 @@ public class ErrandController implements ErrandControllerApi {
     private final ErrandService errandService;
     private final EmployeeService employeeService;
     private final UserService userService;
+    private final EmailService emailService;
+    private final DepartmentService departmentService;
 
     //TODO изменить формат вывода даты на читаемый
     @GetMapping(value = "/pending", produces = "application/json")
@@ -55,7 +52,7 @@ public class ErrandController implements ErrandControllerApi {
         Specification<Errand> spec = errandFilter.getSpec();
 
         //get masterEmployee from Principal
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        User user = userService.findByUsername(principal.getName());
         Employee master = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("master not found"));
 
         for (Role role : user.getListRoles()) {
@@ -70,7 +67,7 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @GetMapping(value = "/report")
-    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params){
+    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=report.xlsx");
@@ -92,6 +89,57 @@ public class ErrandController implements ErrandControllerApi {
     @Override
     public ResponseEntity<?> create(List<ErrandDto> errandCreateDtoList) {
         return ResponseEntity.ok(errandService.createErrands(errandCreateDtoList));
+    }
+
+    @Override
+    public void createErrand(ErrandDto newErrandDto, Principal principal) {
+        var name = principal.getName();
+        emailAlertWhenErrandCreated(newErrandDto, name);
+    }
+
+    @Override
+    public ResponseEntity<?> updateErrandStatus(Long errandId, String status) {
+        var errand = errandService.findErrandById(errandId);
+        errand.setStatusType(status);
+        errandService.updateErrands(errand);
+        var responseMsg = "Email alert sent";
+        emailAlertWhenErrandUpdated(errand);
+        return ResponseEntity.ok(responseMsg);
+    }
+
+    /**
+     * При создании новой командировки сотрудником, непосредственный начальник
+     * получает оповещение на почту
+     * @see EmailService
+     * @param newErrandDto
+     * @param name
+     * @author owpk
+     */
+    private void emailAlertWhenErrandCreated(ErrandDto newErrandDto, String name) {
+        var user = userService.findByUsername(name);
+        var isMaster= user.getListRoles().stream()
+                .anyMatch(x -> x.getName().equals("MASTER"));
+        if (!isMaster) {
+            var dep = departmentService.findDepartmentByDepartmentTitle(newErrandDto.getDepartmentTitle());
+            var master= dep.getMaster();
+            var msg = ErrandEmailMessageAlertHelper.generateEmailMessage(newErrandDto);
+            emailService.sendSimpleMessage(master.getEmployeeDetails().getMail(), "Создана командровка", msg);
+        }
+    }
+
+    /**
+     * Создает email сообщение при смене статуса командировки на confirmed или reject, отправляет
+     * оповещения на почту командируемого сотрудника
+     * @see EmailService
+     * @param errand
+     * @author owpk
+     */
+    private void emailAlertWhenErrandUpdated(ErrandDto errand) {
+        var employee = employeeService.findById(errand.getEmployeeId());
+        var emailMsg = ErrandEmailMessageAlertHelper.generateEmailMessage(errand);
+        emailService.sendSimpleMessage(
+                employee.getEmployeeDetails().getMail(),
+                "Статус командировки обновлен", emailMsg);
     }
 
     @Override
