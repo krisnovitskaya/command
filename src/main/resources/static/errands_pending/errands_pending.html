@@ -10,8 +10,8 @@
                     <span class="input-group-text">ФИО</span>
                     <select id="employee" class="form-control filter_box" ng-model="filter.employee">
                         <option value="" selected></option>
-                        <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.lastName}}
-                            {{employee.firstName}} {{employee.middleName}}
+                        <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.last_name}}
+                            {{employee.first_name}} {{employee.middle_name}}
                         </option>
                     </select>
                 </div>
@@ -56,12 +56,12 @@
                 <tbody>
 
                 <tr ng-repeat="e in ErrandsPage.content">
-                    <td>{{e.employeeLastName}} {{e.employeeFirstName}} {{e.employeeMiddleName}}</td>
+                    <td>{{e.employeeFIO}}</td>
                     <td>{{e.detailMatterType}}</td>
                     <td>{{e.dateStart}}</td>
                     <td>{{e.dateEnd}}</td>
                     <td>{{e.departmentTitle}}</td>
-                    <td>{{e.detailPlace}}</td>
+                    <td>{{e.placeType}}</td>
                     <td>
                         <button class="btn btn-primary" ng-click="errandDetails(e.id)">Детали</button>
                         <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>

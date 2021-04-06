@@ -6,7 +6,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.ErrandDetails;
+import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.repositories.*;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.util.PageImpl;
@@ -106,42 +109,41 @@ public class ErrandServiceImpl implements ErrandService {
     }
 
 
-    //TODO написать обратный маппер
-    private <T extends ErrandDto> Errand convertToErrand(T errandDto) {
-//
-//        Employee employee = employeeRepository.findEmployeeById(errandDto.getEmployeeId());
-//        errand.setEmployee(employee);
-//        ErrandStatusType errandStatusType =
-//                errandStatusTypeRepository.findErrandStatusTypeById(errandDto.getStatusId());
-//        errand.setStatusType(errandStatusType);
-//        ErrandDetails errandDetails = null;
-//        if (errandDto.getErrandDetailsDto() != null) {
-//            if (errand.getErrandDetails() == null) {
-//                errandDetails = new ErrandDetails();
-//            } else {
-//                errandDetails = errand.getErrandDetails();
-//            }
-//            ErrandDetailsDto errandDetailsDto = errandDto.getErrandDetailsDto();
-//            errandDetails.setMatter(
-//                    errandMatterTypeRepository.findErrandMatterTypeById(
-//                            errandDetailsDto.getErrandMatterTypeId()));
-//            errandDetails.setPlace(placeRepository.findPlaceById(errandDetailsDto.getPlaceId()));
-//            errandDetails.setComment(errandDetailsDto.getComment());
-//            errandDetails.setCreatedBy(
-//                    employeeRepository.findEmployeeById(errandDetailsDto.getCreatedById()));
-//            errandDetails.setConfirmedOrRejectedBy(
-//                    employeeRepository.findEmployeeById(errandDetailsDto.getConfirmedOrRejectedById()));
-//            errand.setErrandDetails(errandDetails);
-//        }
-//        errand.setDateStart(errandDto.getDateStart());
-//        errand.setDateEnd(errandDto.getDateEnd());
-//        return errand;
-                return null;
+    public Errand convertToErrand(ErrandDto errandDto) {
+
+        //Ищем командировку по айди, иначе создаем новую
+        Errand errand;
+        if (errandDto.getId() == null) {
+            errand = new Errand();
+        } else errand = errandRepository.findErrandById(errandDto.getId());
+
+        //Находим сотрудника по айди и записываем
+        Employee employee = employeeRepository.findEmployeeById(errandDto.getEmployeeId());
+        errand.setEmployee(employee);
+
+        //Находим статус по имени и сохраняем
+        ErrandStatusType errandStatusType = errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType());
+        errand.setStatusType(errandStatusType);
+
+        //Заполняем Детали из ДТО
+        ErrandDetails errandDetails = errand.getErrandDetails();
+
+        errand.getErrandDetails().setMatter(errandMatterTypeRepository.findErrandMatterTypeByMatter(errandDto.getMatter()));
+        errand.getErrandDetails().setPlace(placeRepository.findPlaceByTitle(errandDto.getPlace()));
+        errand.getErrandDetails().setComment(errandDto.getComment());
+        errandDetails.setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
+        errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getConfirmedOrRejectedById()));
+        errand.setErrandDetails(errandDetails);
+
+        errand.setDateStart(errandDto.getDateStart());
+        errand.setDateEnd(errandDto.getDateEnd());
+
+        return errand;
     }
 
 
     @Override
-    public ByteArrayInputStream findAllForReport(Specification<Errand> spec){
+    public ByteArrayInputStream findAllForReport(Specification<Errand> spec) {
         return ReportErrandExporterExcel.errandsToExcel(errandRepository.findAll(spec));
     }
 }

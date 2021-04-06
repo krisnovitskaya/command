@@ -15,7 +15,6 @@ import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
 @RequiredArgsConstructor
 public class ErrandMatterTypeServiceImpl implements ErrandMatterTypeService {
     
-	@Autowired
 	private final ErrandMatterTypeRepository matterTypeRepository;
 
 	@Override

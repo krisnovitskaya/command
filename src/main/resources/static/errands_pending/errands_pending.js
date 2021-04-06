@@ -38,6 +38,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             }
         })
             .then(function (response) {
+                console.log(response);
                 $scope.ErrandsPage = response.data;
                 $scope.PaginationArray = $scope.generatePagesInd(pageIndex - PAGINATION_DIAPASON, pageIndex + PAGINATION_DIAPASON);
             });
