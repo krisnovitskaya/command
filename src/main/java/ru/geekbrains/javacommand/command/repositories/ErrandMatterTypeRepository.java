@@ -6,4 +6,6 @@ import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
 
 @Repository
 public interface ErrandMatterTypeRepository extends JpaRepository<ErrandMatterType, Long> {
+	
+	ErrandMatterType findErrandMatterTypeById(Long id);
 }

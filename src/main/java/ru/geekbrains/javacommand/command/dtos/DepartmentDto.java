@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.geekbrains.javacommand.command.entities.Department;
 
-/**
- * @author owpk
- */
 @Getter
 @Setter
 @NoArgsConstructor

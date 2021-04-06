@@ -1,23 +1,17 @@
 package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandsStatisticsControllerApi;
-import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.PlaceDto;
-import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.entities.PlaceType;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.services.ErrandStatusTypeService;
 import ru.geekbrains.javacommand.command.services.PlaceService;
 import ru.geekbrains.javacommand.command.services.PlaceTypeService;
-import ru.geekbrains.javacommand.command.utils.ErrandSpecificationResolver;
+import ru.geekbrains.javacommand.command.util.ErrandsStatisticSpecificationResolver;
 
 import java.util.List;
 import java.util.Map;
@@ -37,10 +31,9 @@ public class ErrandsStatisticController implements ErrandsStatisticsControllerAp
 
     @Override
     public ResponseEntity<?> getAllErrands(Integer page, Map<String, String> specs) {
-        var resolvedSpecs = new ErrandSpecificationResolver(specs).resolve();
-        Page<Errand> errands = errandService.getAllErrands(resolvedSpecs, page < 0 ? 1 : page - 1, 3);
-        var result = new PageImpl<>(errands.stream().map(ErrandDto::new).collect(Collectors.toList()));
-        return ResponseEntity.ok(result);
+        var resolvedSpecs = new ErrandsStatisticSpecificationResolver(specs).resolve();
+        var errands = errandService.findAll(resolvedSpecs, page < 0 ? 1 : page - 1, 3);
+        return ResponseEntity.ok(errands);
     }
 
     @Override

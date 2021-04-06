@@ -43,7 +43,36 @@
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
+            })
+            .when('/employee_form', {
+                templateUrl: 'administration/employee_form.html',
+                controller: 'administrationController'
             });
+
+        $httpProvider.interceptors.push(function ($q, $location, $localStorage) {
+            return {
+                'responseError': function (rejection, $http) {
+
+                    let defer = $q.defer();
+                    console.log(rejection.data);
+
+                    if (rejection.status === 403) {
+                        window.location.href = '#!/auth';
+                    }
+
+                    if (rejection.status === 401) {
+                        if (!(localStorage.currentUser === null)) {
+                            delete $localStorage.currentUser;
+                            $http.defaults.headers.common.Authorization = '';
+                        }
+                        window.location.href = '#!/auth';
+                    }
+
+                    defer.reject(rejection);
+                    return defer.promise;
+                }
+            };
+        });
 
     }
 
@@ -73,7 +102,6 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
             $(this).toggleClass('active');
         });
     });
-
 
 });
 

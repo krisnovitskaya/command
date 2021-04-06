@@ -21,4 +21,11 @@ public class ExceptionControllerAdvice {
         CommandError err = new CommandError(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleExcelExportException(ExcelExportException e) {
+        log.error(e.getMessage());
+        CommandError err = new CommandError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
 }

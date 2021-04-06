@@ -1,6 +1,3 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.controllers.facade;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +22,7 @@ public interface ErrandControllerApi {
 	/**
 	 * Find entity Errand by id
 	 * @param id
-	 * @return ErrandDto
+	 * @return ResponseEntity<?>
 	 */
 	@GetMapping(path = "/findbyid",
 			produces = "application/json;charset=UTF-8")
@@ -33,49 +30,56 @@ public interface ErrandControllerApi {
 
 	/**
 	 * Create entity Errand
-	 * @param errandDto
-	 * @return ResponseEntity<?>
+	 * @param errandCreateDtoList
+	 * @return ResponseEntity
 	 */
   @PostMapping(
       path = "/create",
       consumes = "application/json;charset=UTF-8",
       produces = "application/json;charset=UTF-8")
-  ResponseEntity<?> create(@RequestBody ErrandDto errandDto);
+  ResponseEntity<?> create(@RequestBody List<ErrandDto> errandCreateDtoList);
 
 	/**
 	 * Update entity Errand by id
-	 * @param id
-	 * @param errandDto
-	 * @return ResponseEntity<?>
+	 * @param errandUpdateDtoList
+	 * @return ResponseEntity
 	 */
-	@PutMapping(path = "/updatebyid",
+	@PutMapping(path = "/update",
 			consumes = "application/json;charset=UTF-8",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> updateById(@RequestParam (name = "id") Long id, @RequestBody ErrandDto errandDto);
+	ResponseEntity<?> update(@RequestBody List<ErrandDto> errandUpdateDtoList);
 
 	/**
 	 * Fill deleted field to true for Errand entity by id
-	 * @param id
-	 * @return ResponseEntity<?>
+	 * @param idsList
+	 * @return ResponseEntity
 	 */
-	@DeleteMapping(path = "/deletebyid",
+	@DeleteMapping(path = "/deletebyids",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> deleteById(@RequestParam (name = "id") Long id);
+	ResponseEntity<?> deleteByIds(@RequestBody List<Long> idsList);
 
 	/**
 	 * Remove entity Errand by id from DataBase
-	 * @param id
-	 * @return ResponseEntity<?>
+	 * @param idsList
+	 * @return ResponseEntity
 	 */
-	@DeleteMapping(path = "/removebyid",
+	@DeleteMapping(path = "/removebyids",
 			produces = "application/json;charset=UTF-8")
-	ResponseEntity<?> removeById(@RequestParam (name = "id") Long id);
+	ResponseEntity<?> removeByIds(@RequestBody List<Long> idsList);
 
 	/**
 	 * Return All ErrandMatterType as DTO from current DataBase
-	 * @return List<ErrandMatterDto>
+	 * @return List ErrandMatterDto
 	 */
 	@GetMapping(value = "/matters", produces = "application/json;charset=UTF-8")
 	List<ErrandMatterDto> getMatters();
+
+	/**
+	 *
+	 * @param params
+	 * @return report file
+	 */
+	@GetMapping(value = "/report")
+	ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
 
 }

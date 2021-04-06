@@ -1,4 +1,4 @@
-package ru.geekbrains.javacommand.command.utils;
+package ru.geekbrains.javacommand.command.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

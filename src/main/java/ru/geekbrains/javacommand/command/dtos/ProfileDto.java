@@ -30,6 +30,6 @@ public class ProfileDto {
         this.department = employee.getDepartment().getTitle();
         this.position = employee.getPosition().getPosition();
         this.email = employee.getEmployeeDetails().getMail();
-        this.master = employee.getDepartment().getMaster().getFIO();
+        this.master = employee.getDepartment().getMaster() != null ? employee.getDepartment().getMaster().getFIO() : null;
     }
 }

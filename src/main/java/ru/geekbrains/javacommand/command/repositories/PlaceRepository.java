@@ -6,4 +6,5 @@ import ru.geekbrains.javacommand.command.entities.Place;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
+	Place findPlaceById(Long id);
 }

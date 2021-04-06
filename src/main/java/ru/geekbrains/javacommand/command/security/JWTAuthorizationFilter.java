@@ -1,8 +1,10 @@
 package ru.geekbrains.javacommand.command.security;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +27,9 @@ import java.util.stream.Collectors;
  * @author owpk
  * @author jackwizard88
  */
- @Component
+@Component
 @Slf4j
+@RequiredArgsConstructor
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     @Value("${security.jwt.token-header}")
@@ -35,8 +38,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Value("${security.jwt.token-prefix}")
     private String TOKEN_PREFIX;
 
-    @Autowired
-    private JWTTokenManager tokenManager;
+    private final JWTTokenManager tokenManager;
 
     /**
      * JWT фильтр запросов пользователей
@@ -52,17 +54,20 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
+
         String header = req.getHeader(TOKEN_HEADER);
+
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
             chain.doFilter(req, res);
             return;
         }
+
         try {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(req, res);
-        } catch (BadCredentialsException | JWTDecodeException | IOException | ServletException e) {
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getLocalizedMessage());
+        } catch (BadCredentialsException | JWTDecodeException  | TokenExpiredException e) {
+            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
             log.error("jwt filter error: {}", e.getMessage());
         }
     }

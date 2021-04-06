@@ -40,7 +40,7 @@ public class Employee extends DefaultEntity {
     @OneToOne(cascade =  CascadeType.PERSIST, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
 
-
+    //TODO тут этому не место
     public String getFIO(){
         return String.format("%s %s %s", this.getLastName(), this.getFirstName(), this.getMiddleName());
     }

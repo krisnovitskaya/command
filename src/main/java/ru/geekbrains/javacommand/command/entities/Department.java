@@ -28,7 +28,8 @@ public class Department extends DefaultEntity {
     @JsonIgnore
     private Department masterDepartment;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy ="department" )
+    @OneToMany
+		@JoinColumn(name = "department_id")
     private List<Employee> employees;
 
 }

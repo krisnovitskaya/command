@@ -116,13 +116,13 @@ create table if not exists errands(
     id                  bigserial primary key,
     status_id           bigint,
     employee_id         bigint,
-    errand_detail_id    bigint,
+    errand_details_id    bigint,
     date_start          timestamp not null,
     date_end            timestamp,
     created             timestamp default current_timestamp,
     updated             timestamp default current_timestamp,
-    deleted             int default 0,
+    deleted             boolean default 0,
     foreign key (status_id) references errands_status_types(id),
     foreign key (employee_id) references employees(id),
-    foreign key (errand_detail_id) references errands_details(id)
+    foreign key (errand_details_id) references errands_details(id)
 );

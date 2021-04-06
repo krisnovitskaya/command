@@ -1,5 +1,6 @@
-package ru.geekbrains.javacommand.command.utils;
+package ru.geekbrains.javacommand.command.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.javacommand.command.entities.Errand;
 
@@ -10,12 +11,13 @@ import java.util.Map;
 /**
  * @author owpk
  */
-public class ErrandSpecificationResolver {
+@Slf4j
+public class ErrandsStatisticSpecificationResolver {
 
     private final Map<String, String> specs;
     private Specification<Errand> defaultSpec;
 
-    public ErrandSpecificationResolver(Map<String, String> specs) {
+    public ErrandsStatisticSpecificationResolver(Map<String, String> specs) {
         this.specs = specs;
         defaultSpec = Specification.where(null);
     }
@@ -49,7 +51,9 @@ public class ErrandSpecificationResolver {
 
     private void appendIfContains(String key, Specification<Errand> specification) {
         if (specs.containsKey(key)) {
-           defaultSpec = defaultSpec.and(specification);
+            if (specs.get(key) != null && !specs.get(key).isBlank())
+                defaultSpec = defaultSpec.and(specification);
+            else log.warn("empty specification with key: {}", key);
         }
     }
 

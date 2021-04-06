@@ -1,29 +1,64 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
-import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.util.PageImpl;
 
 public interface ErrandService {
 
-	/**
-	 *
-	 * @param id
-	 * @return ErrandDto
-	 */
-	ErrandDto findErrandById(Long id);
+    /**
+     * @param id
+     * @return ErrandDto
+     */
+    ErrandDto findErrandById(Long id);
 
-	Errand saveErrand(ErrandDto errandDto);
-	
-	List<CurrentErrandDto> getListCurrent();
+    /**
+     * @param errandDtoList
+     * @return List ErrandDto
+     */
+    List<ErrandDto> createErrands(List<ErrandDto> errandDtoList);
 
-	Page<Errand> getAllErrands(Specification<Errand> specification, int page, int size);
+    /**
+     * @param errandDtoList
+     * @return List ErrandDto
+     */
+    List<ErrandDto> updateErrands(List<ErrandDto> errandDtoList);
+
+    /**
+     * @param idsList
+     * @return List ErrandDto
+     */
+    List<ErrandDto> deleteErrands(List<Long> idsList);
+
+    /**
+     * @param idsList
+     * @return List ErrandDto
+     */
+    List<ErrandDto> removeErrands(List<Long> idsList);
+
+    /**
+     * @return List ErrandDto
+     */
+    List<ErrandDto> getListCurrent();
+
+    /**
+     * @param spec
+     * @param page
+     * @param size
+     * @return PageImpl ErrandDto
+     */
+    PageImpl<ErrandDto> findAll(Specification<Errand> spec, int page, int size);
+
+    /**
+     * @param spec
+     * @return ByteArrayInputStream report
+     */
+    ByteArrayInputStream findAllForReport(Specification<Errand> spec);
+
 }
