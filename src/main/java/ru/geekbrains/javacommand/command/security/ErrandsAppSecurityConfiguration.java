@@ -28,7 +28,7 @@ public class ErrandsAppSecurityConfiguration extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/post/**").hasAnyRole("ADMIN", "POST")
                 .antMatchers("/api/v1/employees/**").authenticated()

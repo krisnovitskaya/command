@@ -1,10 +1,36 @@
 <div class="mb-3 text-center" ng-controller="administrationController">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Отдел</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Аккаунт</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-model="employee">
+            <td>{{employee.id}}</td>
+            <td>{{employee.first_name}}</td>
+            <td>{{employee.middle_name}}</td>
+            <td>{{employee.last_name}}</td>
+            <td>{{employee.department_name}}</td>
+            <td>{{employee.position_name}}</td>
+            <td>{{employee.user_name}}</td>
+        </tr>
+        </tbody>
+    </table>
+
     <div class="form-group col-md-6">
         <h3>Cотрудник</h3>
     </div>
     <div class="form-group col-md-6">
         <label for="elementSurname">Фамилия</label>
-        <input class="form-control" type="text" ng-model="employee.last_name" id="elementSurname">
+        <input class="form-control" type="text" value="{{employee.last_name}}" ng-model="employee.last_name" id="elementSurname">
     </div>
     <div class="form-group col-md-6">
         <label for="elementName">Имя</label>

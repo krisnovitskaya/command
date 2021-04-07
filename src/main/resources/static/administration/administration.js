@@ -43,6 +43,7 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.employee = null;
     $scope.editEmployee = null;
+    $scope.employee69 = {}
 
     $scope.create = function (employee) {
 
@@ -67,7 +68,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.edit = function (emp) {
-        $scope.editEmployee = emp;
+        $scope.employee = emp;
 
     }
 
