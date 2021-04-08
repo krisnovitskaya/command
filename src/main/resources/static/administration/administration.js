@@ -42,15 +42,12 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.employee = null;
-    $scope.editEmployee = null;
-    $scope.employee69 = {}
 
     $scope.create = function (employee) {
 
         $http.post(contextPath + "/api/v1/employees", $scope.employee = employee)
             .then(resp => {
                     $scope.employee = null;
-                    $scope.editEmployee = null;
                 },
                 resp => {
                     console.error(resp);

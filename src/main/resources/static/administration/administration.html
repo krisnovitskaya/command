@@ -26,7 +26,9 @@
                 <td>{{emp.position_name}}</td>
                 <td>{{emp.user_name}}</td>
                 <td>
-                    <a class="btn btn-outline-primary" ng-click="edit(emp)" href="#!/employee_form">Редактировать</a>
+                    <a class="btn btn-outline-primary" href="#!/employee_form">Редактировать</a>
+                    <button class="btn btn-outline-primary" ng-click="edit(emp.last_name)">edit</button>
+
                     <button ng-click="delete(emp)" class="btn btn-outline-danger">Удалить</button>
                 </td>
             </tr>
