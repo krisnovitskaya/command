@@ -1,6 +1,7 @@
 <div>
     <h3>Профиль</h3>
     <div>
+<<<<<<< HEAD
         <table class="table " cellpadding="0" cellspacing="0" style="width: 500px">
             <tbody>
             <tr>
@@ -28,6 +29,31 @@
     </div>
 
     <form style="width: 600px" novalidate ng-submit="changePassword()">
+=======
+        <div class="form-group col-md-6">
+            <label for="fio">ФИО</label>
+            <input name="textfield" type="text" value="{{Profile.fio}}" id="fio" disabled>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="position">Должность</label>
+            <input name="textfield" type="text" value="{{Profile.position}}" id="position" disabled>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="email">e-mail</label>
+            <input name="textfield" type="text" value="{{Profile.email}}" id="email" disabled>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="department">Подразделение</label>
+            <input name="textfield" type="text" value="{{Profile.department}}" id="department" disabled>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="master">Начальник</label>
+            <input name="textfield" type="text" value="{{Profile.master}}" id="master" disabled>
+        </div>
+    </div>
+
+    <form novalidate ng-submit="changePassword()">
+>>>>>>> remotes/origin/eagromova-Task27-28-continue
         <div class="form-group col-md-6">
             <label for="pass">Введите текущий пароль</label>
             <input class="form-control" type="password" ng-model="ChangePassword.currentPass" id="pass">

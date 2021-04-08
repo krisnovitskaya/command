@@ -1,7 +1,3 @@
-/*
- * License Headers.
- */
-
 package ru.geekbrains.javacommand.command.entities;
 
 import java.util.Set;
@@ -11,15 +7,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
-/**
- * @author Igor Popovich, email: popovichia@gmail.com
- */
 
 @Entity
 @Data
@@ -43,7 +36,7 @@ public class User extends DefaultEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> listRoles;
 
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
 }
-
-
-

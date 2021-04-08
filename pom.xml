@@ -126,7 +126,6 @@
             <version>2.3.4.RELEASE</version>
         </dependency>
         <!-- /email -->
-
     </dependencies>
 
     <build>

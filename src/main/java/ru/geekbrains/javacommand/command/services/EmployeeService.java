@@ -1,12 +1,10 @@
 package ru.geekbrains.javacommand.command.services;
 
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 
-import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +24,12 @@ public interface EmployeeService {
     void deleteEmployee(Long id);
 
     Employee findById(Long id);
+
+    List<EmployeeDto> findAllByDepartmentId(Long id);
+
+    EmployeeDto findByUsername(String username);
+    
+		EmployeeDto findByUserId(Long id);
+
+    Employee convertToEmployee(EmployeeDto employeeDto);
 }

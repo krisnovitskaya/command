@@ -15,6 +15,7 @@ public class PostController implements PostControllerApi {
 
     @Override
     public List<ErrandDto> getListCurrent() {
+//    public List<CurrentErrandDto> getListCurrent() {
         return errandService.getListCurrent();
     }
 }

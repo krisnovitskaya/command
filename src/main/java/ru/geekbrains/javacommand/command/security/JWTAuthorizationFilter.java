@@ -84,6 +84,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
             }
         }
+
         return null;
     }
 }

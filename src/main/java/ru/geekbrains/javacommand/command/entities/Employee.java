@@ -33,7 +33,7 @@ public class Employee extends DefaultEntity {
     @JsonBackReference
     private Department department;
 
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -44,5 +44,4 @@ public class Employee extends DefaultEntity {
     public String getFIO(){
         return String.format("%s %s %s", this.getLastName(), this.getFirstName(), this.getMiddleName());
     }
-
 }
