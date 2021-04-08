@@ -1,12 +1,24 @@
-<<<<<<< HEAD
 <div class="mb-3 text-center" ng-controller="administrationController">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Cотрудник</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-model="employee">
+            <td>{{employee}}</td>
+        </tr>
+        </tbody>
+    </table>
 
     <div class="form-group col-md-6">
         <h3>Cотрудник</h3>
     </div>
     <div class="form-group col-md-6">
         <label for="elementSurname">Фамилия</label>
-        <input class="form-control" type="text" value="{{employee.last_name}}" ng-model="employee.last_name" id="elementSurname">
+        <input class="form-control" type="text" ng-model="employee.last_name" id="elementSurname">
     </div>
     <div class="form-group col-md-6">
         <label for="elementName">Имя</label>
@@ -17,145 +29,40 @@
         <input class="form-control" type="text" ng-model="employee.middle_name" id="elementMiddleName">
     </div>
     <div class="form-group col-md-6">
-        <label for="employeePositionId">Должность сотрудника</label>
+        <label for="employeePositionName">Должность сотрудника</label>
         <span  class="nullable">
             <select class="form-control" ng-model="employee.position_name"
-                    ng-options="p.position as p.position for p in positionList"  id="employeePositionId">
+                    ng-options="p.position as p.position for p in positionList"  id="employeePositionName">
                 <option value="">Должность сотрудника</option>
             </select>
+<!--            <select class="form-control" ng-model="employee.position_id"-->
+<!--                    ng-options="p.id as p.position for p in positionList"  id="employeePositionId">-->
+<!--                <option value="">Должность сотрудника</option>-->
+<!--            </select>-->
+
         </span><br/>
     </div>
     <div class="form-group col-md-6">
-        <label for="employeeDepartmentId">Отдел сотрудника</label>
+        <label for="employeeDepartmentName">Отдел сотрудника</label>
         <span  class="nullable">
             <select class="form-control" ng-model="employee.department_name"
-                    ng-options="d.title as d.title for d in departmentList" id="employeeDepartmentId">
+                    ng-options="d.title as d.title for d in departmentList" id="employeeDepartmentName">
                 <option value="">Отдел сотрудника</option>
             </select>
+<!--            <select class="form-control" ng-model="employee.department_id"-->
+<!--                    ng-options="d.id as d.title for d in departmentList"  id="employeeDepartmentId">-->
+<!--                <option value="">Отдел сотрудника</option>-->
+<!--            </select>-->
+
         </span><br/>
     </div>
-    <div class="form-group col-md-6">
-        <label for="employeeUserId">Учётная запись сотрудника</label>
-        <span  class="nullable">
-            <select class="form-control" ng-model="employee.user_name"
-                    ng-options="u.userName as u.userName for u in userList" id="employeeUserId">
-                <option value="">Учётная запись сотрудника</option>
-            </select>
-        </span><br/>
-    </div>
+<!--    <input type="hidden" ng-model="employee.user_name" value="def" id="user_name">-->
+<!--    <input type="hidden" ng-model="employee.mail" value="def" id="mail">-->
+<!--    <input type="hidden" ng-model="employee.position_id" value="100" id="position_id">-->
+<!--    <input type="hidden" ng-model="employee.department_id" value="100" id="department_id">-->
+<!--    <input type="hidden" ng-model="employee.user_id" value="100" id="user_id">-->
 
     <div>
         <button ng-click="create(employee)" class="btn btn-success">Сохранить</button>
     </div>
 </div>
-=======
-<!doctype html>
-
-<html ng-app="app">
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <title>Администрирование</title>
-</head>
-
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#!/">Программа Командировок/Администрирование списка сотрудников</a>
-
-    <div class="collapse navbar-collapse" ng-controller="EmployeeController" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
-
-            <li class="nav-item">
-                <a class="nav-link" ng-href="/admin">Главная</a>
-            </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
-                <a class="nav-link" ng-href="/employee_form">Создать карточку сотрудника</a>
-            </li>
-
-        </ul>
-    </div>
-</nav>
-
-
-<main class="content-wrapper" >
-
-    <div class="container-fluid" ng-controller="EmployeeController">
-        <h3>Cотрудник</h3>
-        <form novalidate ng-submit="createNewEmployee()">
-            <div class="form-group col-md-6">
-                <label for="elementSurname">Фамилия</label>
-                <input class="form-control" type="text" ng-model="employee.surname" id="elementSurname">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="elementName">Имя</label>
-                <input class="form-control" type="text" ng-model="employee.name" id="elementName">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="elementMiddleName">Отчество</label>
-                <input class="form-control" type="text" ng-model="employee.middleName" id="elementMiddleName">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="employeePositionId">Должность сотрудника</label>
-                <span  class="nullable">
-                        <select class="form-control" ng-model="employee.position_id"  id="employeePositionId" required="">
-                            <option value="">Должность сотрудника</option>
-                            <option value="{{p.id}}" ng-options="p.position for p in positionList">{{p.title}}</option>
-                        </select>
-                    </span><br/>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="employeeDepartmentId">Отдел сотрудника</label>
-                <span  class="nullable">
-                        <select class="form-control" ng-model="employee.department_id"  id="employeeDepartmentId" required="">
-                            <option value="">Отдел сотрудника</option>
-                            <option value="{{d.id}}" ng-options="d.title for d in departmentList">{{d.title}}</option>
-                        </select>
-                    </span><br/>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="employeeUserId">Аккаунт сотрудника</label>
-                <span  class="nullable">
-                        <select class="form-control" ng-model="employee.user_id"  id="employeeUserId" required="">
-                            <option value="">Аккаунт сотрудника</option>
-                            <option value="{{u.id}}" ng-options="u.title for u in userList">{{u.username}}</option>
-                        </select>
-                    </span><br/>
-            </div>
-            <div>
-                <button ng-click="create(employee)" class="btn btn-success" type="submit">Сохранить</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="container-fluid">
-
-        <ng-view></ng-view>
-
-        <script src="administration/administration.js"></script>
-
-    </div>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <div class="text-center">
-            <span> TeamWorkers , 2021</span>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
->>>>>>> remotes/origin/eagromova-Task27-28-continue

@@ -28,7 +28,7 @@ public interface EmployeeControllerApi {
     @GetMapping(path = "/all", produces = "application/json")
     List<EmployeeDto> getEmployees();
 
-    @PostMapping
+    @PostMapping(path = "/new")
     void createEmployee(@RequestBody EmployeeDto employeeDto);
 
     @DeleteMapping(path = "/delete/{id}")

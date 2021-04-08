@@ -37,12 +37,13 @@ public class EmployeeDto {
     private String userName;
     private String mail;
 
-		@JsonProperty("position_id")
-    private Position position;
-    @JsonProperty("department_id")
-    private Department department;
-    @JsonProperty("user_id")
-    private User user;
+    //я думаю, что не нужно в DTO класс добавлять сущности целиком (@jonathanovich)
+//    @JsonProperty("position_id")
+//    private Position position;
+//    @JsonProperty("department_id")
+//    private Department department;
+//    @JsonProperty("user_id")
+//    private User user;
 
     public EmployeeDto(Employee e) {
         this.id = e.getId();
@@ -54,13 +55,15 @@ public class EmployeeDto {
         this.userName = e.getUser() != null ? e.getUser().getUserName() : "def";
         this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : "def";
     }
-    public EmployeeDto(Optional<Employee> employee){
-        this.id = employee.get().getId();
-        this.firstName = employee.get().getFirstName();
-        this.middleName = employee.get().getMiddleName();
-        this.lastName = employee.get().getLastName();
-        this.position = employee.get().getPosition();
+
+    // не моё, не знаю что с этим артифактом делать будут (@jonathanovich)
+//    public EmployeeDto(Optional<Employee> employee){
+//        this.id = employee.get().getId();
+//        this.firstName = employee.get().getFirstName();
+//        this.middleName = employee.get().getMiddleName();
+//        this.lastName = employee.get().getLastName();
+//        this.position = employee.get().getPosition();
 //        this.department = employee.getDepartment();
 //        this.user = employee.getUser();
-    }
+//    }
 }

@@ -61,11 +61,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setLastName(employeeDto.getLastName());
         newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
         newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
-        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
-            .orElseThrow(() -> new ResourceNotFoundException(
-                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
-            )
-        );
+//        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
+//            .orElseThrow(() -> new ResourceNotFoundException(
+//                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
+//            )
+//        );
         employeeRepository.save(newEmployee);
     }
 
@@ -103,7 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setLastName(employeeDto.getLastName());
         employee.setFirstName(employeeDto.getFirstName());
         employee.setMiddleName(employeeDto.getMiddleName());
-        employee.setPosition(employeeDto.getPosition());
+        employee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
         return employee;
     }
 
