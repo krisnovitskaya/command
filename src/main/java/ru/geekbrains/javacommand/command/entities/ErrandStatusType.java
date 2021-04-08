@@ -15,4 +15,5 @@ public class ErrandStatusType extends DefaultEntity {
 
     @Column(name = "status")
     private String status;
+
 }

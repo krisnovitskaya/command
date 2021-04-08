@@ -47,7 +47,6 @@ public class UserController implements UserControllerApi {
         userService.save(currentUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @Override
     public List<UserDto> getUsers() {
         return userService.findAll();

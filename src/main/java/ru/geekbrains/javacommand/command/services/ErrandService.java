@@ -1,8 +1,9 @@
+/*
+ * License Headers.
+ */
 package ru.geekbrains.javacommand.command.services;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
-
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
@@ -18,11 +19,24 @@ public interface ErrandService {
      */
     ErrandDto findErrandById(Long id);
 
-    /**
+		/**
      * @param errandDtoList
      * @return List ErrandDto
      */
     List<ErrandDto> createErrands(List<ErrandDto> errandDtoList);
+
+		/**
+		 *
+		 * @param errand
+		 */
+		void saveErrand(Errand errand);
+
+		/**
+		 *
+		 * @param errand
+		 * @return
+		 */
+		ErrandDto saveOrUpdate(Errand errand);
 
     /**
      * @param errandDtoList

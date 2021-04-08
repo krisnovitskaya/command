@@ -1,17 +1,16 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
-import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.lang.module.ResolutionException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
+import ru.geekbrains.javacommand.command.entities.Department;
+import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
+import ru.geekbrains.javacommand.command.services.DepartmentService;
 
 @Service
 @RequiredArgsConstructor

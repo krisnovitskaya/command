@@ -5,21 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.javacommand.command.entities.User;
+import org.hibernate.validator.constraints.Length;
+import ru.geekbrains.javacommand.command.entities.User;
+import javax.persistence.Column;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
 
-    @JsonProperty("id")
+		@JsonProperty("id")
     private Long id;
 
-    @JsonProperty("userName")
+    @JsonProperty("username")
     private String userName;
+
+    @JsonProperty("password")
+    private String password;
 
     public UserDto(User user) {
         this.id = user.getId();
         this.userName = user.getUserName();
     }
-
+    public UserDto(Optional<User> user){
+        this.userName = user.get().getUserName();
+        this.password = user.get().getPassword();
+    }
 }

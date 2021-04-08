@@ -39,5 +39,12 @@ public class Errand extends DefaultEntity {
     @NotNull
     @Column(name = "deleted")
     private boolean deleted;
+//    private int deleted;
 
+    public Errand(Employee employee, ErrandDetails errandDetails, OffsetDateTime dateStart, OffsetDateTime dateEnd){
+        this.employee = employee;
+        this.errandDetails = errandDetails;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+    }
 }

@@ -1,5 +1,12 @@
+/*
+ * License Headers.
+ */
 package ru.geekbrains.javacommand.command.services.impl;
 
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +22,6 @@ import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ErrandServiceImpl implements ErrandService {
@@ -31,6 +33,12 @@ public class ErrandServiceImpl implements ErrandService {
     private final PlaceRepository placeRepository;
 
 
+//	@Override
+//	public List<CurrentErrandDto> getListCurrent() {
+//
+//		return errandRepository.findCurrent().stream().map(CurrentErrandDto::new).collect(Collectors.toList());
+//
+//	}
     @Override
     public List<ErrandDto> getListCurrent() {
         return errandRepository.findCurrent().stream()
@@ -43,6 +51,16 @@ public class ErrandServiceImpl implements ErrandService {
         return new ErrandDto(errandRepository.findErrandById(id));
     }
 
+	@Override
+	public void saveErrand(Errand errand) {
+		//Errand errand = convertToErrand(errandDto);
+		errandRepository.save(errand);
+	}
+
+	@Override
+	public ErrandDto saveOrUpdate(Errand errand) {
+		return convertToErrandDto(errandRepository.save(errand));
+	}
     @Override
     public List<ErrandDto> createErrands(List<ErrandDto> errandDtoList) {
         return null;
@@ -151,4 +169,41 @@ public class ErrandServiceImpl implements ErrandService {
     public void updateErrands(ErrandDto errandDto) {
         //TODO
     }
+	private ErrandDto convertToErrandDto(Errand errand) {
+		
+		ErrandDto resultErrandDto = null;
+		if (errand != null) {
+			resultErrandDto = new ErrandDto(errand);
+//			resultErrandDto = new ErrandDto(
+//					errand.getId(),
+//					errand.getCreated(),
+//					errand.getUpdated(),
+//					errand.getStatusType().getStatus(),
+//					errand.getDateStart(),
+//					errand.getDateEnd(),
+//					errand.getEmployee().getFirstName(),
+//					errand.getEmployee().getMiddleName(),
+//					errand.getEmployee().getLastName(),
+//					errand.getEmployee().getPosition().getPosition(),
+//					errand.getEmployee().getUser().getUserName(),
+//					errand.getEmployee().getDepartment().getTitle(),
+//					errand.getEmployee().getDepartment().getMaster().getFirstName(),
+//					errand.getEmployee().getDepartment().getMaster().getMiddleName(),
+//					errand.getEmployee().getDepartment().getMaster().getLastName(),
+//					errand.getEmployee().getDepartment().getMaster().getUser().getUserName(),
+//					errand.getErrandDetails().getMatter().getMatter(),
+//					errand.getErrandDetails().getPlace().getTitle(),
+//					errand.getErrandDetails().getPlace().getPlaceType().getType(),
+//					errand.getErrandDetails().getComment(),
+//					errand.getErrandDetails().getCreatedBy().getFirstName(),
+//					errand.getErrandDetails().getCreatedBy().getMiddleName(),
+//					errand.getErrandDetails().getCreatedBy().getLastName(),
+//					errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName(),
+//					errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName(),
+//					errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName()
+//			);
+		}
+		return resultErrandDto;
+
+	}
 }
