@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import java.util.List;
 
 import java.util.List;
 
@@ -24,5 +25,4 @@ public interface ErrandRepository extends JpaRepository<Errand, Long>, JpaSpecif
                     + " where e.dateStart < current_timestamp and e.dateEnd > current_timestamp"
                     + " and e.statusType.status = 'CONFIRMED'")
     List<Errand> findCurrent();
-
 }

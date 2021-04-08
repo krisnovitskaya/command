@@ -18,7 +18,6 @@ public interface UserControllerApi {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<?> changePassword(@RequestBody @Validated ChangePasswordDto passwordDto, BindingResult bindingResult, Principal principal);
-
     @GetMapping(value = "/all", produces = "application/json")
     List<UserDto> getUsers();
 }

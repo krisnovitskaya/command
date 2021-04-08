@@ -18,4 +18,5 @@ public interface PostControllerApi {
     @Secured({"ROLE_ADMIN","ROLE_POST"})
     @GetMapping(produces = "application/json")
     List<ErrandDto> getListCurrent();
+//		List<CurrentErrandDto> getListCurrent();
 }

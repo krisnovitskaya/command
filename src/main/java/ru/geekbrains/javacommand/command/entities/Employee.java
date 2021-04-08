@@ -1,5 +1,7 @@
 package ru.geekbrains.javacommand.command.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,9 +30,10 @@ public class Employee extends DefaultEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "department_id")
+    @JsonBackReference
     private Department department;
 
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -41,5 +44,4 @@ public class Employee extends DefaultEntity {
     public String getFIO(){
         return String.format("%s %s %s", this.getLastName(), this.getFirstName(), this.getMiddleName());
     }
-
 }

@@ -4,6 +4,7 @@
     <div class="column_box">
         <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
         <div class="extremum-slide">
+<<<<<<< HEAD
             <form autocomplete="off" style="width: 600px;" novalidate ng-submit="fillTable()">
 
                 <div class="input-group mb-3">
@@ -36,6 +37,34 @@
                 </div>
 
 
+=======
+            <form style="width: 600px;" novalidate ng-submit="fillTable()">
+
+                <select id="employee" class="form-control filter_box"
+                        ng-model="filter.employee">
+                    <option value="" disabled selected>ФИО</option>
+                    <option ng-repeat="employee in Employees" ng-value="{{employee.id}">{{employee.employeeFirstName}}
+                        {{employee.employeeLastName}} {{employee.employeeMiddleName}}
+                    </option>
+                </select>
+
+                <select id="matterType" class="form-control filter_box"
+                        ng-model="filter.errandMatterType">
+                    <option value="" disabled selected>Тип</option>
+                    <option ng-repeat="errandMatterType in ErrandMatterTypes" ng-value="{{errandMatterType.id}">
+                        {{errandMatterType.matter}}
+                    </option>
+                </select>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">с</span>
+                    <input style="margin-right: 10px;" type="text" id="datepickerStart" ng-model="filter.dateStart" aria-describedby="basic-addon1">
+
+                    <span class="input-group-text" id="basic-addon2">по</span>
+                    <input type="text" id="datepickerEnd" ng-model="filter.dateEnd" aria-describedby="basic-addon2">
+                </div>
+
+>>>>>>> remotes/origin/eagromova-Task27-28-continue
                 <input class="btn btn-warning" type="submit" value="Применить">
                 <a class="btn btn-warning" ng-click="clearFilter()">Сбросить</a>
             </form>
@@ -45,23 +74,24 @@
         <div class="main_box">
             <table class="table table-hover" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td><b>ФИО сотрудника</b></td>
-                    <td><b>Тип</b></td>
-                    <td><b>дата начала</b></td>
-                    <td><b>дата окончания</b></td>
-                    <td><b>подразделение</b></td>
-                    <td><b>место назначения</b></td>
+                    <td>ФИО сотрудника</td>
+                    <td>Тип</td>
+                    <td>дата начала</td>
+                    <td>дата окончания</td>
+                    <td>подразделение</td>
+                    <td>куда</td>
                     <td></td>
                 </tr>
                 <tbody>
 
                 <tr ng-repeat="e in ErrandsPage.content">
-                    <td>{{e.employeeFIO}}</td>
+                    <td>{{e.employeeFirstName}} {{e.employeeLastName}} {{e.employeeMiddleName}}</td>
                     <td>{{e.detailMatterType}}</td>
                     <td>{{e.dateStart}}</td>
                     <td>{{e.dateEnd}}</td>
                     <td>{{e.departmentTitle}}</td>
                     <td>{{e.placeType}}</td>
+                    <td>{{e.detailPlace}}</td>
                     <td>
                         <button class="btn btn-primary" ng-click="errandDetails(e.id)">Детали</button>
                         <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>

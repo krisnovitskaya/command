@@ -1,21 +1,19 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.repositories.*;
-import ru.geekbrains.javacommand.command.entities.User;
-import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-import ru.geekbrains.javacommand.command.dtos.ProfileDto;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
+import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.entities.Department;
+import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.User;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.*;
+import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.services.EmployeeService;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
+    }
+
     public void saveOrUpdate(EmployeeDto employeeDto) {
         Employee newEmployee;
         if (employeeDto.getId() == null) {
@@ -58,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setMiddleName(employeeDto.getMiddleName());
         newEmployee.setLastName(employeeDto.getLastName());
         newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
-        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()));
+        newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
         newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
             .orElseThrow(() -> new ResourceNotFoundException(
                 String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
@@ -76,5 +78,37 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+//    @Override
+//    public EmployeeDto findById(Long id) {
+//        return new EmployeeDto(employeeRepository.findById(id));
+//    }
 
+    @Override
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Employee not found with id %s", id)));
+    }
+    public List<EmployeeDto> findAllByDepartmentId(Long id) {
+        return employeeRepository.findAllByDepartmentId(id).stream().map(EmployeeDto::new).collect(Collectors.toList());
+    }
+    @Override
+    public EmployeeDto findByUserId(Long id) {
+        return new EmployeeDto(employeeRepository.findByUserId(id));
+    }
+
+    @Override
+    public Employee convertToEmployee(EmployeeDto employeeDto){
+        Employee employee = new Employee();
+        employee.setId(employeeDto.getId());
+        employee.setLastName(employeeDto.getLastName());
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setMiddleName(employeeDto.getMiddleName());
+        employee.setPosition(employeeDto.getPosition());
+        return employee;
+    }
+
+	@Override
+	public EmployeeDto findByUsername(String username) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 }

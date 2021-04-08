@@ -66,7 +66,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(req, res);
-        } catch (BadCredentialsException | JWTDecodeException | IOException | ServletException | TokenExpiredException e) {
+        } catch (BadCredentialsException | JWTDecodeException  | TokenExpiredException e) {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
             log.error("jwt filter error: {}", e.getMessage());
         }
@@ -84,6 +84,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
             }
         }
+
         return null;
     }
 }
