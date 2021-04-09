@@ -1,4 +1,4 @@
---Default(Test) database creation
+--Default(Test) database H2 creation
 
 create table if not exists users(
     id          bigserial primary key,
@@ -125,4 +125,17 @@ create table if not exists errands(
     foreign key (status_id) references errands_status_types(id),
     foreign key (employee_id) references employees(id),
     foreign key (errand_details_id) references errands_details(id)
+);
+
+create table if not exists files(
+    id                      bigserial primary key,
+    file_name               varchar(255),
+    file_data               clob,
+    author_id               bigint not null,
+    errand_id               bigint not null,
+    created                 timestamp default current_timestamp,
+    updated                 timestamp default current_timestamp,
+    deleted                 boolean default 0,
+    foreign key (author_id)        references users(id),
+    foreign key (errand_id)     references errands(id)
 );
