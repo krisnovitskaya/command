@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.DepartmentControllerApi;
 import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-import ru.geekbrains.javacommand.command.services.impl.DepartmentServiceImpl;
+import ru.geekbrains.javacommand.command.dtos.DepartmentSimpleDto;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequiredArgsConstructor
 public class DepartmentController implements DepartmentControllerApi {
     
-		@Autowired
+    @Autowired
     private DepartmentService departmentService;
 
     @Override
     public List<DepartmentDto> getDepartments() {
         return departmentService.findAll();
 		}
-		
-		@Override
-    public List<DepartmentDto> getAllDepartments() {
-        return departmentService.findAll();
+
+//	@Override
+//    public List<DepartmentDto> getAllDepartments() {
+//        return departmentService.findAll();
+//    }
+
+    @Override
+    public List<DepartmentSimpleDto> getSubordinateDepartments(Long id){
+        return departmentService.getSubordinateDepartments(id);
     }
+
 }

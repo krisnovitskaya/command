@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandStatusTypeDto;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.repositories.ErrandStatusTypeRepository;
-import ru.geekbrains.javacommand.command.services.ErrandStatusTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandStatusTypeService;
 
 @Service
 @RequiredArgsConstructor

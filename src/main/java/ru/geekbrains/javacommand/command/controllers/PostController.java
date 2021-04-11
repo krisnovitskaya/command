@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.PostControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
 
 import java.util.List;
 

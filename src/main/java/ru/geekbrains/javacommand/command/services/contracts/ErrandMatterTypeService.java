@@ -1,4 +1,4 @@
-package ru.geekbrains.javacommand.command.services;
+package ru.geekbrains.javacommand.command.services.contracts;
 
 import java.util.List;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;

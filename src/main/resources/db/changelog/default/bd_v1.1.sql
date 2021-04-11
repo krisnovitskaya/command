@@ -57,7 +57,7 @@ create table if not exists employees(
 
 create table if not exists employees_details(
     id      	bigserial primary key,
-    mail	varchar(100),
+    mail	    varchar(100),
     employee_id bigint not null,
     created     timestamp default current_timestamp,
     updated     timestamp default current_timestamp,
@@ -121,7 +121,7 @@ create table if not exists errands(
     date_end            timestamp,
     created             timestamp default current_timestamp,
     updated             timestamp default current_timestamp,
-    deleted             boolean default 0,
+    deleted             boolean default false,
     foreign key (status_id) references errands_status_types(id),
     foreign key (employee_id) references employees(id),
     foreign key (errand_details_id) references errands_details(id)

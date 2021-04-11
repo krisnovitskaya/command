@@ -54,6 +54,7 @@ public class EmployeeDto {
         this.userName = e.getUser() != null ? e.getUser().getUserName() : "def";
         this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : "def";
     }
+
     public EmployeeDto(Optional<Employee> employee){
         this.id = employee.get().getId();
         this.firstName = employee.get().getFirstName();
