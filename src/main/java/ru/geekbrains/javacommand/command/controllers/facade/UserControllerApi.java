@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.javacommand.command.dtos.ChangePasswordDto;
+import ru.geekbrains.javacommand.command.dtos.RoleDto;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
+import ru.geekbrains.javacommand.command.entities.Role;
 
 import java.security.Principal;
 import java.util.List;
@@ -21,4 +23,8 @@ public interface UserControllerApi {
 
     @GetMapping(value = "/all", produces = "application/json")
     List<UserDto> getUsers();
+
+    @GetMapping(value = "/checkRoles", produces = "application/json")
+    ResponseEntity<?> checkUserRoles(Principal principal);
+
 }

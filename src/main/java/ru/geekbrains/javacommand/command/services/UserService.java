@@ -2,6 +2,7 @@ package ru.geekbrains.javacommand.command.services;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import ru.geekbrains.javacommand.command.dtos.RoleDto;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.User;
 

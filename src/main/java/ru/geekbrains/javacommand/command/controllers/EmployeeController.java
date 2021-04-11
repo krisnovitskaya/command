@@ -2,6 +2,7 @@ package ru.geekbrains.javacommand.command.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
@@ -68,6 +69,17 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public void deleteEmployee(Long id) {
         employeeService.deleteEmployee(id);
+    }
+
+    @Override
+    public List<EmployeeDto> getEmployeesFromDepartment(Long departmentId) {
+        return employeeService.findAllByDepartmentId(departmentId);
+    }
+
+    @Override
+    public EmployeeDto getEmployee(Principal principal) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+        return employeeService.findByUserId(user.getId());
     }
 
 }

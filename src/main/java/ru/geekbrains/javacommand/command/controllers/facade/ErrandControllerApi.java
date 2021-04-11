@@ -1,9 +1,7 @@
 package ru.geekbrains.javacommand.command.controllers.facade;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 
@@ -12,10 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import ru.geekbrains.javacommand.command.dtos.PlaceDto;
+import ru.geekbrains.javacommand.command.dtos.PlaceTypeDto;
+import ru.geekbrains.javacommand.command.entities.Errand;
 
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
@@ -93,5 +90,14 @@ public interface ErrandControllerApi {
 	 */
 	@GetMapping(value = "/report")
 	ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
+
+	@GetMapping("/getPlaceTypesList")
+	List<PlaceTypeDto> getPlaceTypes();
+
+	@GetMapping("/getPlacesList/{id}")
+	List<PlaceDto> getPlaces(@PathVariable Long id);
+
+	@PostMapping("/createErrand")
+	public void createNewErrand(@RequestBody ErrandDto errandDto, Principal principal);
 
 }

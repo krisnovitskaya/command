@@ -19,4 +19,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 		Employee findEmployeeById(Long id);
     Optional<Employee> findByUser(User user);
     List<Employee> findAllByDepartment(Department department);
+
+    @Query("select e from Employee e where e.department.id = ?1")
+    List<Employee> findAllByDepartmentId(Long id);
+
+    @Query("select e from Employee e where e.user.id = ?1")
+    Employee findByUserId(Long id);
 }

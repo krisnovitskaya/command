@@ -87,4 +87,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 () -> new ResourceNotFoundException(String.format("Employee not found with id %s", id)));
     }
 
+    @Override
+    public List<EmployeeDto> findAllByDepartmentId(Long id) {
+        return employeeRepository.findAllByDepartmentId(id).stream().map(EmployeeDto::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public EmployeeDto findByUserId(Long id) {
+        return new EmployeeDto(employeeRepository.findByUserId(id));
+    }
+
 }

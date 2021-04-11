@@ -25,4 +25,10 @@ public interface EmployeeControllerApi {
 
     @DeleteMapping(value = "/delete/{id}")
     void deleteEmployee(@PathVariable("id") Long id);
+
+    @GetMapping(value = "/get/{department_id}", produces = "application/json")
+    List<EmployeeDto> getEmployeesFromDepartment(@PathVariable(name = "department_id") Long departmentId);
+
+    @GetMapping(value = "/getCurrent", produces = "application/json")
+    EmployeeDto getEmployee(Principal principal);
 }

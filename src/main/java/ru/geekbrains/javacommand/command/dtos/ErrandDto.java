@@ -6,15 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrandDto {
 
     private Long id;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private OffsetDateTime dateStart;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateEnd;
@@ -47,10 +50,13 @@ public class ErrandDto {
     private Long employeeId;
     private String employeeFIO;
     private String matter;
+    private Long matterId;
+    private Long placeId;
     private String place;
     private String placeType;
     private Long createdById;
     private Long confirmedOrRejectedById;
+    private ErrandDetails errandDetails;
 
     public ErrandDto(Errand errand) {
         this.id = errand.getId();

@@ -4,18 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
-import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
+import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.repositories.*;
 import ru.geekbrains.javacommand.command.services.ErrandService;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
 import java.io.ByteArrayInputStream;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -151,4 +150,35 @@ public class ErrandServiceImpl implements ErrandService {
     public void updateErrands(ErrandDto errandDto) {
         //TODO
     }
+
+    @Override
+    public void saveErrand(ErrandDto errandDto) {
+        Errand errand = new Errand();
+        errand.setId(null);
+        errand.setEmployee(employeeRepository.findByUserId(errandDto.getEmployeeId()));
+        errand.setDateStart(errandDto.getDateStart());
+        errand.setDateEnd(errandDto.getDateEnd());
+        errand.setStatusType(errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()));
+        errand.setCreated(OffsetDateTime.now());
+        errand.setUpdated(OffsetDateTime.now());
+        errand.setDeleted(false);
+
+        //ErrandDetails errandDetails = errand.getErrandDetails();
+        ErrandDetails errandDetails = new ErrandDetails();
+        errandDetails.setId(null);
+        errandDetails.setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
+        errandDetails.setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
+        errandDetails.setComment(errandDto.getComment());
+        errandDetails.setCreatedBy(employeeRepository.findByUserId(errandDto.getEmployeeId()));
+       // errandDetails.setConfirmedOrRejectedBy(errandDto.getErrandDetails().getConfirmedOrRejectedBy());
+        errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getEmployeeId()));
+
+
+
+        errand.setErrandDetails(errandDetails);
+
+        errandRepository.save(errand);
+    }
+
+
 }

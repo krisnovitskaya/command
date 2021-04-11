@@ -1,4 +1,77 @@
-<div>
-    <h1>Создание новой командировки</h1>
-    <h3>В разработке</h3>
+<div class="mb-3 text-center" xmlns="http://www.w3.org/1999/html">
+    <form novalidate ng-submit="createErrand()" style="max-width: 1600px; padding: 10px; margin: 0 auto; position: relative">
+
+        <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Заявка на командировку:</h1>
+
+    <tt ng-model="ErrandDto.createdById" value = "{{Employee.id}}" aria-hidden="true">{{Employee.id}}</tt>
+        <span>{{Employee.id}}</span>
+
+        <div ng-if="CheckRoles == true">
+            <div class="form-group col-md-6">
+                <label for="errandDepartment">Отдел сотрудника:</label>
+                <select class="form-control" ng-model="errand.department_id" id="errandDepartment" required="true" ng-change="getEmployeesList(errand.department_id)">
+                    <option value="">Отдел сотрудника</option>
+                    <option value="{{do.id}}" ng-repeat="do in DepartmentsList">{{do.title}}</option>
+                </select>
+            </div>
+
+            <span ng-if="EmployeesList.length == 0">В отделе нет сотрудников. Пожалуйста, выберите, другой</span>
+            <div ng-if="(EmployeesList.length != 0) && (EmployeesList != null) && (errand.department_id != null)" class="form-group col-md-6">
+                <label for="employeeId">ФИО сотрудника:</label>
+                <select class="form-control" ng-model="ErrandDto.employeeId"  id="employeeId" required="true">
+                    <option value="">ФИО сотрудника</option>
+                    <option value="{{e.id}}" ng-repeat="e in EmployeesList">{{e.last_name}} {{e.first_name}} {{e.middle_name}}</option>
+                </select>
+                <span>{{ErrandDto.employeeId}}</span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="matterId">Тип командировки:</label>
+            <select class="form-control" ng-model="ErrandDto.matterId"  id="matterId" required="true">
+                <option value="">Тип командировки</option>
+                <option value="{{m.id}}" ng-repeat="m in ErrandMatterTypesList">{{m.matter}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <p>Начало командировки: <input type="datetime-local" ng-model="ErrandDto.dateStart" id="dateStart" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"  required="true"></p>
+        </div>
+
+        <div class="form-group col-md-6">
+            <p>Окончание командировки: <input type="datetime-local" ng-model="ErrandDto.dateEnd" id="dateEnd" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"  required="true"></p>
+        </div>
+
+        <span>{{ErrandDto.dateStart}}</span>
+        <span>{{ErrandDto.dateEnd}}</span>
+
+        <div class="form-group col-md-6">
+            <label for="errandPlaceTypeId">Тип места назначения:</label>
+            <select class="form-control" ng-model="errandDetails.placeTypeId"  id="errandPlaceTypeId" required="true" ng-change="getPlacesList(errandDetails.placeTypeId)">
+                <option value="">Тип места назначения</option>
+                <option value="{{pt.id}}" ng-repeat="pt in PlaceTypesList">{{pt.type}}</option>
+            </select>
+        </div>
+
+        <span ng-if="PlacesList.length == 0">В месте назначения нет мест. Пожалуйста, выберите, другое</span>
+        <div  ng-if="(PlacesList.length != 0) && (PlacesList != null) && (errandDetails.placeTypeId != null)" class="form-group col-md-6">
+            <label for="placeId">Место назначения:</label>
+            <select class="form-control" ng-model="ErrandDto.placeId"  id="placeId" required>
+                <option value="">Место назначения</option>
+                <option value="{{p.id}}" ng-repeat="p in PlacesList">{{p.title}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="errand.comment">Комментарий:</label>
+            <input type="text" ng-model="ErrandDto.comment" id="errand.comment" class="form-control"
+                   placeholder="Комментарий" style="margin-bottom: 10px;">
+        </div>
+
+        <div class="form-group col-md-6">
+            Подтвердить командировку: <input type="checkbox" ng-model="checked" onclick="check()" required="true"></br></br>
+            <button ng-disabled="!checked" class="btn btn-success" type="submit">Создать командировку</button>
+        </div>
+
+    </form>
 </div>
