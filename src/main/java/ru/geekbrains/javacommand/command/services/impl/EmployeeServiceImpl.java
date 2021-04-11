@@ -12,8 +12,8 @@ import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
-import ru.geekbrains.javacommand.command.services.EmployeeService;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 
 @Service
 @RequiredArgsConstructor

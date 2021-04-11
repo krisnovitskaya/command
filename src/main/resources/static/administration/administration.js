@@ -1,12 +1,12 @@
 angular.module('app').controller('administrationController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8989/errands';
 
-<<<<<<< HEAD
+
     $scope.getAllEmployees = function() {
     $http.get(contextPath + "/api/v1/employees/all")
         .then(resp => {
                 $scope.employeeList = resp.data;
-=======
+
     $http.get(contextPath + "/api/v1/employees/all")
         .then(resp => {
                 $scope.emploeeList = resp.data;
@@ -34,12 +34,12 @@ angular.module('app').controller('administrationController', function ($scope, $
     $http.get(contextPath + "/api/v1/users/all")
         .then(resp => {
                 $scope.userList = resp.data;
->>>>>>> remotes/origin/eagromova-Task27-28-continue
+
             },
             resp => {
                 console.error(resp);
             });
-<<<<<<< HEAD
+
     }
 
     $scope.getAllDepartments = function() {
@@ -81,7 +81,7 @@ angular.module('app').controller('administrationController', function ($scope, $
             .then(resp => {
                     $scope.employee = null;
                     $scope.editEmployee = null;
-=======
+
 
 
 
@@ -93,14 +93,14 @@ angular.module('app').controller('administrationController', function ($scope, $
         $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
             .then(resp => {
                     $scope.employee = null;
->>>>>>> remotes/origin/eagromova-Task27-28-continue
+
                 },
                 resp => {
                     console.error(resp);
                 });
     }
 
-<<<<<<< HEAD
+
     $scope.delete = function (emp) {
         $http.delete(contextPath + "/api/v1/employees/delete/" + emp.id)
             .then(resp => {
@@ -121,7 +121,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.getAllPositions();
     $scope.getAllUsers();
 
-=======
+
     $scope.delete = function (employee) {
         $http.delete(contextPath + "/api/v1/employees/delete/" + employee.id)
     }
@@ -130,5 +130,4 @@ angular.module('app').controller('administrationController', function ($scope, $
         $http.get(contextPath + "/api/v1/employees/edit/" + employee.id)
     }
 
->>>>>>> remotes/origin/eagromova-Task27-28-continue
 });

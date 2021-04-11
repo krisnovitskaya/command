@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.repositories.RoleRepository;
-import ru.geekbrains.javacommand.command.services.RoleService;
+import ru.geekbrains.javacommand.command.services.contracts.RoleService;
 
 @Service
 @RequiredArgsConstructor

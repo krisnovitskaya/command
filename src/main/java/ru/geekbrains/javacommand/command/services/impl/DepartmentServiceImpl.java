@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
+import ru.geekbrains.javacommand.command.dtos.DepartmentSimpleDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
-import ru.geekbrains.javacommand.command.services.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findDepartmentByTitle(departmentTitle)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format("Department not found by title: %s", departmentTitle)));
+    }
+
+    @Override
+    public List<DepartmentSimpleDto> getSubordinateDepartments(Long id) {
+        return departmentRepository.getSubordinateDepartments(id).stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
     }
 }

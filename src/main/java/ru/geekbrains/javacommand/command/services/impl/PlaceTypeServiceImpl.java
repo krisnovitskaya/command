@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.PlaceTypeDto;
 import ru.geekbrains.javacommand.command.entities.PlaceType;
 import ru.geekbrains.javacommand.command.repositories.PlaceTypeRepository;
-import ru.geekbrains.javacommand.command.services.PlaceTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.PlaceTypeService;
 
 @Service
 @RequiredArgsConstructor

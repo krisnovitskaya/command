@@ -7,10 +7,10 @@ import ru.geekbrains.javacommand.command.controllers.facade.ErrandsStatisticsCon
 import ru.geekbrains.javacommand.command.dtos.PlaceDto;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.entities.PlaceType;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.services.ErrandStatusTypeService;
-import ru.geekbrains.javacommand.command.services.PlaceService;
-import ru.geekbrains.javacommand.command.services.PlaceTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandStatusTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.PlaceService;
+import ru.geekbrains.javacommand.command.services.contracts.PlaceTypeService;
 import ru.geekbrains.javacommand.command.util.ErrandsStatisticSpecificationResolver;
 
 import java.util.List;

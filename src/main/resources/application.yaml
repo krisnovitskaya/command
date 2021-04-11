@@ -47,7 +47,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/errands
     username: postgres
-    password: waagh!
+    password: 32167
   jpa:
     hibernate:
       ddl-auto: none
@@ -56,7 +56,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
   liquibase:
-    changeLogFile: src/main/resources/db/changelog/master-prod.yaml
+    change-log: classpath:/db/changelog/master-prod.yaml
 ---
 # Gmail Alert
 spring:
