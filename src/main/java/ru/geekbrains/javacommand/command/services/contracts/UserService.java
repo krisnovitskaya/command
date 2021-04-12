@@ -19,4 +19,8 @@ public interface UserService extends UserDetailsService {
 
     List<UserDto> findAll();
 
+    boolean isAdmin(User user);
+
+    boolean isMaster(User user);
+
 }

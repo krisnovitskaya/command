@@ -3,19 +3,23 @@ package ru.geekbrains.javacommand.command.services.impl;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
-import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
+import ru.geekbrains.javacommand.command.entities.*;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
+import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
 import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.UserService;
+import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
@@ -28,6 +32,9 @@ public class ErrandServiceImpl implements ErrandService {
     private final ErrandStatusTypeRepository errandStatusTypeRepository;
     private final ErrandMatterTypeRepository errandMatterTypeRepository;
     private final PlaceRepository placeRepository;
+    private final UserService userService;
+
+    private final Integer PAGE_SIZE = 5;
 
 
 //	@Override
@@ -61,6 +68,27 @@ public class ErrandServiceImpl implements ErrandService {
     @Override
     public List<ErrandDto> createErrands(List<ErrandDto> errandDtoList) {
         return null;
+    }
+
+    @Override
+    public PageImpl<ErrandDto> findErrandsByMaster(int page, Map<String, String> params, User user) {
+
+        // get masterEmployee from Principal
+        Employee master =
+                employeeRepository
+                        .findByUser(user)
+                        .orElseThrow(() -> new ResourceNotFoundException("master not found"));
+
+        // Prepare Spec Filter
+        ErrandFilter errandFilter = new ErrandFilter(params);
+        Specification<Errand> spec = errandFilter.getSpec();
+
+        // Force Add departmentId to FilterSpec for nonAdmin Users
+        if (!userService.isAdmin(user)) {
+            spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
+        }
+
+        return findAll(spec, page - 1, PAGE_SIZE);
     }
 
     @Override

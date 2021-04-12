@@ -44,7 +44,7 @@ public class ErrandController implements ErrandControllerApi {
     /**
      * Возвращает список командировок для всех подчиненных сотрудников, в любом статусе, с учетом параметров
      * фильтрации
-     * Для Роли Администратор возврвщает все командировки
+     * Для Роли Администратор возвращает все командировки
      *
      * @param page
      * @param params
@@ -55,31 +55,14 @@ public class ErrandController implements ErrandControllerApi {
             @RequestParam(defaultValue = "1", name = "p") Integer page,
             @RequestParam Map<String, String> params,
             Principal principal) {
+
         if (page < 1) {
             page = 1;
         }
 
-        // Prepare Spec Filter
-        ErrandFilter errandFilter = new ErrandFilter(params);
-        Specification<Errand> spec = errandFilter.getSpec();
-
-        // get masterEmployee from Principal
         User user = userService.findByUsername(principal.getName()).get();
-        Employee master =
-                employeeService
-                        .findByUser(user)
-                        .orElseThrow(() -> new ResourceNotFoundException("master not found"));
 
-        for (Role role : user.getListRoles()) {
-            if (role.getName().equals("ROLE_ADMIN")) {
-                return ResponseEntity.ok(errandService.findAll(spec, page - 1, 5));
-            }
-        }
-
-        // Force Add departmentId to FilterSpec
-        spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
-
-        return ResponseEntity.ok(errandService.findAll(spec, page - 1, 5));
+        return ResponseEntity.ok(errandService.findErrandsByMaster(page, params, user));
     }
 
 
