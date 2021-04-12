@@ -20,4 +20,8 @@ public interface UserControllerApi {
     ResponseEntity<?> changePassword(@RequestBody @Validated ChangePasswordDto passwordDto, BindingResult bindingResult, Principal principal);
     @GetMapping(value = "/all", produces = "application/json")
     List<UserDto> getUsers();
+
+    @GetMapping(value = "/checkRoles", produces = "application/json")
+    ResponseEntity<?> checkUserRoles(Principal principal);
+
 }

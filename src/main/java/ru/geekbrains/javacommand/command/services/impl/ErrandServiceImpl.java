@@ -4,6 +4,7 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.io.ByteArrayInputStream;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -206,4 +207,35 @@ public class ErrandServiceImpl implements ErrandService {
 		return resultErrandDto;
 
 	}
+
+    @Override
+    public void saveErrand(ErrandDto errandDto) {
+        Errand errand = new Errand();
+        errand.setId(null);
+        errand.setEmployee(employeeRepository.findByUserId(errandDto.getEmployeeId()));
+        errand.setDateStart(errandDto.getDateStart());
+        errand.setDateEnd(errandDto.getDateEnd());
+        errand.setStatusType(errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()));
+        errand.setCreated(OffsetDateTime.now());
+        errand.setUpdated(OffsetDateTime.now());
+        errand.setDeleted(false);
+
+        //ErrandDetails errandDetails = errand.getErrandDetails();
+        ErrandDetails errandDetails = new ErrandDetails();
+        errandDetails.setId(null);
+        errandDetails.setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
+        errandDetails.setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
+        errandDetails.setComment(errandDto.getComment());
+        errandDetails.setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
+        //errandDetails.setCreatedBy(employeeRepository.findByUserId(errandDto.getEmployeeId()));
+        // errandDetails.setConfirmedOrRejectedBy(errandDto.getErrandDetails().getConfirmedOrRejectedBy());
+        errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getEmployeeId()));
+
+
+
+        errand.setErrandDetails(errandDetails);
+
+        errandRepository.save(errand);
+    }
+
 }
