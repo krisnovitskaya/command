@@ -206,8 +206,6 @@ public class ErrandServiceImpl implements ErrandService {
         errandRepository.save(errand);
     }
 
-	}
-
     @Override
     public void saveErrand(ErrandDto errandDto) {
         Errand errand = new Errand();
@@ -215,7 +213,7 @@ public class ErrandServiceImpl implements ErrandService {
         errand.setEmployee(employeeRepository.findByUserId(errandDto.getEmployeeId()));
         errand.setDateStart(errandDto.getDateStart());
         errand.setDateEnd(errandDto.getDateEnd());
-        errand.setStatusType(errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()));
+        errand.setStatusType(errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()).get());
         errand.setCreated(OffsetDateTime.now());
         errand.setUpdated(OffsetDateTime.now());
         errand.setDeleted(false);
@@ -230,8 +228,6 @@ public class ErrandServiceImpl implements ErrandService {
         //errandDetails.setCreatedBy(employeeRepository.findByUserId(errandDto.getEmployeeId()));
         // errandDetails.setConfirmedOrRejectedBy(errandDto.getErrandDetails().getConfirmedOrRejectedBy());
         errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getEmployeeId()));
-
-
 
         errand.setErrandDetails(errandDetails);
 

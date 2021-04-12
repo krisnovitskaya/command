@@ -309,7 +309,7 @@ public class ErrandController implements ErrandControllerApi {
 //        errandDetails.setPlaceId(errandDto.getPlaceId());
 //        errandDetails.setComment(errandDto.getComment());
 //        errandDetails.setCreatedBy(employeeService.findById(errandDto.getEmployeeId()));
-    User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+    User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
     Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee for user not found"));
 
     if (user.getListRoles().contains("MASTER")){// начальник
