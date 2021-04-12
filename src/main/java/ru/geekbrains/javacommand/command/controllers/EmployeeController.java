@@ -84,4 +84,9 @@ public class EmployeeController implements EmployeeControllerApi {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
         return employeeService.findByUserId(user.getId());
     }
+
+    @Override
+    public EmployeeDto getEmployeeToEdit(Long id) {
+        return employeeService.findEmployeeById(id);
+    }
 }

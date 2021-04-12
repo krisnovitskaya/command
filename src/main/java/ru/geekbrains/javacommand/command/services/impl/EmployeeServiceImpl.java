@@ -78,10 +78,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
-//    @Override
-//    public EmployeeDto findById(Long id) {
-//        return new EmployeeDto(employeeRepository.findById(id));
-//    }
 
     @Override
     public Employee findById(Long id) {
@@ -97,17 +93,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee convertToEmployee(EmployeeDto employeeDto){
-        Employee employee = new Employee();
-        employee.setId(employeeDto.getId());
-        employee.setLastName(employeeDto.getLastName());
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setMiddleName(employeeDto.getMiddleName());
-        employee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
-        return employee;
+    public EmployeeDto findEmployeeById(Long id) {
+        return new EmployeeDto(employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Сотрудник с id = %s не найден", id))
+                )
+        );
     }
 
-	@Override
+    @Override
 	public EmployeeDto findByUsername(String username) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}

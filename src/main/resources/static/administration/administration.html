@@ -1,6 +1,6 @@
 <div class="mb-1 text-center" ng-controller="administrationController">
 
-    <a class="btn btn-success" href="#!/employee_form">Создать карточку сотрудника</a>
+    <a class="btn btn-success" href="#!/employee_form/0">Создать карточку сотрудника</a>
     <br/><br/>
 
     <table class="table table-striped">
@@ -28,7 +28,7 @@
             <td>{{emp.user_name}}</td>
             <td>{{emp.mail}}</td>
             <td>
-                <a class="btn btn-outline-primary" ng-click="edit(emp)" href="#!/employee_form">Редактировать</a>
+                <a class="btn btn-outline-primary" href="#!/employee_form/{{emp.id}}">Редактировать</a>
                 <button ng-click="delete(emp)" class="btn btn-outline-danger">Удалить</button>
             </td>
         </tr>

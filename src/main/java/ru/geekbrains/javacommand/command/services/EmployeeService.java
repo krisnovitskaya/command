@@ -29,7 +29,8 @@ public interface EmployeeService {
 
     EmployeeDto findByUsername(String username);
     
-		EmployeeDto findByUserId(Long id);
+    EmployeeDto findByUserId(Long id);
 
-    Employee convertToEmployee(EmployeeDto employeeDto);
+    EmployeeDto findEmployeeById(Long id);
+
 }

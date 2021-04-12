@@ -1,5 +1,14 @@
-angular.module('app').controller('administrationController', function ($scope, $http) {
+angular.module('app').controller('administrationController', function ($scope, $http, $routeParams) {
     const contextPath = 'http://localhost:8989/errands';
+
+
+    // $stateProvider
+    //     .state('employeeDetail', {
+    //         url: '/employee_form/:employeeId'
+    //     });
+    // $scope.id = $stateParams.employeeId;
+
+    const empId = $routeParams.employeeId;
 
     $scope.getAllEmployees = function() {
         $http.get(contextPath + "/api/v1/employees/all")
@@ -31,7 +40,7 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    $scope.employee = {"user_name":"def", "mail":"def"};
+    // $scope.employee = null;
 
     $scope.create = function (employee) {
 
@@ -54,8 +63,14 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    $scope.edit = function (emp) {
-        $scope.employee = emp;
+    $scope.edit = function () {
+        $http.get(contextPath + "/api/v1/employees/edit/" + empId)
+        .then(resp => {
+                $scope.employee = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
 
     }
 
