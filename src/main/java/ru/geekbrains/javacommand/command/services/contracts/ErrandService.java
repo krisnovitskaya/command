@@ -1,7 +1,7 @@
 /*
  * License Headers.
  */
-package ru.geekbrains.javacommand.command.services;
+package ru.geekbrains.javacommand.command.services.contracts;
 
 import org.springframework.data.jpa.domain.Specification;
 import java.io.ByteArrayInputStream;

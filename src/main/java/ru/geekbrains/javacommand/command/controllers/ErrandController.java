@@ -22,7 +22,7 @@ import ru.geekbrains.javacommand.command.dtos.*;
 import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
-import ru.geekbrains.javacommand.command.services.*;
+import ru.geekbrains.javacommand.command.services.contracts.*;
 import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;

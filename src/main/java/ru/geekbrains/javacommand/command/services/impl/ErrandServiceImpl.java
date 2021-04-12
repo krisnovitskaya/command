@@ -18,7 +18,7 @@ import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.repositories.*;
-import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 

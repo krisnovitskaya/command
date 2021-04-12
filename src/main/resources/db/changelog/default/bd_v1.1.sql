@@ -57,7 +57,7 @@ create table if not exists employees(
 
 create table if not exists employees_details(
     id      	bigserial primary key,
-    mail	varchar(100),
+    mail	    varchar(100),
     employee_id bigint not null,
     created     timestamp default current_timestamp,
     updated     timestamp default current_timestamp,
