@@ -5,16 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.javacommand.command.entities.Employee;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.geekbrains.javacommand.command.entities.Department;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Position;
-import ru.geekbrains.javacommand.command.entities.User;
-
-import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -35,14 +25,8 @@ public class EmployeeDto {
     private String departmentName;
     @JsonProperty("user_name")
     private String userName;
+    @JsonProperty("mail")
     private String mail;
-
-		@JsonProperty("position_id")
-    private Position position;
-    @JsonProperty("department_id")
-    private Department department;
-    @JsonProperty("user_id")
-    private User user;
 
     public EmployeeDto(Employee e) {
         this.id = e.getId();
@@ -55,13 +39,4 @@ public class EmployeeDto {
         this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : "def";
     }
 
-    public EmployeeDto(Optional<Employee> employee){
-        this.id = employee.get().getId();
-        this.firstName = employee.get().getFirstName();
-        this.middleName = employee.get().getMiddleName();
-        this.lastName = employee.get().getLastName();
-        this.position = employee.get().getPosition();
-//        this.department = employee.getDepartment();
-//        this.user = employee.getUser();
-    }
 }

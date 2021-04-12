@@ -47,7 +47,7 @@ create table if not exists employees(
     last_name       	varchar(100) not null,
     position_id     	bigint not null,
     department_id   	bigint not null,
-    user_id         	bigint not null,
+    user_id         	bigint,
     created             timestamp default current_timestamp,
     updated             timestamp default current_timestamp,
     foreign key (position_id) references positions (id),
