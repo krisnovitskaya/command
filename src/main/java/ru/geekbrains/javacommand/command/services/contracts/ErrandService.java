@@ -1,6 +1,3 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services.contracts;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -9,6 +6,7 @@ import java.util.List;
 
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 
 public interface ErrandService {
@@ -80,4 +78,13 @@ public interface ErrandService {
 	 * @param errand
 	 */
 	void updateErrands(ErrandDto errand);
+
+	/**
+	 *	Обновляет статус командировки по логину и статусу
+	 *
+	 * @param errandId
+	 * @param errandStatusType
+	 * @author jackwizard88
+	 */
+	void updateErrandStatus(Long errandId, ErrandStatusType errandStatusType);
 }

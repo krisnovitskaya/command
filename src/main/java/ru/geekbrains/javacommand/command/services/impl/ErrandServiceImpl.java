@@ -1,6 +1,3 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.io.ByteArrayInputStream;
@@ -59,7 +56,7 @@ public class ErrandServiceImpl implements ErrandService {
 
 	@Override
 	public ErrandDto saveOrUpdate(Errand errand) {
-		return convertToErrandDto(errandRepository.save(errand));
+		return new ErrandDto(errandRepository.save(errand));
 	}
     @Override
     public List<ErrandDto> createErrands(List<ErrandDto> errandDtoList) {
@@ -98,7 +95,6 @@ public class ErrandServiceImpl implements ErrandService {
         ArrayList<ErrandDto> resultErrandDtoList = new ArrayList<>();
         if (!idsList.isEmpty()) {
             for (Long id : idsList) {
-                ErrandDto errandDto = null;
                 Errand errand = errandRepository.findErrandById(id);
                 if (errand != null) {
                     errand.setDeleted(true);
@@ -140,7 +136,7 @@ public class ErrandServiceImpl implements ErrandService {
         errand.setEmployee(employee);
 
         //Находим статус по имени и сохраняем
-        ErrandStatusType errandStatusType = errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType());
+        ErrandStatusType errandStatusType = errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()).get();
         errand.setStatusType(errandStatusType);
 
         //Заполняем Детали из ДТО
@@ -169,41 +165,12 @@ public class ErrandServiceImpl implements ErrandService {
     public void updateErrands(ErrandDto errandDto) {
         //TODO
     }
-	private ErrandDto convertToErrandDto(Errand errand) {
-		
-		ErrandDto resultErrandDto = null;
-		if (errand != null) {
-			resultErrandDto = new ErrandDto(errand);
-//			resultErrandDto = new ErrandDto(
-//					errand.getId(),
-//					errand.getCreated(),
-//					errand.getUpdated(),
-//					errand.getStatusType().getStatus(),
-//					errand.getDateStart(),
-//					errand.getDateEnd(),
-//					errand.getEmployee().getFirstName(),
-//					errand.getEmployee().getMiddleName(),
-//					errand.getEmployee().getLastName(),
-//					errand.getEmployee().getPosition().getPosition(),
-//					errand.getEmployee().getUser().getUserName(),
-//					errand.getEmployee().getDepartment().getTitle(),
-//					errand.getEmployee().getDepartment().getMaster().getFirstName(),
-//					errand.getEmployee().getDepartment().getMaster().getMiddleName(),
-//					errand.getEmployee().getDepartment().getMaster().getLastName(),
-//					errand.getEmployee().getDepartment().getMaster().getUser().getUserName(),
-//					errand.getErrandDetails().getMatter().getMatter(),
-//					errand.getErrandDetails().getPlace().getTitle(),
-//					errand.getErrandDetails().getPlace().getPlaceType().getType(),
-//					errand.getErrandDetails().getComment(),
-//					errand.getErrandDetails().getCreatedBy().getFirstName(),
-//					errand.getErrandDetails().getCreatedBy().getMiddleName(),
-//					errand.getErrandDetails().getCreatedBy().getLastName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName()
-//			);
-		}
-		return resultErrandDto;
 
-	}
+    @Override
+    public void updateErrandStatus(Long errandId, ErrandStatusType errandStatusType) {
+        Errand errand = errandRepository.findErrandById(errandId);
+        errand.setStatusType(errandStatusType);
+        errandRepository.save(errand);
+    }
+
 }

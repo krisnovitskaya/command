@@ -15,11 +15,19 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 
+  /**
+   * Find all pending errands by Master via Principal
+   *
+   * @param page
+   * @param params
+   * @return PageImpl<ErrandDto>
+   */
   @GetMapping(value = "/pending", produces = "application/json")
-  public PageImpl<ErrandDto> getAllErrands(
+  ResponseEntity<?> getAllErrands(
       @RequestParam(defaultValue = "1", name = "p") Integer page,
       @RequestParam Map<String, String> params,
       Principal principal);
+
   /**
    * Find entity Errand by id
    *
@@ -28,6 +36,15 @@ public interface ErrandControllerApi {
    */
   @GetMapping(path = "/findbyid", produces = "application/json;charset=UTF-8")
   ResponseEntity<?> findById(@RequestParam(name = "id") Long id);
+
+  /**
+   * Find ErrandDto by id
+   *
+   * @param errandId
+   * @return ErrandDto
+   */
+  @PostMapping(path = "/get_details", produces = "application/json;charset=UTF-8")
+  ResponseEntity<?> getErrandDetails(@RequestParam(name = "errandId") Long errandId);
 
   /**
    * @param errandDto
@@ -91,10 +108,15 @@ public interface ErrandControllerApi {
   ResponseEntity<?> updateById(
       @RequestParam(name = "id") Long id, @RequestBody ErrandDto errandDto);
 
-  @GetMapping(
-      path = "/updateStatus",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
+  /**
+   * Update Errand status by id
+   *
+   * @param errandId
+   * @param status
+   * @return ResponseEntity<?>
+   */
+  @PostMapping(
+      path = "/updateStatus")
   ResponseEntity<?> updateErrandStatus(@RequestParam Long errandId, @RequestParam String status);
 
   /**
@@ -141,8 +163,13 @@ public interface ErrandControllerApi {
   @GetMapping(value = "/matters", produces = "application/json;charset=UTF-8")
   List<ErrandMatterDto> getMatters();
 
-  @GetMapping(value = "/types", produces = "application/json")
-  List<ErrandMatterDto> getErrandMatters();
+  /**
+   * Return All ErrandStatusType as List DTO from current DataBase
+   *
+   * @return List<ErrandStatusTypeDto>
+   */
+  @GetMapping(value = "/statuses", produces = "application/json;charset=UTF-8")
+  List<ErrandStatusTypeDto> getStatuses();
 
   /** @return */
   @GetMapping("/getPlaceTypesList")
