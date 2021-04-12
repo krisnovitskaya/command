@@ -161,4 +161,7 @@ public interface ErrandControllerApi {
    */
   @GetMapping(value = "/report")
   ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
+
+  @PostMapping("/createErrand")
+  public void createNewErrand(@RequestBody ErrandDto errandDto, Principal principal);
 }

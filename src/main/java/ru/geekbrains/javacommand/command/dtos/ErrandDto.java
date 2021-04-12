@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 
 @Data
 @AllArgsConstructor
@@ -50,9 +51,12 @@ public class ErrandDto {
     private String employeeFIO;
     private String matter;
     private String place;
+    private Long matterId;
+    private Long placeId;
     private String placeType;
     private Long createdById;
     private Long confirmedOrRejectedById;
+    private ErrandDetails errandDetails;
 
     public ErrandDto(Errand errand) {
         this.id = errand.getId();

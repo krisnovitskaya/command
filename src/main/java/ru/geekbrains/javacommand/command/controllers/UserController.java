@@ -3,6 +3,7 @@ package ru.geekbrains.javacommand.command.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.controllers.facade.UserControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ChangePasswordDto;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
+import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.PasswordUpdateError;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.RoleRepository;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
 import java.security.Principal;
@@ -23,6 +26,7 @@ import java.util.List;
 public class UserController implements UserControllerApi {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
+    private final RoleRepository roleRepository;
 
 
     public ResponseEntity<?> changePassword(@RequestBody @Validated ChangePasswordDto passwordDto, BindingResult bindingResult, Principal principal) {
@@ -48,5 +52,15 @@ public class UserController implements UserControllerApi {
     @Override
     public List<UserDto> getUsers() {
         return userService.findAll();
+    }
+
+    @Override
+    public ResponseEntity<?> checkUserRoles(Principal principal) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
+        Role role = roleRepository.getOne(2L);
+        if (!user.getListRoles().contains(role)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
