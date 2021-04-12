@@ -2,6 +2,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,5 +57,25 @@ public class UserServiceImpl implements UserService {
 
     public User saveUser(User user) {
         return save(user);
+    }
+
+    @Override
+    public boolean isAdmin(User user) {
+        for (Role role : user.getListRoles()) {
+            if (role.getName().equals("ROLE_ADMIN")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMaster(User user) {
+        for (Role role : user.getListRoles()) {
+            if (role.getName().equals("ROLE_MASTER")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

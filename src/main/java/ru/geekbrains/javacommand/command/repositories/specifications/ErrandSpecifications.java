@@ -11,6 +11,14 @@ public class ErrandSpecifications {
         return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("employee").get("id"), employeeId);
     }
 
+    public static Specification<Errand> statusIs(String status) {
+        return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("statusType").get("status"), status);
+    }
+
+    public static Specification<Errand> statusIdIs(Long statusId) {
+        return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("statusType").get("id"), statusId);
+    }
+
     public static Specification<Errand> errandMatterTypeIdIs(Long errandMatterTypeId) {
         return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("errandDetails").get("matter").get("id"), errandMatterTypeId);
     }

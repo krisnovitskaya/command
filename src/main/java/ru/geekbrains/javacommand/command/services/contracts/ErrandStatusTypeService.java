@@ -5,10 +5,16 @@ import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface ErrandStatusTypeService {
-	
-    List<ErrandStatusType> getAll();
+
+    List<ErrandStatusTypeDto> findAll();
+
     ErrandStatusTypeDto findById(Long id);
+
     ErrandStatusType returnFromDto(ErrandStatusTypeDto errandStatusTypeDto);
+
+    Optional<ErrandStatusType> findByStatus(String status);
 }
