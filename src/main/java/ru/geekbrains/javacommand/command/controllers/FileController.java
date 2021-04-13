@@ -4,10 +4,20 @@
 
 package ru.geekbrains.javacommand.command.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.FileControllerApi;
 import ru.geekbrains.javacommand.command.dtos.FileDto;
@@ -28,6 +38,19 @@ public class FileController implements FileControllerApi {
 	@Override
 	public ResponseEntity<?> updateFiles(List<FileDto> filesDtosList) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> downloadFile(Long id) {
+		HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/octet-stream");
+		File f = fileService.downloadFile(id);
+		try {
+			return new ResponseEntity(FileUtils.readFileToByteArray(f), headers, HttpStatus.OK);
+		} catch (IOException ex) {
+			Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return null;
 	}
 
 	@Override

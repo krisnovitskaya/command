@@ -18,7 +18,7 @@ public interface FileControllerApi {
 	 * @return ResponseEntity
 	 */
 	@PostMapping(
-      path = "/upload",
+      path = "/uploads",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<?> uploadFiles(@RequestBody (required = false) List<FileDto> filesDtosList);
@@ -29,10 +29,16 @@ public interface FileControllerApi {
 	 * @return ResponseEntity
 	 */
 	@PutMapping(
-      path = "/update",
+      path = "/updates",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<?> updateFiles(@RequestBody List<FileDto> filesDtosList);
+
+	@PostMapping(
+			path = "/download",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+  ResponseEntity<?> downloadFile(@RequestBody Long id);
 
 	/**
 	 *
@@ -40,7 +46,7 @@ public interface FileControllerApi {
 	 * @return ResponseEntity
 	 */
 	@PostMapping(
-			path = "/download",
+			path = "/downloads",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   ResponseEntity<?> downloadFiles(@RequestBody List<Long> idsList);
@@ -51,7 +57,7 @@ public interface FileControllerApi {
 	 * @return ResponseEntity
 	 */
 	@DeleteMapping(
-			path = "/delete",
+			path = "/deletes",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<?> deleteFiles(@RequestBody List<Long> idsList);
@@ -62,7 +68,7 @@ public interface FileControllerApi {
 	 * @return ResponseEntity
 	 */
 	@DeleteMapping(
-			path = "/remove",
+			path = "/removes",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<?> removeFiles(@RequestBody List<Long> idsList);

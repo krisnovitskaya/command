@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 /** @author Igor Popovich, email: popovichia@gmail.com */
 @Entity
@@ -24,7 +23,7 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "files")
-public class File extends DefaultEntity {
+public class FileEntity extends DefaultEntity {
 
 	@Column(name = "file_name")
 	private String fileName;

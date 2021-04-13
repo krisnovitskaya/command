@@ -9,10 +9,11 @@ package ru.geekbrains.javacommand.command.util;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.File;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.geekbrains.javacommand.command.entities.File;
+import ru.geekbrains.javacommand.command.entities.FileEntity;
 
 /** @author Igor Popovich, email: popovichia@gmail.com */
 @Component
@@ -21,26 +22,36 @@ public class FileUtilities {
   @Value("tmpdirpath")
   private String tmpDirPath;
 
-  public java.io.File createArchive(List<File> filesList)
+	public File getFileFromDB(FileEntity fileEntity) throws FileNotFoundException, IOException {
+		File resultFile = null;
+		if (checkDir(tmpDirPath)) {
+			resultFile = new File(tmpDirPath + File.separator + fileEntity.getFileName());
+			FileOutputStream fileOutputStream = new FileOutputStream(resultFile);
+			fileOutputStream.write(fileEntity.getFileData());
+			fileOutputStream.close();
+		}
+		return resultFile;
+	}
+	
+  public File createArchive(List<FileEntity> filesEntitiesList)
       throws FileNotFoundException, IOException {
 
-    java.io.File tmpDir = new java.io.File(tmpDirPath);
-    if (checkDir(tmpDir)) {
-      for (File file : filesList) {
-        java.io.File tmpFile =
-            new java.io.File(tmpDirPath + java.io.File.separator + file.getFileName());
+    if (checkDir(tmpDirPath)) {
+      for (FileEntity fileEntity : filesEntitiesList) {
+        File tmpFile = new File(tmpDirPath + File.separator + fileEntity.getFileName());
         FileOutputStream fileOutputStream = new FileOutputStream(tmpFile);
-        fileOutputStream.write(file.getFileData());
+        fileOutputStream.write(fileEntity.getFileData());
       }
     }
     return null;
   }
 
-  public boolean checkDir(java.io.File tmpDirPath) {
+  public boolean checkDir(String tmpDirPath) {
 
     boolean result = true;
-    if (!tmpDirPath.exists() || !tmpDirPath.isDirectory()) {
-      tmpDirPath.mkdir();
+    File tmpDir = new File(tmpDirPath);
+    if (!tmpDir.exists() || !tmpDir.isDirectory()) {
+      tmpDir.mkdir();
     }
     return result;
   }

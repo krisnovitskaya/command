@@ -18,8 +18,8 @@ public class SpringConfiguration {
 	public ModelMapper getModelMapper() {
 		return new ModelMapper();
 	}
-	@Bean(name = "fileUtilities")
-	public FileUtilities getFileUtilities() {
-		return new FileUtilities();
-	}
+//	@Bean(name = "fileUtilities")
+//	public FileUtilities getFileUtilities() {
+//		return new FileUtilities();
+//	}
 }

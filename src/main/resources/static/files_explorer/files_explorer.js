@@ -60,7 +60,7 @@ function fillRequest(fileName, fileByteArray) {
 };
 
 function sendRequest(requestData) {
-    fetch('./api/v1/files/upload', {
+    fetch('./api/v1/files/uploads', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
