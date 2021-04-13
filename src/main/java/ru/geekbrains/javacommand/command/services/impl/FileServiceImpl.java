@@ -24,10 +24,13 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public List<File> uploadFiles(List<FileDto> filesDtosList) {
-		List<File> filesList = fileDtoMapper.convertToFilesList(filesDtosList);
-		for (File file : filesList) {
-			fileRepository.save(file);
-		}
+		List<File> filesList = new ArrayList<>();
+			if (filesDtosList != null && !filesDtosList.isEmpty()) {
+				filesList = fileDtoMapper.convertToFilesList(filesDtosList);
+				for (File file : filesList) {
+					fileRepository.save(file);
+				}
+			}
 		return filesList;
 	}
 

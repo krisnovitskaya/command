@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 /** @author Igor Popovich, email: popovichia@gmail.com */
 @Entity
@@ -25,9 +26,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "files")
 public class File extends DefaultEntity {
 
+	@Column(name = "file_name")
 	private String fileName;
 	
-	@Lob
+	@Column(name = "file_data")
+	@Type(type = "org.hibernate.type.BinaryType")
 	private byte[] fileData;
 
 	@ManyToOne

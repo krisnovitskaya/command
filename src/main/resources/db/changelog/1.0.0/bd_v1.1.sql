@@ -121,7 +121,7 @@ create table if not exists errands(
     date_end            timestamp,
     created             timestamp default current_timestamp,
     updated             timestamp default current_timestamp,
-    deleted             boolean default 0,
+    deleted             boolean default false,
     foreign key (status_id) references errands_status_types(id),
     foreign key (employee_id) references employees(id),
     foreign key (errand_details_id) references errands_details(id)
@@ -130,12 +130,12 @@ create table if not exists errands(
 create table if not exists files(
     id                      bigserial primary key,
     file_name               varchar(255),
-    file_data               blob,
+    file_data               bytea,
     author_id               bigint,
     errand_id               bigint,
     created                 timestamp default current_timestamp,
     updated                 timestamp default current_timestamp,
-    deleted                 boolean default 0,
-    foreign key (author)        references users(id),
+    deleted                 boolean default false,
+    foreign key (author_id)     references users(id),
     foreign key (errand_id)     references errands(id)
 );

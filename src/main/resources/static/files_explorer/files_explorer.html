@@ -1,0 +1,32 @@
+<div xmlns="http://www.w3.org/1999/html">
+    <form novalidate style="max-width: 1600px; padding: 10px; margin: 0 auto; position: relative">
+        <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Обозреватель файлов:</h1>
+        <div class="form-group col-md-6">
+            <label for="errandDepartment">Список файлов:</label>
+            <table class="table table-hover" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>Идентификатор</td>
+                    <td>Название</td>
+                    <td>Автор</td>
+                    <td>Командировка</td>
+                    <td>Действие</td>
+                </tr>
+                <tbody>
+                    <tr ng-repeat="fileDto in filesDtosList">
+                        <td>{{fileDto.id}}</td>
+                        <td>{{fileDto.fileName}}</td>
+                        <td>{{fileDto.authorId}}</td>
+                        <td>{{fileDto.errandId}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="errandDetails(e.id)">Обновить</button>
+                            <button class="btn btn-success" ng-click="confirmErrand(e.id)">Удалить</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group col-md-6">
+            <input class="btn btn-primary" name="files" type="file" multiple onchange="uploadFiles(event.target.files)">
+        </div>
+    </form>
+</div>

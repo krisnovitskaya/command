@@ -8,7 +8,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.FileControllerApi;
 import ru.geekbrains.javacommand.command.dtos.FileDto;
@@ -22,17 +21,17 @@ public class FileController implements FileControllerApi {
 	private FileService fileService;
 
 	@Override
-	public ResponseEntity<?> uploadFiles(@RequestBody List<FileDto> filesDtosList) {
+	public ResponseEntity<?> uploadFiles(List<FileDto> filesDtosList) {
     return ResponseEntity.ok(fileService.uploadFiles(filesDtosList));
 	}
 
 	@Override
-	public ResponseEntity<?> updateFiles(@RequestBody List<FileDto> filesDtosList) {
+	public ResponseEntity<?> updateFiles(List<FileDto> filesDtosList) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override
-	public ResponseEntity<?> downloadFiles(@RequestBody List<Long> id) {
+	public ResponseEntity<?> downloadFiles(List<Long> id) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

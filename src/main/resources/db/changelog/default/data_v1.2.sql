@@ -166,15 +166,3 @@ values
 insert into errands(status_id, employee_id, errand_details_id, date_start, date_end, created, updated)
 values
     (1, 5, 4, '2021-03-18', '2021-03-19', '2021-03-19', '2021-03-19');        --id 11
-
-insert into files(file_name, author_id, errand_id)
-values
-    ('test1', 1, 1),        --id 1
-    ('test2', 2, 1),        --id 2
-    ('test3', 3, 1),        --id 3
-    ('test4', 4, 1),        --id 4
-    ('test5', 5, 1),        --id 5
-    ('test6', 6, 1),        --id 6
-    ('test7', 7, 1),        --id 7
-    ('test8', 8, 1),        --id 8
-    ('test9', 9, 1);        --id 9

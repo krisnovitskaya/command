@@ -47,6 +47,10 @@
             .when('/employee_form', {
                 templateUrl: 'administration/employee_form.html',
                 controller: 'administrationController'
+            })
+            .when('/files_explorer', {
+                templateUrl: 'files_explorer/files_explorer.html',
+                controller: 'filesExplorerController'
             });
 
         $httpProvider.interceptors.push(function ($q, $location, $localStorage) {

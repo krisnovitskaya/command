@@ -21,7 +21,7 @@ public interface FileControllerApi {
       path = "/upload",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> uploadFiles(@RequestBody List<FileDto> filesDtosList);
+  ResponseEntity<?> uploadFiles(@RequestBody (required = false) List<FileDto> filesDtosList);
 
 	/**
 	 *
