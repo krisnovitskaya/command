@@ -15,13 +15,15 @@ import ru.geekbrains.javacommand.command.entities.File;
 import ru.geekbrains.javacommand.command.repositories.FileRepository;
 import ru.geekbrains.javacommand.command.services.FileService;
 import ru.geekbrains.javacommand.command.util.FileDtoMapper;
+import ru.geekbrains.javacommand.command.util.FileUtilities;
 
 @Service
 public class FileServiceImpl implements FileService {
 
   @Autowired private FileRepository fileRepository;
   @Autowired private FileDtoMapper fileDtoMapper;
-
+	@Autowired private FileUtilities fileUtilities;
+	
 	@Override
 	public List<File> uploadFiles(List<FileDto> filesDtosList) {
 		List<File> filesList = new ArrayList<>();
@@ -32,6 +34,11 @@ public class FileServiceImpl implements FileService {
 				}
 			}
 		return filesList;
+	}
+
+	@Override
+	public java.io.File downloadFiles(List<Long> idsList) {
+		return fileUtilities.createArchive(fileRepository.getFilesByIdsList(idsList));
 	}
 
 	@Override

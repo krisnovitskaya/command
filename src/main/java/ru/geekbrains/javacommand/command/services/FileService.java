@@ -12,5 +12,6 @@ import ru.geekbrains.javacommand.command.entities.File;
 public interface FileService {
 	
 	List<File> uploadFiles(List<FileDto> filesDtosList);
+	java.io.File downloadFiles(List<Long> idsList);
 	List<FileDto> listFiles(List<Long> errandsIdsList);
 }

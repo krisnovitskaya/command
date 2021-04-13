@@ -9,6 +9,7 @@
                     <td>Название</td>
                     <td>Автор</td>
                     <td>Командировка</td>
+                    <td>X</td>
                     <td>Действие</td>
                 </tr>
                 <tbody>
@@ -17,6 +18,7 @@
                         <td>{{fileDto.fileName}}</td>
                         <td>{{fileDto.authorId}}</td>
                         <td>{{fileDto.errandId}}</td>
+                        <td><input type="checkbox"/></td>
                         <td>
                             <button class="btn btn-primary" ng-click="errandDetails(e.id)">Обновить</button>
                             <button class="btn btn-success" ng-click="confirmErrand(e.id)">Удалить</button>
@@ -26,7 +28,11 @@
             </table>
         </div>
         <div class="form-group col-md-6">
-            <input class="btn btn-primary" name="files" type="file" multiple onchange="uploadFiles(event.target.files)">
+            <input class="btn btn-primary" id="files" name="files" type="file" multiple/>
+            <button class="btn btn-success" onclick="uploadFiles(document.getElementById('files'));">Загрузить</button>
+        </div>
+        <div class="form-group col-md-6">
+            <button class="btn btn-success" onclick="downloadFiles(document.getElementById('files'));">Скачать</button>
         </div>
     </form>
 </div>

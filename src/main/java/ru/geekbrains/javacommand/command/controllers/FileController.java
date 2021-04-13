@@ -31,7 +31,17 @@ public class FileController implements FileControllerApi {
 	}
 
 	@Override
-	public ResponseEntity<?> downloadFiles(List<Long> id) {
+	public ResponseEntity<?> downloadFiles(List<Long> idsList) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> deleteFiles(List<Long> idsList) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> removeFiles(List<Long> idsList) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -39,5 +49,4 @@ public class FileController implements FileControllerApi {
 	public ResponseEntity<?> listFiles(List<Long> errandsIdsList) {
     return ResponseEntity.ok(fileService.listFiles(errandsIdsList));
 	}
-
 }

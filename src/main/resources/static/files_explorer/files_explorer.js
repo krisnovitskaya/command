@@ -25,34 +25,47 @@ angular.module('app').controller('filesExplorerController', function ($scope, $h
 
     $scope.fillFilesList([]);
 });
-function uploadFiles(files) {
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(files[0]);
-    reader.onloadend = function (evt) {
-        var fileByteArray = [];
-        if (evt.target.readyState == FileReader.DONE) {
-            var arrayBuffer = evt.target.result,
-                    array = new Uint8Array(arrayBuffer);
-            for (var i = 0; i < array.length; i++) {
-                fileByteArray.push(array[i]);
-            }
+
+function uploadFiles(input) {
+    var files = input.files;
+    for (var i = 0; i < files.length; i++) {
+        loadFile(files[i]);
+    }
+};
+
+function loadFile(file) {
+    var fileReader = new FileReader();
+    fileReader.onloadend = function () {
+        var fileData = fileReader.result;
+        var array = new Uint8Array(fileData);
+        var fileByteArray = new Array();
+        for (var i = 0; i < array.length; i++) {
+            fileByteArray.push(array[i]);
         }
-        return fileByteArray;
+        sendRequest(fillRequest(file.name, fileByteArray));
     };
+    fileReader.readAsArrayBuffer(file);
+};
+
+function fillRequest(fileName, fileByteArray) {
     let data = [{
-            'id': '',
-            'fileName': files[0].name,
-            'fileData': fileByteArray,
-            'authorId': 2,
-            'errandId': 2,
-            'deleted': false
-        }];
+        'id': '',
+        'fileName': fileName,
+        'fileData': fileByteArray,
+        'authorId': 2,
+        'errandId': 2,
+        'deleted': false
+    }];
+    return data;
+};
+
+function sendRequest(requestData) {
     fetch('./api/v1/files/upload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(requestData)
     })
             .then(response => response.json())
             .then(result => {
@@ -62,3 +75,20 @@ function uploadFiles(files) {
                 console.error('Error:', error);
             });
 };
+
+function downloadFiles(idsList) {
+    fetch('./api/v1/files/download', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(idsList)
+    })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });    
+}

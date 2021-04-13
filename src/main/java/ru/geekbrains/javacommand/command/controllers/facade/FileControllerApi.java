@@ -36,14 +36,36 @@ public interface FileControllerApi {
 
 	/**
 	 *
-	 * @param id
+	 * @param idsList
 	 * @return ResponseEntity
 	 */
 	@PostMapping(
 			path = "/download",
       consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+  ResponseEntity<?> downloadFiles(@RequestBody List<Long> idsList);
+
+	/**
+	 *
+	 * @param idsList
+	 * @return ResponseEntity
+	 */
+	@DeleteMapping(
+			path = "/delete",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> downloadFiles(@RequestBody List<Long> id);
+  ResponseEntity<?> deleteFiles(@RequestBody List<Long> idsList);
+
+	/**
+	 *
+	 * @param idsList
+	 * @return ResponseEntity
+	 */
+	@DeleteMapping(
+			path = "/remove",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<?> removeFiles(@RequestBody List<Long> idsList);
 
 	/**
 	 *

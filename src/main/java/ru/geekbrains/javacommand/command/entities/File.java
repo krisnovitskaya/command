@@ -30,7 +30,7 @@ public class File extends DefaultEntity {
 	private String fileName;
 	
 	@Column(name = "file_data")
-	@Type(type = "org.hibernate.type.BinaryType")
+	@Lob
 	private byte[] fileData;
 
 	@ManyToOne
