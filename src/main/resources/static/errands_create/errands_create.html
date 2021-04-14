@@ -3,8 +3,6 @@
 
         <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Заявка на командировку:</h1>
 
-        <tt ng-model="ErrandDto.createdById" value = "{{Employee.id}}" aria-hidden="true">{{Employee.id}}</tt>
-        <span>{{Employee.id}}</span>
         <p ng-show="false" ng-model="ErrandDto.createdById" value = "{{Employee.id}}">{{Employee.id}}</p>
 
         <div ng-if="CheckRoles == true">
@@ -19,45 +17,15 @@
             <span ng-if="EmployeesList.length == 0">В отделе нет сотрудников. Пожалуйста, выберите, другой</span>
             <div ng-if="(EmployeesList.length != 0) && (EmployeesList != null) && (errand.department_id != null)" class="form-group col-md-6">
                 <label for="employeeId">ФИО сотрудника:</label>
-                <select class="form-control" ng-model="ErrandDto.employeeId"  id="employeeId" required="true" ng-change="setEmployee(ErrandDto.employeeId)">
+                <select class="form-control" ng-model="$parent.$parent.ErrandDto.employeeId"  id="employeeId" required="true">
                     <option value="">ФИО сотрудника</option>
                     <option value="{{e.id}}" ng-repeat="e in EmployeesList">{{e.last_name}} {{e.first_name}} {{e.middle_name}}</option>
                 </select>
-                <span>{{ErrandDto.employeeId}}</span>
             </div>
         </div>
 
+        <p ng-show="false" ng-model="ErrandDto.employeeId" value = "{{ErrandDto.employeeId}}">emp {{ErrandDto.employeeId}}</p>
 
-
-
-        <div ng-if="CheckRoles == true" class="form-group col-md-6">
-            <label for="errandDepartment1">Отдел сотрудника:</label>
-            <select class="form-control" ng-model="errand.department_id" id="errandDepartment1" required="true" ng-change="getEmployeesList(errand.department_id)">
-                <option value="">Отдел сотрудника</option>
-                <option value="{{do.id}}" ng-repeat="do in DepartmentsList">{{do.title}}</option>
-            </select>
-        </div>
-        errand.department_id <span>{{errand.department_id}}</span>
-
-        <span ng-if="EmployeesList.length == 0">В отделе нет сотрудников. Пожалуйста, выберите, другой</span>
-        <div ng-if="(EmployeesList.length != 0) && (EmployeesList != null) && (errand.department_id != null)" class="form-group col-md-6">
-            <label for="employeeId1">ФИО сотрудника:</label>
-            <select class="form-control" ng-model="ErrandDto.employeeId"  id="employeeId1" required="true" ng-change="setEmployee(ErrandDto.employeeId)">
-                <option value="">ФИО сотрудника</option>
-                <option value="{{e.id}}" ng-repeat="e in EmployeesList">{{e.last_name}} {{e.first_name}} {{e.middle_name}}</option>
-            </select>
-            <span>{{ErrandDto.employeeId}}</span>
-        </div>
-
-
-
-
-
-
-
-
-
-        <span>{{ErrandDto.employeeId}}</span>
 
         <div class="form-group col-md-6">
             <label for="matterId">Тип командировки:</label>

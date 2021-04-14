@@ -3,6 +3,7 @@ package ru.geekbrains.javacommand.command.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.entities.Role;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.RoleRepository;
 import ru.geekbrains.javacommand.command.services.contracts.RoleService;
 
@@ -15,4 +16,10 @@ public class RoleServiceImpl implements RoleService {
         return repository.findRoleByName("ROLE_USER");
     }
 
+    @Override
+    public Role findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+                String.format("Роль с id = %s не найдена", id))
+        );
+    }
 }

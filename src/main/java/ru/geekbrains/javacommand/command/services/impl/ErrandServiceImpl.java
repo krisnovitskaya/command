@@ -218,18 +218,14 @@ public class ErrandServiceImpl implements ErrandService {
         errand.setUpdated(OffsetDateTime.now());
         errand.setDeleted(false);
 
-        //ErrandDetails errandDetails = errand.getErrandDetails();
-        ErrandDetails errandDetails = new ErrandDetails();
-        errandDetails.setId(null);
-        errandDetails.setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
-        errandDetails.setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
-        errandDetails.setComment(errandDto.getComment());
-        errandDetails.setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
-        //errandDetails.setCreatedBy(employeeRepository.findByUserId(errandDto.getEmployeeId()));
-        // errandDetails.setConfirmedOrRejectedBy(errandDto.getErrandDetails().getConfirmedOrRejectedBy());
-        errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getEmployeeId()));
-
-        errand.setErrandDetails(errandDetails);
+        errand.setErrandDetails(new ErrandDetails());
+        errand.getErrandDetails().setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
+        errand.getErrandDetails().setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
+        errand.getErrandDetails().setComment(errandDto.getComment());
+        errand.getErrandDetails().setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
+        errand.getErrandDetails().setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getConfirmedOrRejectedById()));
+        errand.getErrandDetails().setCreated(OffsetDateTime.now());
+        errand.getErrandDetails().setUpdated(OffsetDateTime.now());
 
         errandRepository.save(errand);
     }

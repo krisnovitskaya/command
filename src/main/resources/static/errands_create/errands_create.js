@@ -38,17 +38,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                     });
     };
 
-    $scope.setEmployee = function(ErrandDto.employeeId){
-                         $http({
-                            url: contextPath + '/api/v1/errands/get/' + ErrandDto.employeeId,
-                            method: 'POST'
-                        })
-                            .then(function (response) {
-                                console.log("Пост сотрудника командировки");
-
-                            });
-    };
-
      $scope.getEmployeesList = function (departmentId) {
                     $http({
                         url: contextPath + '/api/v1/employees/get/' + departmentId,
@@ -97,7 +86,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
           $http.post(contextPath + '/api/v1/errands/createErrand', $scope.ErrandDto)
                      .then(function (response) {
                          $scope.errand = null;
-//                         $scope.errandDetails = null;
                          $scope.ErrandDto = null;
                          alert('Ваша заявка успешно оформлена');
                      });

@@ -16,6 +16,7 @@ import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.PasswordUpdateError;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.RoleRepository;
+import ru.geekbrains.javacommand.command.services.contracts.RoleService;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
 import java.security.Principal;
@@ -26,7 +27,7 @@ import java.util.List;
 public class UserController implements UserControllerApi {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
 
     public ResponseEntity<?> changePassword(@RequestBody @Validated ChangePasswordDto passwordDto, BindingResult bindingResult, Principal principal) {
@@ -56,8 +57,8 @@ public class UserController implements UserControllerApi {
 
     @Override
     public ResponseEntity<?> checkUserRoles(Principal principal) {
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", principal.getName())));
-        Role role = roleRepository.getOne(2L);
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
+        Role role = roleService.findById(2L);
         if (!user.getListRoles().contains(role)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
