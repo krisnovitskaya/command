@@ -39,6 +39,7 @@ public class ErrandController implements ErrandControllerApi {
     private final PlaceTypeService placeTypeService;
     private final ErrandDetailsService errandDetailsService;
     private final ErrandStatusTypeService errandStatusTypeService;
+    private final RoleService roleService;
 
 
     /**
@@ -292,94 +293,20 @@ public class ErrandController implements ErrandControllerApi {
 
   @Override
   public void createNewErrand(ErrandDto errandDto, Principal principal) {
-//        errandService.saveErrand();
-//        errandDetailsService.saveErrandDetails();
-//        ErrandDto errand = new ErrandDto();
-//        errand.setId(null);
-//        errand.setDateStart(errandDto.getDateStart());
-//        errand.setDateEnd(errandDto.getDateEnd());
-//        errand.setEmployeeId(errandDto.getEmployeeId());
-//        errandDto.setCreated(OffsetDateTime.now());
-//        errandDto.setUpdated(OffsetDateTime.now());
-
-
-//        ErrandDetailsDto errandDetails = new ErrandDetailsDto();
-//        errandDetails.setId(null);
-//        errandDetails.setMatter(matterTypeService.findErrandMatterTypeById(errandDto.getMatterId()));
-//        errandDetails.setPlaceId(errandDto.getPlaceId());
-//        errandDetails.setComment(errandDto.getComment());
-//        errandDetails.setCreatedBy(employeeService.findById(errandDto.getEmployeeId()));
     User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
     Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee for user not found"));
+    Role role = roleService.findById(2L);
 
-    if (user.getListRoles().contains("MASTER")){// начальник
+    if (user.getListRoles().contains(role)){// начальник
       errandDto.setStatusType(errandStatusTypeService.findById(2L).getStatus());
       errandDto.setConfirmedOrRejectedById(employee.getId());
-      errandDto.getErrandDetails().setConfirmedOrRejectedBy(employee);
     }
     else {
       errandDto.setStatusType(errandStatusTypeService.findById(1L).getStatus());
     }
-//        errand.setErrandDetails(errandDetails);
 
-    System.out.println("errandDto.getEmployeeId() " + errandDto.getEmployeeId());
-    System.out.println("matter) " + errandDto.getMatterId());
-    System.out.println("place " + errandDto.getPlaceId());
-    System.out.println("comment " + errandDto.getComment());
-    System.out.println("start " + errandDto.getDateStart());
-    System.out.println("end " + errandDto.getDateEnd());
-    System.out.println("status " + errandDto.getStatusType());
-    System.out.println("created " + errandDto.getCreatedById());
-//        System.out.println("conf " + errandDto.getErrandDetails().getConfirmedOrRejectedBy().getId());
+    errandDto.setCreatedById(employee.getId());
 
     errandService.saveErrand(errandDto);
-//        errandDetailsService.saveErrandDetails(errandDetails);
-
-
-    // остальные сотрудники
-//        ErrandMatterDto errandMatterTypeDto = matterTypeService.findById(newErrandDto.getMatterId());
-//        ErrandMatterType errandMatterType = matterTypeService.convertToErrandMatterType(errandMatterTypeDto);
-//
-//        PlaceDto placeDto = placeService.findById(newErrandDto.getPlaceId());
-//        Place place = placeService.convertToPlace(placeDto);
-//
-//        EmployeeDto employeeDto = employeeService.findById(newErrandDto.getEmployeeId());
-//        Employee employee = employeeService.convertToEmployee(employeeDto);
-//
-//        ErrandDetails newErrandDetails = new ErrandDetails(errandMatterType, place, newErrandDto.getComment(), employee);
-//        newErrandDetails.setId(null);
-//
-//        errandDetailsService.save(newErrandDetails);
-//
-//        Errand newErrand = new Errand(employee, newErrandDetails, newErrandDto.getDateStart(), newErrandDto.getDateEnd());
-//        newErrand.setId(null);
-//
-//        errandService.saveErrand(newErrand);
-//
-//        newErrandDetails.setCreated(OffsetDateTime.now());
-//        newErrandDetails.setUpdated(OffsetDateTime.now());
-//        newErrand.setCreated(OffsetDateTime.from(ZonedDateTime.now()));
-//        newErrand.setUpdated(OffsetDateTime.from(ZonedDateTime.now()));
-//
-//        if (newErrand.getEmployee().getId() == 1){// начальник
-//            newErrand.setStatusType(errandStatusTypeService.returnFromDto(errandStatusTypeService.findById(2L)));
-//            newErrandDetails.setConfirmedOrRejectedBy(newErrand.getEmployee());
-//        }
-//        else {
-//            newErrand.setStatusType(errandStatusTypeService.returnFromDto(errandStatusTypeService.findById(1L)));
-//        }// остальные сотрудники
-//
-//
-//        System.out.println(" getEmployee().getId()  " + newErrand.getEmployee().getId() +
-//                " newErrand.getErranddet().getId()  " + newErrand.getErrandDetails().getId() +
-//                " newErrand.getDateStart()  " + newErrand.getDateStart() +
-//                " newErrand.getstatus  " + newErrand.getStatusType() +
-//                " newErrand.getDateEnd()  " + newErrand.getDateEnd());
-//        System.out.println(" errandDetails.getMatter().getMatter()  " + newErrandDetails.getMatter().getMatter() +
-//                " newErrandDetails.getPlace() " + newErrandDetails.getPlace().getTitle() +
-//                "  newErrandDetails.getComment()  " + newErrandDetails.getComment() +
-//                "  newErrandDetails.getdate  " + newErrandDetails.getCreated()+
-//                "  newErrandDetails.cjnf  " + newErrandDetails.getConfirmedOrRejectedBy());
-
   }
 }

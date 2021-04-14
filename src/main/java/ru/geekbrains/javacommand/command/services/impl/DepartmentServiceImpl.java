@@ -9,6 +9,7 @@ import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
 import ru.geekbrains.javacommand.command.dtos.DepartmentSimpleDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.DepartmentRepository;
 import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
@@ -39,4 +40,5 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<DepartmentSimpleDto> getSubordinateDepartments(Long id) {
         return departmentRepository.getSubordinateDepartments(id).stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
     }
+
 }

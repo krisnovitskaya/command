@@ -63,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
 //        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
 //            .orElseThrow(() -> new ResourceNotFoundException(
-//                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
+////                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
 //            )
 //        );
         employeeRepository.save(newEmployee);
