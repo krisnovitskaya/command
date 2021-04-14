@@ -17,7 +17,7 @@ public class FileDto {
   private String fileName;
 
   @JsonProperty("fileData")
-  private byte[] fileData;
+  private String fileData;
 	
   @JsonProperty("authorId")
   private Long authorId;

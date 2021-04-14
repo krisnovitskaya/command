@@ -35,23 +35,18 @@ function uploadFiles(input) {
 
 function loadFile(file) {
     var fileReader = new FileReader();
-    fileReader.onloadend = function () {
+    fileReader.onload = function () {
         var fileData = fileReader.result;
-        var array = new Uint8Array(fileData);
-        var fileByteArray = new Array();
-        for (var i = 0; i < array.length; i++) {
-            fileByteArray.push(array[i]);
-        }
-        sendRequest(fillRequest(file.name, fileByteArray));
+        sendRequest(fillRequest(file.name, fileData));
     };
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsDataURL(file);
 };
 
-function fillRequest(fileName, fileByteArray) {
+function fillRequest(fileName, fileData) {
     let data = [{
         'id': '',
         'fileName': fileName,
-        'fileData': fileByteArray,
+        'fileData': fileData,
         'authorId': 2,
         'errandId': 2,
         'deleted': false

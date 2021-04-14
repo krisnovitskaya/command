@@ -30,7 +30,7 @@ public class FileEntity extends DefaultEntity {
 	
 	@Column(name = "file_data")
 	@Lob
-	private byte[] fileData;
+	private String fileData;
 
 	@ManyToOne
   @JoinColumn(name = "author_id")

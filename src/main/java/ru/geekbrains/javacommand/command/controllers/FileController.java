@@ -6,8 +6,6 @@ package ru.geekbrains.javacommand.command.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.FileControllerApi;
 import ru.geekbrains.javacommand.command.dtos.FileDto;
@@ -44,7 +41,8 @@ public class FileController implements FileControllerApi {
 	public ResponseEntity<?> downloadFile(Long id) {
 		HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/octet-stream");
-		File f = fileService.downloadFile(id);
+    headers.add("Content-Disposition", "attachment; filename='x.jpg'");
+		File f = fileService.getFile(id);
 		try {
 			return new ResponseEntity(FileUtils.readFileToByteArray(f), headers, HttpStatus.OK);
 		} catch (IOException ex) {

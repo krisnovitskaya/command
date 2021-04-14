@@ -13,7 +13,7 @@ import ru.geekbrains.javacommand.command.entities.FileEntity;
 public interface FileService {
 	
 	List<FileEntity> uploadFiles(List<FileDto> filesDtosList);
-	File downloadFile(Long id);
-	File downloadFiles(List<Long> idsList);
+	File getFile(Long id);
+	File getFiles(List<Long> idsList);
 	List<FileDto> listFiles(List<Long> errandsIdsList);
 }

@@ -41,7 +41,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public File downloadFile(Long id) {
+	public File getFile(Long id) {
 		File resultFile = null;
 		try {
 			resultFile = fileUtilities.getFileFromDB(fileRepository.getFileById(id));
@@ -52,7 +52,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public File downloadFiles(List<Long> idsList) {
+	public File getFiles(List<Long> idsList) {
 		return null;
 	}
 
