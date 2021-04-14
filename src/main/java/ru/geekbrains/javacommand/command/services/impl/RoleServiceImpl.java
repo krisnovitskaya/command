@@ -12,9 +12,6 @@ import ru.geekbrains.javacommand.command.services.contracts.RoleService;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository repository;
 
-    public Role getUserRole() {
-        return repository.findRoleByName("ROLE_USER");
-    }
 
     @Override
     public Role findById(Long id) {
@@ -22,4 +19,10 @@ public class RoleServiceImpl implements RoleService {
                 String.format("Роль с id = %s не найдена", id))
         );
     }
+
+    @Override
+    public Role findByName(String name){
+        return repository.getOneByName(name);
+    }
+
 }
