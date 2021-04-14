@@ -14,12 +14,9 @@ import ru.geekbrains.javacommand.command.util.FileUtilities;
 /** @author Igor Popovich, email: popovichia@gmail.com, */
 @Configuration
 public class SpringConfiguration {
+
 	@Bean(name = "modelMapper")
 	public ModelMapper getModelMapper() {
 		return new ModelMapper();
 	}
-//	@Bean(name = "fileUtilities")
-//	public FileUtilities getFileUtilities() {
-//		return new FileUtilities();
-//	}
 }

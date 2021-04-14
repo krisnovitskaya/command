@@ -29,11 +29,11 @@ angular.module('app').controller('filesExplorerController', function ($scope, $h
 function uploadFiles(input) {
     var files = input.files;
     for (var i = 0; i < files.length; i++) {
-        loadFile(files[i]);
+        uploadFile(files[i]);
     }
 };
 
-function loadFile(file) {
+function uploadFile(file) {
     var fileReader = new FileReader();
     fileReader.onload = function () {
         var fileData = fileReader.result;
@@ -71,13 +71,32 @@ function sendRequest(requestData) {
             });
 };
 
-function downloadFiles(idsList) {
+function download(id) {
+    console.log("ID - " + id);
     fetch('./api/v1/files/download', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify(idsList)
+        body: JSON.stringify(id)
+    })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });    
+}
+
+function deletes(idsList) {
+    console.log("ID LIST - " + idsList);
+    fetch('./api/v1/files/deletes', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(id)
     })
             .then(response => response.json())
             .then(result => {
