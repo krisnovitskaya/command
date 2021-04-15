@@ -22,7 +22,40 @@ angular.module('app').controller('filesExplorerController', function ($scope, $h
             $scope.filesDtosList = response.data;
         });
     };
+    
+    $scope.download = function (id) {
+        console.log("ID - " + id);
+        $http({
+            url: contextPath + '/api/v1/files/download',
+            method: 'POST',
+            headers: {'Content-type': 'application/json'},
+            data: id
+        }).then(function (response) {
+            console.log("Скачивание файла.");
+            var file = new Blob([response.data]);
+            var url = window.URL || window.webkitURL;
+            var downloadLink = angular.element('<a></a>');
+            downloadLink.attr('href', url.createObjectURL(file));
+            downloadLink.attr('target', '_self');
+            downloadLink.attr('download', 'fileName');
+            downloadLink[0].click();
+        });
+    };
 
+    $scope.delete = function (id) {
+        console.log("ID LIST - " + id);
+        console.log("ID - " + id);
+        $http({
+            url: contextPath + '/api/v1/files/delete',
+            method: 'DELETE',
+            headers: {'Content-type': 'application/json'},
+            data: id
+        }).then(function (response) {
+            console.log("Удаление файла.");
+            $scope.filesDtosList = response.data;
+        });
+    };
+    
     $scope.fillFilesList([]);
 });
 
@@ -70,39 +103,3 @@ function sendRequest(requestData) {
                 console.error('Error:', error);
             });
 };
-
-function download(id) {
-    console.log("ID - " + id);
-    fetch('./api/v1/files/download', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(id)
-    })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success:', result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });    
-}
-
-function deletes(idsList) {
-    console.log("ID LIST - " + idsList);
-    fetch('./api/v1/files/deletes', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(id)
-    })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success:', result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });    
-}

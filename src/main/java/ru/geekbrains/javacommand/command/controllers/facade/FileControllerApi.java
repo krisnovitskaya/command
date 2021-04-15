@@ -53,6 +53,17 @@ public interface FileControllerApi {
 
 	/**
 	 *
+	 * @param id
+	 * @return ResponseEntity
+	 */
+	@DeleteMapping(
+			path = "/delete",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<?> deleteFile(@RequestBody Long id);
+
+	/**
+	 *
 	 * @param idsList
 	 * @return ResponseEntity
 	 */

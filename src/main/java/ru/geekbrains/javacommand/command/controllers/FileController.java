@@ -39,10 +39,11 @@ public class FileController implements FileControllerApi {
 
 	@Override
 	public ResponseEntity<?> downloadFile(Long id) {
+		File f = fileService.getFile(id);
 		HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/octet-stream");
-    headers.add("Content-Disposition", "attachment; filename='x.jpg'");
-		File f = fileService.getFile(id);
+		headers.add("FileName", f.getName());
+    headers.add("Content-Disposition", "attachment; " + f.getName());
 		try {
 			return new ResponseEntity(FileUtils.readFileToByteArray(f), headers, HttpStatus.OK);
 		} catch (IOException ex) {
@@ -53,6 +54,11 @@ public class FileController implements FileControllerApi {
 
 	@Override
 	public ResponseEntity<?> downloadFiles(List<Long> idsList) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public ResponseEntity<?> deleteFile(Long id) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

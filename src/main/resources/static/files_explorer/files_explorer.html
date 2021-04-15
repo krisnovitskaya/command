@@ -18,8 +18,8 @@
                         <td>{{fileDto.authorId}}</td>
                         <td>{{fileDto.errandId}}</td>
                         <td>
-                            <button class="btn btn-primary" ng-click="download({{fileDto.id}});">D</button>
-                            <button class="btn btn-error" ng-click="deletes({{fileDto.id}});">X</button>
+                            <button class="btn btn-primary" ng-click="download(fileDto.id);">D</button>
+                            <button class="btn btn-error" ng-click="delete(fileDto.id);">X</button>
                         </td>
                     </tr>
                 </tbody>

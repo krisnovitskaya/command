@@ -32,7 +32,6 @@ public class FileUtilities {
 			try (FileOutputStream fileOutputStream = new FileOutputStream(resultFile)) {
 				String dataUrl = fileEntity.getFileData();
 				Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, dataUrl);
-				Logger.getLogger(FileUtilities.class.getName()).log(Level.SEVERE, dataUrl);
 				int dataStartIndex = dataUrl.indexOf(",") + 1;
 				final String data = dataUrl.substring(dataStartIndex);
 				fileOutputStream.write(Base64.decodeBase64(data));
