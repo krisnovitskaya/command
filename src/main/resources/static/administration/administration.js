@@ -1,14 +1,8 @@
-angular.module('app').controller('administrationController', function ($scope, $http, $routeParams) {
+angular.module('app').controller('administrationController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8989/errands';
 
+    $scope.empl = $location.search();
 
-    // $stateProvider
-    //     .state('employeeDetail', {
-    //         url: '/employee_form/:employeeId'
-    //     });
-    // $scope.id = $stateParams.employeeId;
-
-    const empId = $routeParams.employeeId;
 
     $scope.getAllEmployees = function() {
         $http.get(contextPath + "/api/v1/employees/all")
@@ -40,10 +34,7 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    // $scope.employee = null;
-
     $scope.create = function (employee) {
-
         $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
             .then(resp => {
                     $scope.employee = null;
@@ -64,18 +55,45 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.edit = function () {
-        $http.get(contextPath + "/api/v1/employees/edit/" + empId)
+        $http.get(contextPath + "/api/v1/employees/edit/" + $scope.empl.id)
         .then(resp => {
                 $scope.employee = resp.data;
             },
             resp => {
                 console.error(resp);
             });
+    }
 
+    $scope.isNew = function() {
+        return $scope.empl.id == null;
+    }
+
+    $scope.isEdit = function() {
+        return $scope.empl.id > 0;
     }
 
     $scope.getAllEmployees();
     $scope.getAllDepartments();
     $scope.getAllPositions();
+    $scope.edit();
 
 });
+
+// $stateProvider
+//     .state('employeeDetail', {
+//         url: '/employee_form/:employeeId',
+//         templateUrl: 'administration/employee_form.html',
+//         controller: function($scope, $stateParams, $http){
+//             const contextPath = 'http://localhost:8989/errands';
+//
+//             const empId = $stateParams;
+//
+//             $http.get(contextPath + "/api/v1/employees/edit/" + empId)
+//                 .then(resp => {
+//                         $scope.employee = resp.data;
+//                     },
+//                     resp => {
+//                         console.error(resp);
+//                     });
+//         }
+//     });
