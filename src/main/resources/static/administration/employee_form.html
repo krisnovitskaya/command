@@ -35,11 +35,6 @@
                     ng-options="p.position as p.position for p in positionList"  id="employeePositionName">
                 <option value="">Должность сотрудника</option>
             </select>
-<!--            <select class="form-control" ng-model="employee.position_id"-->
-<!--                    ng-options="p.id as p.position for p in positionList"  id="employeePositionId">-->
-<!--                <option value="">Должность сотрудника</option>-->
-<!--            </select>-->
-
         </span><br/>
     </div>
     <div class="form-group col-md-6">
@@ -49,18 +44,20 @@
                     ng-options="d.title as d.title for d in departmentList" id="employeeDepartmentName">
                 <option value="">Отдел сотрудника</option>
             </select>
-<!--            <select class="form-control" ng-model="employee.department_id"-->
-<!--                    ng-options="d.id as d.title for d in departmentList"  id="employeeDepartmentId">-->
-<!--                <option value="">Отдел сотрудника</option>-->
-<!--            </select>-->
-
         </span><br/>
     </div>
-<!--    <input type="hidden" ng-model="employee.user_name" value="def" id="user_name">-->
-<!--    <input type="hidden" ng-model="employee.mail" value="def" id="mail">-->
-<!--    <input type="hidden" ng-model="employee.position_id" value="100" id="position_id">-->
-<!--    <input type="hidden" ng-model="employee.department_id" value="100" id="department_id">-->
-<!--    <input type="hidden" ng-model="employee.user_id" value="100" id="user_id">-->
+    <div ng-if="isNew()" class="form-group col-md-6">
+        <label>Детализация сотрудника</label><br/>
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/employee_details_form">Создать</a>
+        </span><br/>
+    </div>
+    <div ng-if="isNew()" class="form-group col-md-6">
+        <label>Учётная запись сотрудника</label><br/>
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/employee_user_form">Создать</a>
+        </span><br/>
+    </div>
 
     <div>
         <button ng-click="create(employee)" class="btn btn-success">Сохранить</button>
