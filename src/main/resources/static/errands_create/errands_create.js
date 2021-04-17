@@ -3,7 +3,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
    $scope.getEmployee = function () {
         $http({
-            url: contextPath + '/api/v1/employees/getCurrent',
+            url: contextPath + '/api/v1/employees/get_current',
             method: 'GET'
         })
             .then(function (response) {
@@ -14,7 +14,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
        $scope.getUserRoles = function () {
             $http({
-                url: contextPath + '/api/v1/users/checkRoles',
+                url: contextPath + '/api/v1/users/check_roles',
                 method: 'GET'
             })
                   .then(
@@ -29,7 +29,8 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
  $scope.getDepartmentsList = function () {
                 $http({
-                    url: contextPath + '/api/v1/departments/all',
+                 url: contextPath + '/api/v1/departments/subordinate',
+//                    url: contextPath + '/api/v1/departments/all',
                     method: 'GET'
                 })
                     .then(function (response) {
@@ -62,7 +63,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
          $scope.getPlaceTypesList = function () {
                         $http({
-                               url: contextPath + '/api/v1/errands/getPlaceTypesList',
+                               url: contextPath + '/api/v1/errands/get_place_types_list',
                                method: 'GET'
                         })
                         .then(function (response) {
@@ -73,7 +74,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
          $scope.getPlacesList = function (placeType_id) {
                         $http({
-                                 url: contextPath + '/api/v1/errands/getPlacesList/' + placeType_id,
+                                 url: contextPath + '/api/v1/errands/get_places_list/' + placeType_id,
                                  method: 'GET'
                         })
                         .then(function (response) {
@@ -83,11 +84,16 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
          };
 
          $scope.createErrand = function () {
-          $http.post(contextPath + '/api/v1/errands/createErrand', $scope.ErrandDto)
+          $http.post(contextPath + '/api/v1/errands/create_errand', $scope.CreatedErrandDto)
                      .then(function (response) {
-                         $scope.errand = null;
-                         $scope.ErrandDto = null;
-                         alert('Ваша заявка успешно оформлена');
+
+                         $scope.$parent.errand = null;
+                         $scope.errandDetails = null;
+                         $scope.CreatedErrandDto = null;
+                         $scope.checked = false;
+                         alert('Ваша заявка успешно оформлена!');
+                         $scope.form.reset();
+                         window.alert("Ваша заявка успешно оформлена!");
                      });
          };
 

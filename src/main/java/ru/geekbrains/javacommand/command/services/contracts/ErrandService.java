@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
 
+import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
@@ -99,5 +100,5 @@ public interface ErrandService {
 	 */
 	void updateErrands(ErrandDto errand);
 
-	void saveErrand(ErrandDto errandDto);
+	void saveErrand(CreatedErrandDto errandDto);
 }

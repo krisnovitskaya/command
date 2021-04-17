@@ -172,14 +172,14 @@ public interface ErrandControllerApi {
   List<ErrandStatusTypeDto> getStatuses();
 
   /** @return */
-  @GetMapping("/getPlaceTypesList")
+  @GetMapping("/get_place_types_list")
   List<PlaceTypeDto> getPlaceTypes();
 
   /**
    * @param placeTypeId
    * @return
    */
-  @GetMapping("/getPlacesList/{placeType_id}")
+  @GetMapping("/get_places_list/{placeType_id}")
   List<PlaceDto> getPlaces(@PathVariable(name = "placeType_id") Long placeTypeId);
 
   /**
@@ -189,6 +189,6 @@ public interface ErrandControllerApi {
   @GetMapping(value = "/report")
   ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
 
-  @PostMapping("/createErrand")
-  public void createNewErrand(@RequestBody ErrandDto errandDto, Principal principal);
+  @PostMapping("/create_errand")
+  public void createNewErrand(@RequestBody CreatedErrandDto errandDto, Principal principal);
 }

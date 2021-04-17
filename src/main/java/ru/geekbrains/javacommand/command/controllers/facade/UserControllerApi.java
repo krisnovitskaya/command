@@ -21,7 +21,7 @@ public interface UserControllerApi {
     @GetMapping(value = "/all", produces = "application/json")
     List<UserDto> getUsers();
 
-    @GetMapping(value = "/checkRoles", produces = "application/json")
+    @GetMapping(value = "/check_roles", produces = "application/json")
     ResponseEntity<?> checkUserRoles(Principal principal);
 
 }

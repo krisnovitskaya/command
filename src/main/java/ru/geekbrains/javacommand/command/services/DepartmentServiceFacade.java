@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.javacommand.command.dtos.DepartmentSimpleDto;
@@ -22,6 +23,8 @@ public class DepartmentServiceFacade {
     private final RoleService roleService;
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
+    @Value("${spring.profiles.active:Unknown}")
+    private String activeProfile;
 
 
     /**
@@ -38,9 +41,15 @@ public class DepartmentServiceFacade {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User " + principal.getName() + " doesn't exist"));
         Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee with username: " + principal.getName() + " doesn't exist"));
 
+        //TODO Костыль для H2 неправильной обработки рекурсивных вызовов
         if(user.getListRoles().contains(roleService.findByName("ROLE_MASTER"))){
+            if(activeProfile.equals("prod")){
+                return departmentService.getSubordinateDepartments(employee.getDepartment().getId());
+            } else {
 
-            return departmentService.getSubordinateDepartments(employee.getDepartment().getId());
+                return departmentService.findAllById(employee.getDepartment().getId());
+            }
+
         } else {
             return List.of(new DepartmentSimpleDto(employee.getDepartment()));
         }

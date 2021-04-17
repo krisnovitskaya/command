@@ -38,7 +38,7 @@ public interface EmployeeControllerApi {
     @GetMapping(path = "/get/{department_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<EmployeeDto> getEmployeesFromDepartment(@PathVariable(name = "department_id") Long departmentId);
 
-    @GetMapping(path = "/getCurrent", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/get_current", produces = MediaType.APPLICATION_JSON_VALUE)
     EmployeeDto getEmployee(Principal principal);
 
     @GetMapping(path = "/edit/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
