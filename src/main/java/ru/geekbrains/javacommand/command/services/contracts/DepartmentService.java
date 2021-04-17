@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.services.contracts;
 
+import java.util.Collection;
 import java.util.List;
 import ru.geekbrains.javacommand.command.dtos.DepartmentDto;
 import ru.geekbrains.javacommand.command.dtos.DepartmentSimpleDto;
@@ -18,4 +19,5 @@ public interface DepartmentService {
 
     List<DepartmentSimpleDto> getSubordinateDepartments(Long id);
 
+    List<DepartmentSimpleDto> findAllById(Long id);
 }

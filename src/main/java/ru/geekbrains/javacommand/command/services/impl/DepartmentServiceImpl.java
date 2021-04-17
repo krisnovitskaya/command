@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.lang.module.ResolutionException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,34 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<DepartmentSimpleDto> getSubordinateDepartments(Long id) {
         return departmentRepository.getSubordinateDepartments(id).stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
+    }
+
+
+
+    @Override
+    public List<DepartmentSimpleDto> findAllById(Long id) {
+        List<Department> listFull = departmentRepository.findAll();
+
+        List<Department> list = new ArrayList<>();
+        //достаем текущий департамент
+        for (Department department : listFull) {
+            if(department.getId().equals(id)){
+                list.add(department);
+                break;
+            }
+        }
+
+        for(int i = 0; i < list.size(); i++){
+            Department dep = list.get(i);
+            for (Department department : listFull) {
+                if(department.getMasterDepartment() == null) continue;
+                if(department.getMasterDepartment().getId().equals(dep.getId())){
+                    list.add(department);
+                }
+            }
+        }
+
+        return list.stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
     }
 
 }
