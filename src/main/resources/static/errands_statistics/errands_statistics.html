@@ -24,7 +24,7 @@
 
             <div class="form-group col-md-6">
                 <select class="form-control" ng-model="filter.dep" id="dep">
-                    <option value="" disabled selected>Подразделение</option>
+                    <option value="" selected>Подразделение</option>
                     <option ng-repeat="d in DepsList" value="{{d.title}}">
                         {{d.title}}
                     </option>
@@ -33,7 +33,7 @@
 
             <div class="form-group col-md-6" ng-model="filter.employee">
                 <select class="form-control">
-                    <option value="" disabled selected>Сотрудники</option>
+                    <option value="" selected>Сотрудники</option>
                     <option ng-repeat="e in EmpList">
                         {{e.first_name}} {{e.last_name}}
                     </option>
@@ -42,7 +42,7 @@
 
             <div class="form-group col-md-6">
                 <select class="form-control" ng-model="filter.pl_type">
-                    <option value="" disabled selected>Тип места</option>
+                    <option value="" selected>Тип места</option>
                     <option ng-repeat="p in PlaceTypes">
                         {{p}}
                     </option>
@@ -51,7 +51,7 @@
 
             <div class="form-group col-md-6">
                 <select class="form-control" ng-model="filter.place">
-                    <option value="" disabled selected>Место</option>
+                    <option value="" selected>Место</option>
                     <option ng-repeat="p in Places" value="{{p.title}}">
                         {{p.title}}
                     </option>
@@ -60,7 +60,7 @@
 
             <div class="form-group col-md-6">
                 <select class="form-control" ng-model="filter.er_type">
-                    <option value="" disabled selected>Тип командировки</option>
+                    <option value="" selected>Тип командировки</option>
                     <option ng-repeat="m in Matters" value="{{m.matter}}">
                         {{m.matter}}
                     </option>
@@ -69,7 +69,7 @@
 
             <div class="form-group col-md-6">
                 <select class="form-control" ng-model="filter.er_status">
-                    <option value="" disabled selected>Статус командировки</option>
+                    <option value="" selected>Статус командировки</option>
                     <option ng-repeat="s in Statuses">
                         {{s}}
                     </option>

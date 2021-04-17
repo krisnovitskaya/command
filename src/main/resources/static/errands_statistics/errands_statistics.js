@@ -33,7 +33,7 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
     }
 
     $scope.getDepsList = function () { $http({
-            url: contextPath + '/api/v1/departments/all',
+            url: contextPath + '/api/v1/departments/subordinate',
             method: 'GET'
         })
             .then(function (response) {
