@@ -14,6 +14,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreatedErrandDto {
+
         private String statusType;
         private Long employeeId;
         private OffsetDateTime dateStart;
@@ -30,4 +31,5 @@ public class CreatedErrandDto {
         private boolean deleted;
         private Long confirmedOrRejectedById;
         private ErrandDetails errandDetails;
+
 }
