@@ -304,7 +304,7 @@ public class ErrandController implements ErrandControllerApi {
     else {
       errandDto.setStatusType(errandStatusTypeService.findById(1L).getStatus());
       errandDto.setConfirmedOrRejectedById(null);
-      errandDto.setEmployeeId(employee.getId());
+      errandDto.setEmployeeId(employee.getId());//сотрудник ни начальник
     }
     errandDto.setCreatedById(employee.getId());
 
