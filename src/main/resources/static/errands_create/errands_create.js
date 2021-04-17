@@ -29,7 +29,8 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
  $scope.getDepartmentsList = function () {
                 $http({
-                    url: contextPath + '/api/v1/departments/all',
+                 url: contextPath + '/api/v1/departments/subordinate',
+//                    url: contextPath + '/api/v1/departments/all',
                     method: 'GET'
                 })
                     .then(function (response) {
