@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
@@ -207,7 +208,7 @@ public class ErrandServiceImpl implements ErrandService {
     }
 
     @Override
-    public void saveErrand(ErrandDto errandDto) {
+    public void saveErrand(CreatedErrandDto errandDto) {
         Errand errand = new Errand();
         errand.setId(null);
         errand.setEmployee(employeeRepository.findByUserId(errandDto.getEmployeeId()));

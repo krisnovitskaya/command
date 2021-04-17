@@ -292,7 +292,7 @@ public class ErrandController implements ErrandControllerApi {
   }
 
   @Override
-  public void createNewErrand(ErrandDto errandDto, Principal principal) {
+  public void createNewErrand(CreatedErrandDto errandDto, Principal principal) {
     User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
     Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee for user not found"));
     Role role = roleService.findById(2L);
@@ -303,8 +303,8 @@ public class ErrandController implements ErrandControllerApi {
     }
     else {
       errandDto.setStatusType(errandStatusTypeService.findById(1L).getStatus());
+      errandDto.setConfirmedOrRejectedById(null);
     }
-
     errandDto.setCreatedById(employee.getId());
 
     errandService.saveErrand(errandDto);

@@ -103,7 +103,7 @@ create table if not exists errands_details(
     place_id                    bigint not null,
     comment                     varchar(255),
     created_by                  bigint not null,
-    confirmed_or_rejected_by    bigint not null,
+    confirmed_or_rejected_by    bigint,
     created                     timestamp default current_timestamp,
     updated                     timestamp default current_timestamp,
     foreign key (matter_id) references errands_matter_types(id),
