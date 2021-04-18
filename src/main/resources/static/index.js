@@ -52,7 +52,6 @@
                 templateUrl: 'files_explorer/files_explorer.html',
                 controller: 'filesExplorerController'
             });
-
         $httpProvider.interceptors.push(function ($q, $location, $localStorage) {
             return {
                 'responseError': function (rejection, $http) {

@@ -130,7 +130,7 @@ create table if not exists errands(
 create table if not exists files(
     id                      bigserial primary key,
     file_name               varchar(255),
-    file_data               bytea,
+    file_data               varchar,
     author_id               bigint,
     errand_id               bigint,
     created                 timestamp default current_timestamp,

@@ -34,6 +34,11 @@ public interface FileControllerApi {
       produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<?> updateFiles(@RequestBody List<FileDto> filesDtosList);
 
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
 	@PostMapping(
 			path = "/download",
       consumes = MediaType.APPLICATION_JSON_VALUE,

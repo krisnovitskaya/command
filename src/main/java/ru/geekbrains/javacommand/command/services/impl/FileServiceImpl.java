@@ -57,6 +57,11 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
+	public void deleteFile(Long id) {
+    fileRepository.deleteFileById(id);
+	}
+
+	@Override
   public List<FileDto> listFiles(List<Long> errandsIdsList) {
     List<FileDto> filesDtosList = new ArrayList<>();
     if (errandsIdsList != null && !errandsIdsList.isEmpty()) {

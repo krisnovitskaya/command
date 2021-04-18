@@ -2,7 +2,7 @@
     <form novalidate style="max-width: 1600px; padding: 10px; margin: 0 auto; position: relative">
         <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Обозреватель файлов:</h1>
         <div class="form-group col-md-6">
-            <label for="errandDepartment">Список файлов:</label>
+            <label>Список файлов:</label>
             <table class="table table-hover" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>Идентификатор</td>
@@ -26,8 +26,8 @@
             </table>
         </div>
         <div class="form-group col-md-6">
-            <input id="files" name="files" type="file" multiple/>
-            <button class="btn btn-success" onclick="uploadFiles(document.getElementById('files'));">Загрузить</button>
+            <input ng-model = "uFiles" type="file" multiple onchange="angular.element(this).scope().setFiles(this.files)"/>
+            <button class="btn btn-success" ng-click="uploadFiles();">Загрузить</button>
         </div>
     </form>
 </div>
