@@ -25,7 +25,7 @@ public class DepartmentDto {
     @JsonProperty("master_department")
     private String masterDepartment;
 
-		@JsonProperty("department")
+    @JsonProperty("department")
     private List<Employee> employees;
 
     public DepartmentDto(Department dep) {
@@ -34,4 +34,6 @@ public class DepartmentDto {
         if (dep.getMasterDepartment() != null)
             this.masterDepartment = dep.getMasterDepartment().getTitle();
     }
+
+
 }

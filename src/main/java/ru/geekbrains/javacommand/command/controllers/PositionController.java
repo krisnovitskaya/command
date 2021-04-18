@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.PositionControllerApi;
 import ru.geekbrains.javacommand.command.dtos.PositionDto;
-import ru.geekbrains.javacommand.command.services.PositionService;
+import ru.geekbrains.javacommand.command.services.contracts.PositionService;
 
 import java.util.List;
 

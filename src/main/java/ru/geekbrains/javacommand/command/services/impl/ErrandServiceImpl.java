@@ -4,21 +4,27 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.io.ByteArrayInputStream;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
-import ru.geekbrains.javacommand.command.entities.Employee;
-import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
-import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
+import ru.geekbrains.javacommand.command.entities.*;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
-import ru.geekbrains.javacommand.command.services.ErrandService;
+import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.UserService;
+import ru.geekbrains.javacommand.command.util.ErrandFilter;
 import ru.geekbrains.javacommand.command.util.PageImpl;
 import ru.geekbrains.javacommand.command.util.ReportErrandExporterExcel;
 
@@ -31,6 +37,9 @@ public class ErrandServiceImpl implements ErrandService {
     private final ErrandStatusTypeRepository errandStatusTypeRepository;
     private final ErrandMatterTypeRepository errandMatterTypeRepository;
     private final PlaceRepository placeRepository;
+    private final UserService userService;
+
+    private final Integer PAGE_SIZE = 5;
 
 
 //	@Override
@@ -59,11 +68,32 @@ public class ErrandServiceImpl implements ErrandService {
 
 	@Override
 	public ErrandDto saveOrUpdate(Errand errand) {
-		return convertToErrandDto(errandRepository.save(errand));
+		return new ErrandDto(errandRepository.save(errand));
 	}
     @Override
     public List<ErrandDto> createErrands(List<ErrandDto> errandDtoList) {
         return null;
+    }
+
+    @Override
+    public PageImpl<ErrandDto> findErrandsByMaster(int page, Map<String, String> params, User user) {
+
+        // get masterEmployee from Principal
+        Employee master =
+                employeeRepository
+                        .findByUser(user)
+                        .orElseThrow(() -> new ResourceNotFoundException("master not found"));
+
+        // Prepare Spec Filter
+        ErrandFilter errandFilter = new ErrandFilter(params);
+        Specification<Errand> spec = errandFilter.getSpec();
+
+        // Force Add departmentId to FilterSpec for nonAdmin Users
+        if (!userService.isAdmin(user)) {
+            spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
+        }
+
+        return findAll(spec, page - 1, PAGE_SIZE);
     }
 
     @Override
@@ -140,7 +170,7 @@ public class ErrandServiceImpl implements ErrandService {
         errand.setEmployee(employee);
 
         //Находим статус по имени и сохраняем
-        ErrandStatusType errandStatusType = errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType());
+        ErrandStatusType errandStatusType = errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()).get();
         errand.setStatusType(errandStatusType);
 
         //Заполняем Детали из ДТО
@@ -169,41 +199,36 @@ public class ErrandServiceImpl implements ErrandService {
     public void updateErrands(ErrandDto errandDto) {
         //TODO
     }
-	private ErrandDto convertToErrandDto(Errand errand) {
-		
-		ErrandDto resultErrandDto = null;
-		if (errand != null) {
-			resultErrandDto = new ErrandDto(errand);
-//			resultErrandDto = new ErrandDto(
-//					errand.getId(),
-//					errand.getCreated(),
-//					errand.getUpdated(),
-//					errand.getStatusType().getStatus(),
-//					errand.getDateStart(),
-//					errand.getDateEnd(),
-//					errand.getEmployee().getFirstName(),
-//					errand.getEmployee().getMiddleName(),
-//					errand.getEmployee().getLastName(),
-//					errand.getEmployee().getPosition().getPosition(),
-//					errand.getEmployee().getUser().getUserName(),
-//					errand.getEmployee().getDepartment().getTitle(),
-//					errand.getEmployee().getDepartment().getMaster().getFirstName(),
-//					errand.getEmployee().getDepartment().getMaster().getMiddleName(),
-//					errand.getEmployee().getDepartment().getMaster().getLastName(),
-//					errand.getEmployee().getDepartment().getMaster().getUser().getUserName(),
-//					errand.getErrandDetails().getMatter().getMatter(),
-//					errand.getErrandDetails().getPlace().getTitle(),
-//					errand.getErrandDetails().getPlace().getPlaceType().getType(),
-//					errand.getErrandDetails().getComment(),
-//					errand.getErrandDetails().getCreatedBy().getFirstName(),
-//					errand.getErrandDetails().getCreatedBy().getMiddleName(),
-//					errand.getErrandDetails().getCreatedBy().getLastName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName(),
-//					errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName()
-//			);
-		}
-		return resultErrandDto;
 
-	}
+    @Override
+    public void updateErrandStatus(Long errandId, ErrandStatusType errandStatusType) {
+        Errand errand = errandRepository.findErrandById(errandId);
+        errand.setStatusType(errandStatusType);
+        errandRepository.save(errand);
+    }
+
+    @Override
+    public void saveErrand(CreatedErrandDto errandDto) {
+        Errand errand = new Errand();
+        errand.setId(null);
+        errand.setEmployee(employeeRepository.findByUserId(errandDto.getEmployeeId()));
+        errand.setDateStart(errandDto.getDateStart());
+        errand.setDateEnd(errandDto.getDateEnd());
+        errand.setStatusType(errandStatusTypeRepository.findErrandStatusTypeByStatus(errandDto.getStatusType()).get());
+        errand.setCreated(OffsetDateTime.now());
+        errand.setUpdated(OffsetDateTime.now());
+        errand.setDeleted(false);
+
+        errand.setErrandDetails(new ErrandDetails());
+        errand.getErrandDetails().setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
+        errand.getErrandDetails().setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
+        errand.getErrandDetails().setComment(errandDto.getComment());
+        errand.getErrandDetails().setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
+        errand.getErrandDetails().setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getConfirmedOrRejectedById()));
+        errand.getErrandDetails().setCreated(OffsetDateTime.now());
+        errand.getErrandDetails().setUpdated(OffsetDateTime.now());
+
+        errandRepository.save(errand);
+    }
+
 }

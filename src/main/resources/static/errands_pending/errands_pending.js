@@ -3,7 +3,6 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
 
     const PAGINATION_DIAPASON = 2;
 
-<<<<<<< HEAD
     getEmployees = function() {
         $http({
             url: contextPath + '/api/v1/employees/by_master',
@@ -17,17 +16,69 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
 
     getErrandMatterTypes = function() {
         $http({
-            url: contextPath + '/api/v1/errands/types',
+            url: contextPath + '/api/v1/errands/matters',
             method: 'GET'
         })
             .then(function (response) {
                 $scope.ErrandMatterTypes = response.data;
-                console.log($scope.ErrandMatterTypes.length + ' types loaded');
+                console.log($scope.ErrandMatterTypes.length + ' matter types loaded');
             });
     }
 
-=======
->>>>>>> remotes/origin/eagromova-Task27-28-continue
+    getErrandStatusTypes = function() {
+        $http({
+            url: contextPath + '/api/v1/errands/statuses',
+            method: 'GET'
+        })
+            .then(function (response) {
+                $scope.ErrandStatusTypes = response.data;
+                console.log($scope.ErrandStatusTypes.length + ' status types loaded');
+            });
+    }
+
+
+    $scope.errandDetails = function (errandId) {
+        $http({
+            url: contextPath + '/api/v1/errands/get_details',
+            method: 'POST',
+            params: {
+                errandId: errandId,
+            }
+        })
+            .then(function (response) {
+                $scope.ErrandDetails = response.data.body;
+                console.log('Details loaded');
+            });
+    }
+
+    $scope.confirmErrand = function (errandId) {
+        $http({
+            url: contextPath + '/api/v1/errands/updateStatus',
+            method: 'POST',
+            params: {
+                errandId: errandId,
+                status: 'CONFIRMED'
+            }
+        })
+            .then(function (response) {
+                $scope.fillTable();
+            });
+    }
+
+    $scope.rejectErrand = function (errandId) {
+        $http({
+            url: contextPath + '/api/v1/errands/updateStatus',
+            method: 'POST',
+            params: {
+                errandId: errandId,
+                status: 'REJECTED'
+            }
+        })
+            .then(function (response) {
+                $scope.fillTable();
+            });
+    }
+
     $scope.fillTable = function (pageIndex = 1) {
         $http({
             url: contextPath + '/api/v1/errands/pending',
@@ -35,21 +86,13 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             params: {
                 employee: $scope.filter ? $scope.filter.employee : null,
                 errandMatterType: $scope.filter ? $scope.filter.errandMatterType : null,
-<<<<<<< HEAD
                 dateStart1: $scope.filter ? $scope.filter.dateStart1 : null,
                 dateStart2: $scope.filter ? $scope.filter.dateStart2 : null,
-=======
-                dateStart: $scope.filter ? $scope.filter.dateStart : null,
-                dateEnd: $scope.filter ? $scope.filter.dateEnd : null,
->>>>>>> remotes/origin/eagromova-Task27-28-continue
+                errandStatusType: $scope.filter ? $scope.filter.errandStatusType : null,
                 p: pageIndex
             }
         })
             .then(function (response) {
-<<<<<<< HEAD
-                console.log(response);
-=======
->>>>>>> remotes/origin/eagromova-Task27-28-continue
                 $scope.ErrandsPage = response.data;
                 $scope.PaginationArray = $scope.generatePagesInd(pageIndex - PAGINATION_DIAPASON, pageIndex + PAGINATION_DIAPASON);
             });
@@ -73,34 +116,13 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
         $(this).siblings(".extremum-slide").slideToggle("slow");
     });
 
-<<<<<<< HEAD
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+
     getEmployees();
     getErrandMatterTypes();
+    getErrandStatusTypes();
     $scope.fillTable();
-=======
-    $( function() {
-        $( "#datepickerStart" ).datepicker();
-        $( "#datepickerEnd" ).datepicker();
-    } );
-
-    $.datepicker.regional['ru'] = {
-        closeText: 'Закрыть',
-        prevText: 'Предыдущий',
-        nextText: 'Следующий',
-        currentText: 'Сегодня',
-        monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-        monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
-        dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
-        dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
-        dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
-        weekHeader: 'Не',
-        dateFormat: 'dd.mm.yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    $.datepicker.setDefaults($.datepicker.regional['ru']);
->>>>>>> remotes/origin/eagromova-Task27-28-continue
 
 });

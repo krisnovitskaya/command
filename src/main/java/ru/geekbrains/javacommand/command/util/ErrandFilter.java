@@ -36,5 +36,10 @@ public class ErrandFilter {
             spec = spec.and(ErrandSpecifications.dateStartLessOrEqualsThan(dateStart2));
         }
 
+        if (params.containsKey("errandStatusType") && !params.get("errandStatusType").isBlank()) {
+            Long statusId = Long.parseLong(params.get("errandStatusType"));
+            spec = spec.and(ErrandSpecifications.statusIdIs(statusId));
+        }
+
     }
 }

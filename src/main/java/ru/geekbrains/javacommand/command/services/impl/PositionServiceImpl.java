@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.PositionDto;
 import ru.geekbrains.javacommand.command.repositories.PositionRepository;
-import ru.geekbrains.javacommand.command.services.PositionService;
+import ru.geekbrains.javacommand.command.services.contracts.PositionService;
 
 import java.util.List;
 import java.util.stream.Collectors;

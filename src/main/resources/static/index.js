@@ -44,7 +44,7 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
-            .when('/employee_form', {
+            .when('/employee_form/:employeeId', {
                 templateUrl: 'administration/employee_form.html',
                 controller: 'administrationController'
             })

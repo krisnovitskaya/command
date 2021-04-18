@@ -1,120 +1,38 @@
-<<<<<<< HEAD
-<div class="mb-3 text-center" ng-controller="administrationController">
+<div class="mb-1 text-center" ng-controller="administrationController">
 
-    <a class="btn btn-success" href="#!/employee_form">Создать карточку сотрудника</a>
+    <a class="btn btn-success" href="#!/employee_form/0">Создать карточку сотрудника</a>
     <br/><br/>
-=======
-<!doctype html>
 
-<html ng-app="app">
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <title>Администрирование</title>
-</head>
-
-<body>
-
-<!-- NavBar взят с https://codepen.io/Serhii75/pen/OEQrgM -->
-
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#!/">Программа Командировок/Администрирование списка сотрудников</a>
-
-    <div class="collapse navbar-collapse" ng-controller="EmployeeController" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
-
-            <li class="nav-item">
-                <a class="nav-link" href="/admin">Главная <span class="sr-only"></span></a>
-            </li>
-            <li ng-show="isUserLoggedIn()" class="nav-item">
-                <a class="nav-link" href="/employee_form">Создать карточку сотрудника</a>
-            </li>
-
-        </ul>
-    </div>
-</nav>
-
-
-
-<main class="content-wrapper" ng-controller="EmployeeController">
->>>>>>> remotes/origin/eagromova-Task27-28-continue
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Отчество</th>
-<<<<<<< HEAD
-                <th scope="col">Отдел</th>
-                <th scope="col">Должность</th>
-                <th scope="col">Аккаунт</th>
-=======
->>>>>>> remotes/origin/eagromova-Task27-28-continue
-                <th scope="col">Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-<<<<<<< HEAD
-            <tr ng-repeat="emp in employeeList">
-                <td>{{emp.id}}</td>
-                <td>{{emp.first_name}}</td>
-                <td>{{emp.middle_name}}</td>
-                <td>{{emp.last_name}}</td>
-                <td>{{emp.department_name}}</td>
-                <td>{{emp.position_name}}</td>
-                <td>{{emp.user_name}}</td>
-                <td>
-                    <a class="btn btn-outline-primary" ng-click="edit(emp)" href="#!/employee_form">Редактировать</a>
-                    <button ng-click="delete(emp)" class="btn btn-outline-danger">Удалить</button>
-=======
-            <tr ng-repeat="employee in employeeList">
-                <th scope="row">{{employee.id}}</th>
-                <td>{{employee.surname}}</td>
-                <td>{{employee.name}}</td>
-                <td>{{employee.middleName}}</td>
-                <td>
-                    <button ng-click="edit(employee)" type="submit" class="btn btn-outline-primary">Редактировать</button>
-                    <button ng-click="delete(employee)" type="submit" class="btn btn-outline-danger">Удалить</button>
->>>>>>> remotes/origin/eagromova-Task27-28-continue
-                </td>
-            </tr>
-            </tbody>
-        </table>
-<<<<<<< HEAD
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Отдел</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Аккаунт</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="emp in employeeList">
+            <td>{{emp.id}}</td>
+            <td class="col-sm-9">{{emp.first_name}}</td>
+            <td class="col-sm-9">{{emp.middle_name}}</td>
+            <td>{{emp.last_name}}</td>
+            <td>{{emp.department_name}}</td>
+            <td>{{emp.position_name}}</td>
+            <td>{{emp.user_name}}</td>
+            <td>{{emp.mail}}</td>
+            <td>
+                <a class="btn btn-outline-primary" href="#!/employee_form/{{emp.id}}">Редактировать</a>
+                <button ng-click="delete(emp)" class="btn btn-outline-danger">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
-=======
-    </div>
-
-    <div class="container-fluid">
-
-        <ng-view></ng-view>
-
-        <script src="administration/administration.js"></script>
-
-    </div>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <div class="text-center">
-            <span> TeamWorkers , 2021</span>
-        </div>
-    </div>
-</footer>
-</body>
-</html>
->>>>>>> remotes/origin/eagromova-Task27-28-continue

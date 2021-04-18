@@ -3,17 +3,17 @@ package ru.geekbrains.javacommand.command.dtos;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.time.OffsetDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import ru.geekbrains.javacommand.command.entities.Errand;
+import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 
 @Data
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrandDto {
+
+    //TODO закомментированный код дублирует имеющийся
 
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
@@ -30,29 +30,34 @@ public class ErrandDto {
     private String departmentMasterMiddleName;
     private String departmentMasterLastName;
     private String departmentMasterUserName;
-    private String detailMatterType;
-    private String detailPlace;
-    private String detailPlaceType;
-    private String detailComment;
-    private String detailCreatedByFirstName;
-    private String detailCreatedByMiddleName;
-    private String detailCreatedByLastName;
-    private String detailConfirmedOrRejectedByFirstName;
-    private String detailConfirmedOrRejectedByMiddleName;
-    private String detailConfirmedOrRejectedByLastname;
+//    private String detailMatterType;
+//    private String detailPlace;
+//    private String detailPlaceType;
+//    private String detailComment;
+    private String createdByFirstName;
+    private String createdByMiddleName;
+    private String createdByLastName;
+    private String confirmedOrRejectedByFirstName;
+    private String confirmedOrRejectedByMiddleName;
+    private String confirmedOrRejectedByLastname;
     private String confirmedOrRejectedByFIO;
     private String createdByFIO;
     private String comment;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime created;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime updated;
     private String statusType;
     private Long employeeId;
     private String employeeFIO;
     private String matter;
     private String place;
+    private Long matterId;
+    private Long placeId;
     private String placeType;
     private Long createdById;
     private Long confirmedOrRejectedById;
+    private ErrandDetails errandDetails;
 
     public ErrandDto(Errand errand) {
         this.id = errand.getId();
@@ -88,15 +93,15 @@ public class ErrandDto {
         this.departmentMasterFirstName = errand.getEmployee().getDepartment().getMaster().getFirstName();
         this.departmentMasterMiddleName = errand.getEmployee().getDepartment().getMaster().getMiddleName();
         this.departmentMasterLastName = errand.getEmployee().getDepartment().getMaster().getLastName();
-        this.detailMatterType = errand.getErrandDetails().getMatter().getMatter();
-        this.detailPlace = errand.getErrandDetails().getPlace().getTitle();
-        this.detailPlaceType = errand.getErrandDetails().getPlace().getPlaceType().getType();
-        this.detailComment = errand.getErrandDetails().getComment();
-        this.detailCreatedByFirstName = errand.getErrandDetails().getCreatedBy().getFirstName();
-        this.detailCreatedByMiddleName = errand.getErrandDetails().getCreatedBy().getMiddleName();
-        this.detailCreatedByLastName = errand.getErrandDetails().getCreatedBy().getLastName();
-        this.detailConfirmedOrRejectedByFirstName = errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName();
-        this.detailConfirmedOrRejectedByMiddleName = errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
-        this.detailConfirmedOrRejectedByLastname = errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName();
+//        this.detailMatterType = errand.getErrandDetails().getMatter().getMatter();
+//        this.detailPlace = errand.getErrandDetails().getPlace().getTitle();
+//        this.detailPlaceType = errand.getErrandDetails().getPlace().getPlaceType().getType();
+//        this.detailComment = errand.getErrandDetails().getComment();
+        this.createdByFirstName = errand.getErrandDetails().getCreatedBy().getFirstName();
+        this.createdByMiddleName = errand.getErrandDetails().getCreatedBy().getMiddleName();
+        this.createdByLastName = errand.getErrandDetails().getCreatedBy().getLastName();
+        this.confirmedOrRejectedByFirstName = errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName();
+        this.confirmedOrRejectedByMiddleName = errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
+        this.confirmedOrRejectedByLastname = errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName();
     }
 }

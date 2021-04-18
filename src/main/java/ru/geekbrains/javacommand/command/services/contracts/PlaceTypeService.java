@@ -1,4 +1,4 @@
-package ru.geekbrains.javacommand.command.services;
+package ru.geekbrains.javacommand.command.services.contracts;
 
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.PlaceTypeDto;

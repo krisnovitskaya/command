@@ -13,6 +13,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     Place findPlaceByTitle(String place);
 
-		@Query("select p from Place p where p.placeType.id = ?1")
+    @Query("select p from Place p where p.placeType.id = ?1")
     List<Place> findAllByPlaceTypeId(Long id);
 }
