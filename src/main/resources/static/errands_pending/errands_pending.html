@@ -120,7 +120,6 @@
                 <a class="btn btn-warning" ng-click="clearFilter()">Сбросить</a>
 
             </form>
-            </p>
         </div>
 
         <div class="main_box">
@@ -133,7 +132,7 @@
                     <td>дата окончания</td>
                     <td>подразделение</td>
                     <td>куда</td>
-                    <td></td>
+                    <td style="width: 275px; margin-right: 10px"></td>
                 </tr>
                 <tbody>
 
@@ -145,10 +144,11 @@
                     <td>{{e.dateEnd}}</td>
                     <td>{{e.departmentTitle}}</td>
                     <td>{{e.placeType}}</td>
-                    <td>{{e.detailPlace}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" ng-click="errandDetails(e.id)" data-toggle="modal"
                                 data-target="#exampleModalCenter">Детали
+                        </button>
+                        <button type="button" class="btn btn-warning" ng-click="errandEdit(e.id)">Редактировать
                         </button>
                         <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>
                         <button class="btn btn-danger" ng-click="rejectErrand(e.id)">Отклонить</button>

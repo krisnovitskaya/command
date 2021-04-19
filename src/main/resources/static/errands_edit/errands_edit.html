@@ -1,0 +1,70 @@
+<div>
+
+    <div class="container">
+        <h1 class="form-group col-md-6 h3 mb-3 font-weight-normal">Редактирование командировки</h1>
+
+        <form ng-if="ErrandDetails" ng-model="form" novalidate ng-submit="updateErrand()">
+
+            <table class="table " cellpadding="0" cellspacing="0" style="width: 500px">
+                <tbody>
+                <tr>
+                    <td><label style="width: 150px" for="fio">ФИО</label></td>
+                    <td><input style="width: 100%" type="text" value="{{ErrandDetails.employeeFIO}}" id="fio" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px" for="type">Тип</label></td>
+                    <td>
+                        <select id="type" class="form-control filter_box" ng-value="ErrandDetails.matter">
+                            <option ng-repeat="errandMatterType in ErrandMatterTypes"
+                                    ng-value="{{errandMatterType.id}}">
+                                {{errandMatterType.matter}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px" for="status">Статус</label></td>
+                    <td><input style="width: 100%" type="text" value="{{ErrandDetails.statusType}}" id="status"
+                               disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px">Дата начала</label></td>
+                    <td>
+                        <input id="dateStart" class="form-control filter_box" style="margin-right: 10px;"
+                               type="datetime-local" ng-model="ErrandDetails.dateStartRAW">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px">Дата окончания</label></td>
+                    <td>
+                        <input id="dateEnd" class="form-control filter_box" style="margin-right: 10px;"
+                               type="date" ng-model="ErrandDetails.dateEndRAW">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px" for="place">Место назначения</label></td>
+                    <td>
+                        <select id="place" class="form-control filter_box" ng-value="ErrandDetails.place">
+                            <option ng-repeat="place in PlacesList"
+                                    ng-value="{{place.id}}">
+                                {{place.title}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px" for="createdBy">Кем создана</label></td>
+                    <td><input style="width: 100%" type="text" value="{{ErrandDetails.createdByFIO}}" id="createdBy"
+                               disabled>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input class="btn btn-primary" type="submit" value="Сохранить">
+            <a class="btn btn-secondary" href="#!/errands_pending">Отменить</a>
+        </form>
+
+    </div>
+</div>

@@ -98,7 +98,7 @@ public interface ErrandService {
 	 *
 	 * @param errand
 	 */
-	void updateErrands(ErrandDto errand);
+	ErrandDto updateErrand(ErrandDto errand);
 
 	void saveErrand(CreatedErrandDto errandDto);
 }

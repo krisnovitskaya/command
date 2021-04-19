@@ -17,6 +17,10 @@ body {
   background-color: #ccc;
 }
 
+.btn {
+  margin-bottom: 5px;
+}
+
 .extremum-slide {
   padding:10px;
   display:none;

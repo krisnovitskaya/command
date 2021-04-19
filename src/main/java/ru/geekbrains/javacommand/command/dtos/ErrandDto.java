@@ -18,8 +18,10 @@ public class ErrandDto {
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateStart;
+    private OffsetDateTime dateStartRAW;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateEnd;
+    private OffsetDateTime dateEndRAW;
     private String employeeFirstName;
     private String employeeMiddleName;
     private String employeeLastName;
@@ -55,6 +57,7 @@ public class ErrandDto {
     private Long matterId;
     private Long placeId;
     private String placeType;
+    private Long placeTypeId;
     private Long createdById;
     private Long confirmedOrRejectedById;
     private ErrandDetails errandDetails;
@@ -65,7 +68,9 @@ public class ErrandDto {
         this.updated = errand.getUpdated();
         this.statusType = errand.getStatusType().getStatus();
         this.dateStart = errand.getDateStart();
+        this.dateStartRAW = errand.getDateStart();
         this.dateEnd = errand.getDateEnd();
+        this.dateEndRAW = errand.getDateEnd();
         this.employeeId = errand.getEmployee().getId();
         this.employeeFIO = errand.getEmployee().getLastName() + " "
                 + errand.getEmployee().getFirstName() + " "
@@ -73,7 +78,8 @@ public class ErrandDto {
         this.departmentTitle = errand.getEmployee().getDepartment().getTitle();
         this.matter = errand.getErrandDetails().getMatter().getMatter();
         this.place = errand.getErrandDetails().getPlace().getTitle();
-        this.placeType = errand.getErrandDetails().getPlace().getTitle();
+        this.placeType = errand.getErrandDetails().getPlace().getPlaceType().getType();
+        this.placeTypeId = errand.getErrandDetails().getPlace().getPlaceType().getId();
         this.comment = errand.getErrandDetails().getComment();
         this.createdById = errand.getErrandDetails().getCreatedBy().getId();
         this.createdByFIO = errand.getErrandDetails().getCreatedBy().getLastName() + " "

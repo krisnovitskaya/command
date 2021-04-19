@@ -196,8 +196,9 @@ public class ErrandServiceImpl implements ErrandService {
     }
 
     @Override
-    public void updateErrands(ErrandDto errandDto) {
-        //TODO
+    public ErrandDto updateErrand(ErrandDto errandDto) {
+        Errand errand = convertToErrand(errandDto);
+        return new ErrandDto(errandRepository.save(errand));
     }
 
     @Override

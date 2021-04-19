@@ -83,16 +83,16 @@ public interface ErrandControllerApi {
   void createErrandNew(@RequestBody NewErrandDto newErrandDto);
 
   /**
-   * Update entity Errand by id
+   * Update Errand entity
    *
-   * @param errandUpdateDtoList
+   * @param errandDto
    * @return ResponseEntity
    */
-  @PutMapping(
-      path = "/update",
-      consumes = "application/json;charset=UTF-8",
-      produces = "application/json;charset=UTF-8")
-  ResponseEntity<?> update(@RequestBody List<ErrandDto> errandUpdateDtoList);
+  @PostMapping(
+          path = "/update",
+          consumes = "application/json;charset=UTF-8",
+          produces = "application/json;charset=UTF-8")
+  ResponseEntity<?> updateErrand(@RequestBody ErrandDto errandDto);
 
   /**
    * Update entity Errand by id

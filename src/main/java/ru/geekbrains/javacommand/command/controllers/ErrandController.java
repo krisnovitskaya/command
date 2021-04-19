@@ -76,7 +76,6 @@ public class ErrandController implements ErrandControllerApi {
      * Через POST запрос (для защиты от инъекций с фронта) возвращает ErrandDto для вывода дополнительной информаци
      *
      * @param id
-     *
      * @author jackwizard88
      */
     @Override
@@ -166,9 +165,10 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> update(List<ErrandDto> errandUpdateDtoList) {
-        return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
+    public ResponseEntity<?> updateErrand(ErrandDto errandDto) {
+        return ResponseEntity.ok(errandService.updateErrand(errandDto));
     }
+
 
     @Override
     public ResponseEntity<?> updateById(Long id, ErrandDto errandDto) {
@@ -181,7 +181,6 @@ public class ErrandController implements ErrandControllerApi {
      *
      * @param errandId
      * @param status
-     *
      * @author jackwizard88
      */
     @Override
@@ -284,30 +283,29 @@ public class ErrandController implements ErrandControllerApi {
         headers.add("Content-Disposition", "attachment; filename=report.xlsx");
         headers.add("Content-Type", "application/vnd.ms-excel");
 
-    return ResponseEntity.ok()
-        .headers(headers)
-        .body(
-            new InputStreamResource(
-                errandService.findAllForReport(new ErrandFilter(params).getSpec())));
-  }
-
-  @Override
-  public void createNewErrand(CreatedErrandDto errandDto, Principal principal) {
-    User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
-    Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee for user not found"));
-    Role role = roleService.findById(2L);
-
-    if (user.getListRoles().contains(role)){// начальник
-      errandDto.setStatusType(errandStatusTypeService.findById(2L).getStatus());
-      errandDto.setConfirmedOrRejectedById(employee.getId());
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(
+                        new InputStreamResource(
+                                errandService.findAllForReport(new ErrandFilter(params).getSpec())));
     }
-    else {
-      errandDto.setStatusType(errandStatusTypeService.findById(1L).getStatus());
-      errandDto.setConfirmedOrRejectedById(null);
-      errandDto.setEmployeeId(employee.getId());
-    }
-    errandDto.setCreatedById(employee.getId());
 
-    errandService.saveErrand(errandDto);
-  }
+    @Override
+    public void createNewErrand(CreatedErrandDto errandDto, Principal principal) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
+        Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee for user not found"));
+        Role role = roleService.findById(2L);
+
+        if (user.getListRoles().contains(role)) {// начальник
+            errandDto.setStatusType(errandStatusTypeService.findById(2L).getStatus());
+            errandDto.setConfirmedOrRejectedById(employee.getId());
+        } else {
+            errandDto.setStatusType(errandStatusTypeService.findById(1L).getStatus());
+            errandDto.setConfirmedOrRejectedById(null);
+            errandDto.setEmployeeId(employee.getId());
+        }
+        errandDto.setCreatedById(employee.getId());
+
+        errandService.saveErrand(errandDto);
+    }
 }

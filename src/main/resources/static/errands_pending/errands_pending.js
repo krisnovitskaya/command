@@ -1,9 +1,9 @@
-angular.module('app').controller('errandsPendingController', function ($scope, $http) {
+angular.module('app').controller('errandsPendingController', function ($rootScope, $scope, $http) {
     const contextPath = 'http://localhost:8989/errands';
 
     const PAGINATION_DIAPASON = 2;
 
-    getEmployees = function() {
+    let getEmployees = function () {
         $http({
             url: contextPath + '/api/v1/employees/by_master',
             method: 'GET'
@@ -14,7 +14,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             });
     }
 
-    getErrandMatterTypes = function() {
+    let getErrandMatterTypes = function () {
         $http({
             url: contextPath + '/api/v1/errands/matters',
             method: 'GET'
@@ -25,7 +25,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             });
     }
 
-    getErrandStatusTypes = function() {
+    let getErrandStatusTypes = function () {
         $http({
             url: contextPath + '/api/v1/errands/statuses',
             method: 'GET'
@@ -46,8 +46,23 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             }
         })
             .then(function (response) {
-                $scope.ErrandDetails = response.data.body;
+                $rootScope.ErrandDetails = response.data.body;
                 console.log('Details loaded');
+                console.log($rootScope.ErrandDetails);
+            });
+    }
+
+    $scope.errandEdit = function (errandId) {
+        $http({
+            url: contextPath + '/api/v1/errands/get_details',
+            method: 'POST',
+            params: {
+                errandId: errandId,
+            }
+        })
+            .then(function (response) {
+                $rootScope.ErrandDetails = response.data.body;
+                window.location.href = '#!/errands_edit';
             });
     }
 
@@ -98,7 +113,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             });
     };
 
-    $scope.generatePagesInd = function(startPage, endPage) {
+    $scope.generatePagesInd = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {
             if (i > 0 && i <= $scope.ErrandsPage.totalPages)
