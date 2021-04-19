@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.services.contracts;
 
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
@@ -32,5 +33,7 @@ public interface EmployeeService {
     EmployeeDto findByUserId(Long id);
 
     EmployeeDto findEmployeeById(Long id);
+
+    void saveEmployeeUser(UserDto userDto);
 
 }

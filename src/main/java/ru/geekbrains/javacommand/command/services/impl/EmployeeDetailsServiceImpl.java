@@ -47,8 +47,6 @@ public class EmployeeDetailsServiceImpl implements EmployeeDetailsService {
         newEmployeeDetails.setMail(employeeDetailsDto.getMail());
         newEmployeeDetails.setEmployee(employee);
         employeeDetailsRepository.save(newEmployeeDetails);
-//        employee.setEmployeeDetails(newEmployeeDetails);
-//        employeeRepository.save(employee);
     }
 
     @Override

@@ -3,10 +3,22 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.empl = $location.search();
 
+    $scope.arrRoles = [];
+
     $scope.getAllDetails = function() {
         $http.get(contextPath + "/api/v1/employees/allDetails")
             .then(resp => {
                     $scope.detailsList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.getAllUsers = function() {
+        $http.get(contextPath + "/api/v1/users/all")
+            .then(resp => {
+                    $scope.userList = resp.data;
                 },
                 resp => {
                     console.error(resp);
@@ -45,9 +57,7 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.create = function (employee) {
         $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
-            .then(resp => {
-                    $scope.employee = null;
-                },
+            .then(
                 resp => {
                     console.error(resp);
                 });
@@ -74,7 +84,21 @@ angular.module('app').controller('administrationController', function ($scope, $
             });
     }
 
+    $scope.createNewUser = function (user) {
+        // $scope.user.roles = $scope.arrRoles;
+        $scope.user.roles = ["ROLE_EMPLOYEE"];
+        $scope.user.employee_id = $scope.employee.id;
+        $http.post(contextPath + "/api/v1/users/create", $scope.user = user)
+            .then(
+                $scope.getAllEmployees(),
+                $scope.edit(),
+                resp => {
+                    console.error(resp);
+                });
+    }
+
     $scope.createUser = function (user) {
+        $scope.user.roles = [$scope.arrRoles];
         $http.post(contextPath + "/api/v1/users/edit", $scope.user = user)
             .then(resp => {
                     console.error(resp);
@@ -144,6 +168,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.editDetails();
     $scope.editUser();
     $scope.getAllDetails();
+    $scope.getAllUsers();
 
 });
 

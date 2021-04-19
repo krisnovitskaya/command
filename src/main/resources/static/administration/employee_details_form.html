@@ -45,19 +45,12 @@
         <h3>Детализация карточки сотрудника</h3>
     </div>
 
-<!--    <div class="form-group col-md-6">-->
-<!--        <label for="elementMail">"Id"</label>-->
-<!--        <input class="form-control" type="text" ng-model="employeeDetails.employee_id" id="element">-->
-<!--    </div>-->
-
-
     <div class="form-group col-md-6">
         <label for="elementMail">"Электропочта"</label>
         <input class="form-control" type="text" ng-model="employeeDetails.mail" id="elementMail">
     </div>
 
     <div ng-if="isNewDetails()">
-
         <a ng-click="createNewDetails(employeeDetails)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Создать</a>
     </div>
 
