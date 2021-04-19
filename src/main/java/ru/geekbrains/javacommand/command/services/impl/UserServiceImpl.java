@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
+import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.EmployeeRepository;
 import ru.geekbrains.javacommand.command.repositories.RoleRepository;
 import ru.geekbrains.javacommand.command.repositories.UserRepository;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
     public Optional<User> findByUsername(String username) {

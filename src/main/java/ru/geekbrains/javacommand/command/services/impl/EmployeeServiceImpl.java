@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.EmployeeDetails;
@@ -25,6 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
     private final EmployeeDetailsRepository employeeDetailsRepository;
+    private final RoleRepository roleRepository;
 
     private final DepartmentService departmentService;
 
@@ -104,7 +106,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public void saveEmployeeUser(UserDto userDto) {
+        User newUser = new User();
+        Employee employee = employeeRepository.findById(userDto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Сотрудник с id = %s не найден", userDto.getEmployeeId()))
+                );
+        newUser.setUserName(userDto.getUserName());
+        newUser.setPassword(userDto.getPassword());
+        newUser.setListRoles(userDto.getRoles().stream()
+                .map(s -> roleRepository.findRoleByName(s)).collect(Collectors.toSet()));
+
+        newUser.setEmployee(employee);
+        userRepository.save(newUser);
+        employee.setUser(newUser);
+        employeeRepository.save(employee);
+    }
+
+    @Override
 	public EmployeeDto findByUsername(String username) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
+
+
 }

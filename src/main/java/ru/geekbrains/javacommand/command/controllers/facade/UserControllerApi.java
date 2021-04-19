@@ -29,4 +29,7 @@ public interface UserControllerApi {
     @PostMapping(value = "/edit")
     void editUser(@RequestBody UserDto userDto);
 
+    @PostMapping(value = "/create")
+    void createUser(@RequestBody UserDto userDto);
+
 }

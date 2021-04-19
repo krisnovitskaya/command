@@ -30,6 +30,16 @@
         </tbody>
     </table>
 
+<!--    <div class="form-group col-md-6">-->
+<!--        <label for="employeeMail">List</label>-->
+<!--        <span  class="nullable">-->
+<!--            <select class="form-control" ng-model="user.roles"-->
+<!--                    ng-options="u.roles as u.roles for u in userList"  id="employeeMail">-->
+<!--                <option value="">List</option>-->
+<!--            </select>-->
+<!--        </span><br/>-->
+<!--    </div>-->
+
     <div class="form-group col-md-6">
         <h3>Учётная запись сотрудника</h3>
     </div>
@@ -44,10 +54,14 @@
     </div>
     <div class="form-group col-md-6">
         <label for="elementRoles">"Права"</label>
-        <input class="form-control" type="text" ng-model="user.roles" id="elementRoles">
+        <input class="form-control" type="text" ng-model="arrRoles" id="elementRoles">
     </div>
 
-    <div>
+    <div ng-if="isNewUser()">
+        <a ng-click="createNewUser(user)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Создать</a>
+    </div>
+
+    <div ng-if="isEditUser()">
         <a ng-click="createUser(user)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Сохранить</a>
     </div>
 
