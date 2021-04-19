@@ -1,28 +1,29 @@
 angular.module('app').controller('errandsStatisticsController', function ($scope, $http) {
     const contextPath = 'http://localhost:8989/errands';
 
-    // $scope.fillTable = function(pageIndex = 1) {
-    //     $http({
-    //         url: contextPath + '/api/v1/statistics',
-    //         method: 'GET',
-    //         params: {
-    //             dep: $scope.filter ? $scope.filter.dep : null,
-    //             empl: $scope.filter ? $scope.filter.empl : null,
-    //             pl_type: $scope.filter ? $scope.filter.pl_type : null,
-    //             place: $scope.filter ? $scope.filter.place : null,
-    //             er_type: $scope.filter ? $scope.filter.er_type : null,
-    //             er_status: $scope.filter ? $scope.filter.er_status : null,
-    //             date_from: $scope.filter ? $scope.filter.date_from : null,
-    //             date_to: $scope.filter ? $scope.filter.date_to : null,
-    //             p: pageIndex
-    //         }
-    //     })
-    //         .then(function (response) {
-    //             $scope.ErrandsPage = response.data;
-    //             console.log(response.data);
-    //             $scope.PaginationArray = $scope.generatePagesInd(1, $scope.ErrandsPage.totalPages);
-    //         });
-    // };
+    $scope.fillTable = function(pageIndex = 1) {
+        $http({
+            url: contextPath + '/api/v1/errands/statistic',
+            method: 'GET',
+            params: {
+                department: $scope.filter ? $scope.filter.department : null,
+                employee: $scope.filter ? $scope.filter.employee : null,
+                errandMatterType: $scope.filter ? $scope.filter.errandMatterType : null,
+                errandStatusType: $scope.filter ? $scope.filter.errandStatusType : null,
+                placeType: $scope.filter ? $scope.filter.placeType : null,
+                place: $scope.filter ? $scope.filter.place : null,
+                dateStart: $scope.filter ? $scope.filter.dateStart : null,
+                dateEnd: $scope.filter ? $scope.filter.dateEnd : null,
+                p: pageIndex
+            }
+        })
+            .then(function (response) {
+                //$scope.ErrandsPage = response.data;
+                $scope.Errands = response.data;
+                console.log(response.data);
+                //$scope.PaginationArray = $scope.generatePagesInd(1, $scope.ErrandsPage.totalPages);
+            });
+    };
 
 
     $scope.getDepartments = function () { $http({
@@ -39,7 +40,7 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
             $scope.Employees = null;
         } else {
             $http({
-                url: contextPath + '/api/v1/employees/get/' + departmentId,
+                url: contextPath + '/api/v1/employees/subordinate/' + departmentId,
                 method: 'GET'
             })
                 .then(function (response) {
@@ -93,13 +94,13 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
             });
     };
 
-    $scope.generatePagesInd = function(startPage, endPage) {
-        let arr = [];
-        for (let i = startPage; i < endPage + 1; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
+    // $scope.generatePagesInd = function(startPage, endPage) {
+    //     let arr = [];
+    //     for (let i = startPage; i < endPage + 1; i++) {
+    //         arr.push(i);
+    //     }
+    //     return arr;
+    // }
 
 
     $(".extremum-click").click(function () {

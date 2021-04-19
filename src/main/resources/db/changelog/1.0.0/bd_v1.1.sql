@@ -114,11 +114,11 @@ create table if not exists errands_details(
 
 create table if not exists errands(
     id                  bigserial primary key,
-    status_id           bigint,
-    employee_id         bigint,
-    errand_details_id    bigint,
+    status_id           bigint not null,
+    employee_id         bigint not null,
+    errand_details_id   bigint ,
     date_start          timestamp not null,
-    date_end            timestamp,
+    date_end            timestamp not null,
     created             timestamp default current_timestamp,
     updated             timestamp default current_timestamp,
     deleted             boolean default false,

@@ -4,6 +4,7 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.io.ByteArrayInputStream;
+import java.security.Principal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandStatisticDto;
 import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
@@ -229,6 +232,14 @@ public class ErrandServiceImpl implements ErrandService {
         errand.getErrandDetails().setUpdated(OffsetDateTime.now());
 
         errandRepository.save(errand);
+    }
+
+    @Override
+    @Transactional
+    public List<ErrandStatisticDto> findAllByParams(Map<String, String> params, Principal principal) {
+
+        ErrandFilter filter = new ErrandFilter(params);
+        return errandRepository.findAll(filter.getSpec()).stream().map(ErrandStatisticDto::new).collect(Collectors.toList());
     }
 
 }

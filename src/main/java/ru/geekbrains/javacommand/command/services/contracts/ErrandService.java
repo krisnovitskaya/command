@@ -6,15 +6,18 @@ package ru.geekbrains.javacommand.command.services.contracts;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.io.ByteArrayInputStream;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
+import ru.geekbrains.javacommand.command.dtos.ErrandStatisticDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.util.PageImpl;
+
 
 public interface ErrandService {
 
@@ -101,4 +104,6 @@ public interface ErrandService {
 	void updateErrands(ErrandDto errand);
 
 	void saveErrand(CreatedErrandDto errandDto);
+
+    List<ErrandStatisticDto> findAllByParams(Map<String, String> params, Principal principal);
 }

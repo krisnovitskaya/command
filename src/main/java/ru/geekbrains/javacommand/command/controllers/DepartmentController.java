@@ -28,7 +28,6 @@ public class DepartmentController implements DepartmentControllerApi {
 
     @Override
     public List<DepartmentSimpleDto> getSubordinateDepartments(Principal principal){
-
         return departmentServiceFacade.getDepartments(principal);
     }
 

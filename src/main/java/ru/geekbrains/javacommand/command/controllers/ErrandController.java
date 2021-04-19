@@ -42,6 +42,11 @@ public class ErrandController implements ErrandControllerApi {
     private final RoleService roleService;
 
 
+    @Override
+    public List<ErrandStatisticDto> getStatistic(Map<String, String> params, Principal principal) {
+        return errandService.findAllByParams(params, principal);
+    }
+
     /**
      * Возвращает список командировок для всех подчиненных сотрудников, в любом статусе, с учетом параметров
      * фильтрации

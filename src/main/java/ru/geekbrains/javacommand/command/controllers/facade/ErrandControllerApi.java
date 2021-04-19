@@ -15,6 +15,10 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
 
+  @GetMapping(value = "/statistic", produces = "application/json;charset=UTF-8")
+  List<ErrandStatisticDto> getStatistic(@RequestParam Map<String, String> params,
+                               Principal principal);
+
   /**
    * Find all pending errands by Master via Principal
    *
