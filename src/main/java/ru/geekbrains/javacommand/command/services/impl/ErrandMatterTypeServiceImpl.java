@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.ErrandMatterDto;
 import ru.geekbrains.javacommand.command.entities.ErrandMatterType;
 import ru.geekbrains.javacommand.command.repositories.ErrandMatterTypeRepository;
-import ru.geekbrains.javacommand.command.services.ErrandMatterTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandMatterTypeService;
 
 @Service
 @RequiredArgsConstructor

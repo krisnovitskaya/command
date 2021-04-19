@@ -15,5 +15,6 @@ public interface FileService {
 	List<FileEntity> uploadFiles(List<FileDto> filesDtosList);
 	File getFile(Long id);
 	File getFiles(List<Long> idsList);
+	void deleteFile(Long id);
 	List<FileDto> listFiles(List<Long> errandsIdsList);
 }

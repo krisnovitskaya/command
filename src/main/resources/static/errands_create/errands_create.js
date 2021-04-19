@@ -1,9 +1,9 @@
 angular.module('app').controller('errandsCreateController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8989/errands';
 
-   $scope.fillTable = function () {
+   $scope.getEmployee = function () {
         $http({
-            url: contextPath + '/api/v1/employees/getCurrent',
+            url: contextPath + '/api/v1/employees/get_current',
             method: 'GET'
         })
             .then(function (response) {
@@ -12,9 +12,25 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
             });
     };
 
+       $scope.getUserRoles = function () {
+            $http({
+                url: contextPath + '/api/v1/users/check_roles',
+                method: 'GET'
+            })
+                  .then(
+                        function successCallback(response) {
+                        $scope.CheckRoles = true;
+                        console.log("Начальник")
+                        }, function errorCallback(response){
+                        $scope.CheckRoles = false;
+                        console.log("Не начальник")
+                         });
+        };
+
  $scope.getDepartmentsList = function () {
                 $http({
-                    url: contextPath + '/api/v1/departments',
+                 url: contextPath + '/api/v1/departments/subordinate',
+//                    url: contextPath + '/api/v1/departments/all',
                     method: 'GET'
                 })
                     .then(function (response) {
@@ -47,7 +63,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
          $scope.getPlaceTypesList = function () {
                         $http({
-                               url: contextPath + '/api/v1/errands/getPlaceTypesList',
+                               url: contextPath + '/api/v1/errands/get_place_types_list',
                                method: 'GET'
                         })
                         .then(function (response) {
@@ -56,9 +72,9 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
                         });
          };
 
-         $scope.getPlacesList = function (placeTypeId) {
+         $scope.getPlacesList = function (placeType_id) {
                         $http({
-                                 url: contextPath + '/api/v1/errands/getPlacesList/' + placeTypeId,
+                                 url: contextPath + '/api/v1/errands/get_places_list/' + placeType_id,
                                  method: 'GET'
                         })
                         .then(function (response) {
@@ -68,16 +84,21 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
          };
 
          $scope.createErrand = function () {
-          $http.post(contextPath + '/api/v1/errands/createErrand', $scope.NewErrandDto)
+          $http.post(contextPath + '/api/v1/errands/create_errand', $scope.CreatedErrandDto)
                      .then(function (response) {
-                         $scope.errand = null;
+
+                         $scope.$parent.errand = null;
                          $scope.errandDetails = null;
-                         $scope.NewErrandDto = null;
-                         alert('Ваша заявка успешно оформлена');
+                         $scope.CreatedErrandDto = null;
+                         $scope.checked = false;
+                         alert('Ваша заявка успешно оформлена!');
+                         $scope.form.reset();
+                         window.alert("Ваша заявка успешно оформлена!");
                      });
          };
 
-    $scope.fillTable();
+    $scope.getUserRoles();
+    $scope.getEmployee();
     $scope.getDepartmentsList();
     $scope.getErrandMatterTypesList();
     $scope.getPlaceTypesList();

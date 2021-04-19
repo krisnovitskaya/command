@@ -15,7 +15,7 @@ import ru.geekbrains.javacommand.command.dtos.JwtRequest;
 import ru.geekbrains.javacommand.command.dtos.JwtResponse;
 import ru.geekbrains.javacommand.command.exceptions.CommandError;
 import ru.geekbrains.javacommand.command.security.JWTTokenManager;
-import ru.geekbrains.javacommand.command.services.UserService;
+import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
 import javax.security.auth.message.AuthException;
 

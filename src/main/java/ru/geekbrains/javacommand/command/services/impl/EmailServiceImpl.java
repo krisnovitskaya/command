@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import ru.geekbrains.javacommand.command.services.EmailService;
+import ru.geekbrains.javacommand.command.services.contracts.EmailService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

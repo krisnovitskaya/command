@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.ErrandsStatisticsControllerApi;
+import ru.geekbrains.javacommand.command.dtos.ErrandStatusTypeDto;
 import ru.geekbrains.javacommand.command.dtos.PlaceDto;
 import ru.geekbrains.javacommand.command.entities.ErrandStatusType;
 import ru.geekbrains.javacommand.command.entities.PlaceType;
-import ru.geekbrains.javacommand.command.services.ErrandService;
-import ru.geekbrains.javacommand.command.services.ErrandStatusTypeService;
-import ru.geekbrains.javacommand.command.services.PlaceService;
-import ru.geekbrains.javacommand.command.services.PlaceTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandService;
+import ru.geekbrains.javacommand.command.services.contracts.ErrandStatusTypeService;
+import ru.geekbrains.javacommand.command.services.contracts.PlaceService;
+import ru.geekbrains.javacommand.command.services.contracts.PlaceTypeService;
 import ru.geekbrains.javacommand.command.util.ErrandsStatisticSpecificationResolver;
 
 import java.util.List;
@@ -38,7 +39,8 @@ public class ErrandsStatisticController implements ErrandsStatisticsControllerAp
 
     @Override
     public List<String> getStatuses() {
-        return convertToDtosList(ErrandStatusType::getStatus, statusTypeService.getAll());
+//        return convertToDtosList(ErrandStatusType::getStatus, statusTypeService.findAll());
+        return statusTypeService.findAll().stream().map(ErrandStatusTypeDto::getStatus).collect(Collectors.toList());
     }
 
     @Override

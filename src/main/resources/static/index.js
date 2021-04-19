@@ -44,7 +44,7 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
-            .when('/employee_form', {
+            .when('/employee_form/:employeeId', {
                 templateUrl: 'administration/employee_form.html',
                 controller: 'administrationController'
             })
@@ -52,7 +52,6 @@
                 templateUrl: 'files_explorer/files_explorer.html',
                 controller: 'filesExplorerController'
             });
-
         $httpProvider.interceptors.push(function ($q, $location, $localStorage) {
             return {
                 'responseError': function (rejection, $http) {

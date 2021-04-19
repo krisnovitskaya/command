@@ -29,7 +29,6 @@ public class FileEntity extends DefaultEntity {
 	private String fileName;
 	
 	@Column(name = "file_data")
-	@Lob
 	private String fileData;
 
 	@ManyToOne
