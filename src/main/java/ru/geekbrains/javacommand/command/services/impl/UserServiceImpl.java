@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final EmployeeRepository employeeRepository;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
                         String.format("Аккаунт с id = %s не найден", userDto.getId()))
                 );
         newUser.setUserName(userDto.getUserName());
-        newUser.setPassword(userDto.getPassword());
+        newUser.setPassword(encoder.encode(userDto.getPassword()));
         newUser.setListRoles(userDto.getRoles().stream()
                 .map(s -> roleRepository.findRoleByName(s)).collect(Collectors.toSet()));
         userRepository.save(newUser);

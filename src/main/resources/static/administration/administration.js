@@ -98,7 +98,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.createUser = function (user) {
-        $scope.user.roles = [$scope.arrRoles];
+        // $scope.user.roles = [$scope.arrRoles];
         $http.post(contextPath + "/api/v1/users/edit", $scope.user = user)
             .then(resp => {
                     console.error(resp);

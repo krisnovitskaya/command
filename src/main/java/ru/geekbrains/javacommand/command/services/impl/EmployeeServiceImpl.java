@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
@@ -25,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
-    private final EmployeeDetailsRepository employeeDetailsRepository;
+    private final BCryptPasswordEncoder encoder;
     private final RoleRepository roleRepository;
 
     private final DepartmentService departmentService;
@@ -65,11 +66,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setLastName(employeeDto.getLastName());
         newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
         newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
-//        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
-//            .orElseThrow(() -> new ResourceNotFoundException(
-////                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
-//            )
-//        );
         employeeRepository.save(newEmployee);
     }
 
@@ -113,10 +109,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                         String.format("Сотрудник с id = %s не найден", userDto.getEmployeeId()))
                 );
         newUser.setUserName(userDto.getUserName());
-        newUser.setPassword(userDto.getPassword());
+        newUser.setPassword(encoder.encode(userDto.getPassword()));
         newUser.setListRoles(userDto.getRoles().stream()
                 .map(s -> roleRepository.findRoleByName(s)).collect(Collectors.toSet()));
-
         newUser.setEmployee(employee);
         userRepository.save(newUser);
         employee.setUser(newUser);
