@@ -99,51 +99,6 @@ public class ErrandController implements ErrandControllerApi {
         return ResponseEntity.ok(errandService.createErrands(errandDto));
     }
 
-//    @Override
-//    public void createErrand(ErrandDto newErrandDto, Principal principal) {
-//        var name = principal.getName();
-//        emailAlertWhenErrandCreated(newErrandDto, name);
-//    }
-
-//    @Override
-//    public void createErrandNew(NewErrandDto newErrandDto) {
-//        ErrandMatterDto errandMatterTypeDto = matterTypeService.findById(newErrandDto.getMatterId());
-//        ErrandMatterType errandMatterType =
-//                matterTypeService.convertToErrandMatterType(errandMatterTypeDto);
-//
-//        PlaceDto placeDto = placeService.findById(newErrandDto.getPlaceId());
-//        Place place = placeService.convertToPlace(placeDto);
-//
-//        Employee employee = employeeService.findById(newErrandDto.getEmployeeId());
-//
-//        ErrandDetails newErrandDetails =
-//                new ErrandDetails(errandMatterType, place, newErrandDto.getComment(), employee);
-//        newErrandDetails.setId(null);
-//
-//        errandDetailsService.save(newErrandDetails);
-//
-//        Errand newErrand =
-//                new Errand(
-//                        employee, newErrandDetails, newErrandDto.getDateStart(), newErrandDto.getDateEnd());
-//        newErrand.setId(null);
-//
-//        errandService.saveErrand(newErrand);
-//
-//        newErrandDetails.setCreated(OffsetDateTime.now());
-//        newErrandDetails.setUpdated(OffsetDateTime.now());
-//        newErrand.setCreated(OffsetDateTime.from(ZonedDateTime.now()));
-//        newErrand.setUpdated(OffsetDateTime.from(ZonedDateTime.now()));
-//
-//        if (newErrand.getEmployee().getId() == 1) { // начальник
-//            newErrand.setStatusType(
-//                    errandStatusTypeService.returnFromDto(errandStatusTypeService.findById(2L)));
-//            newErrandDetails.setConfirmedOrRejectedBy(newErrand.getEmployee());
-//        } else {
-//            newErrand.setStatusType(
-//                    errandStatusTypeService.returnFromDto(errandStatusTypeService.findById(1L)));
-//        } // остальные сотрудники
-//    }
-
     @Override
     public ResponseEntity<?> update(List<ErrandDto> errandUpdateDtoList) {
         return ResponseEntity.ok(errandService.updateErrands(errandUpdateDtoList));
