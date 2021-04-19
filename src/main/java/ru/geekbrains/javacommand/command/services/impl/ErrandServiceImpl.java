@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandStatisticDto;
 import ru.geekbrains.javacommand.command.entities.*;
@@ -45,18 +46,11 @@ public class ErrandServiceImpl implements ErrandService {
     private final Integer PAGE_SIZE = 5;
 
 
-//	@Override
-//	public List<CurrentErrandDto> getListCurrent() {
-//
-//		return errandRepository.findCurrent().stream().map(CurrentErrandDto::new).collect(Collectors.toList());
-//
-//	}
-    @Override
-    public List<ErrandDto> getListCurrent() {
-        return errandRepository.findCurrent().stream()
-                .map(ErrandDto::new)
-                .collect(Collectors.toList());
-    }
+	@Override
+	public List<CurrentErrandDto> getListCurrent() {
+		return errandRepository.findCurrent().stream().map(CurrentErrandDto::new).collect(Collectors.toList());
+	}
+
 
     @Override
     public ErrandDto findErrandById(Long id) {
@@ -65,7 +59,6 @@ public class ErrandServiceImpl implements ErrandService {
 
 	@Override
 	public void saveErrand(Errand errand) {
-		//Errand errand = convertToErrand(errandDto);
 		errandRepository.save(errand);
 	}
 

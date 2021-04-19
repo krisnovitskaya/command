@@ -3,6 +3,7 @@ package ru.geekbrains.javacommand.command.controllers.facade;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface PostControllerApi {
 
     @Secured({"ROLE_ADMIN","ROLE_POST"})
     @GetMapping(produces = "application/json")
-    List<ErrandDto> getListCurrent();
-//		List<CurrentErrandDto> getListCurrent();
+
+		List<CurrentErrandDto> getListCurrent();
 }

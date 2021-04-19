@@ -30,7 +30,6 @@ public class UserController implements UserControllerApi {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
     private final RoleService roleService;
-    private final RoleRepository roleRepository;
     private final EmployeeService employeeService;
 
 

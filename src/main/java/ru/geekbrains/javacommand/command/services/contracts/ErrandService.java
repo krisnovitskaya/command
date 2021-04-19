@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandStatisticDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -65,7 +66,7 @@ public interface ErrandService {
     /**
      * @return List ErrandDto
      */
-    List<ErrandDto> getListCurrent();
+    List<CurrentErrandDto> getListCurrent();
 
     /**
      * @param spec

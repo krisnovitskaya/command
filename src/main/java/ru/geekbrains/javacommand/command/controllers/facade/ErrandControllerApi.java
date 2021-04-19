@@ -72,20 +72,6 @@ public interface ErrandControllerApi {
       produces = "application/json;charset=UTF-8")
   ResponseEntity<?> createList(@RequestBody List<ErrandDto> errandCreateDtoList);
 
-//  /**
-//   * @param newErrandDto
-//   * @param principal
-//   */
-//  @PostMapping(
-//      path = "/createerrand",
-//      consumes = MediaType.APPLICATION_JSON_VALUE,
-//      produces = MediaType.APPLICATION_JSON_VALUE)
-//  void createErrand(ErrandDto newErrandDto, Principal principal);
-
-//	/** @param newErrandDto */
-//  @PostMapping("/createerrandnew")
-//  void createErrandNew(@RequestBody NewErrandDto newErrandDto);
-
   /**
    * Update entity Errand by id
    *

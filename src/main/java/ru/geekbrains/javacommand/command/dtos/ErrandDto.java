@@ -13,8 +13,6 @@ import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrandDto {
 
-    //TODO закомментированный код дублирует имеющийся
-
     private Long id;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateStart;
@@ -30,10 +28,6 @@ public class ErrandDto {
     private String departmentMasterMiddleName;
     private String departmentMasterLastName;
     private String departmentMasterUserName;
-//    private String detailMatterType;
-//    private String detailPlace;
-//    private String detailPlaceType;
-//    private String detailComment;
     private String createdByFirstName;
     private String createdByMiddleName;
     private String createdByLastName;
@@ -93,10 +87,6 @@ public class ErrandDto {
         this.departmentMasterFirstName = errand.getEmployee().getDepartment().getMaster().getFirstName();
         this.departmentMasterMiddleName = errand.getEmployee().getDepartment().getMaster().getMiddleName();
         this.departmentMasterLastName = errand.getEmployee().getDepartment().getMaster().getLastName();
-//        this.detailMatterType = errand.getErrandDetails().getMatter().getMatter();
-//        this.detailPlace = errand.getErrandDetails().getPlace().getTitle();
-//        this.detailPlaceType = errand.getErrandDetails().getPlace().getPlaceType().getType();
-//        this.detailComment = errand.getErrandDetails().getComment();
         this.createdByFirstName = errand.getErrandDetails().getCreatedBy().getFirstName();
         this.createdByMiddleName = errand.getErrandDetails().getCreatedBy().getMiddleName();
         this.createdByLastName = errand.getErrandDetails().getCreatedBy().getLastName();
