@@ -41,8 +41,6 @@ public class EmployeeController implements EmployeeControllerApi {
     private final EmployeeDetailsService employeeDetailsService;
     private final RoleService roleService;
     private final EmployeeServiceFacade employeeServiceFacade;
-    private final EmployeeDetailsService employeeDetailsService;
-    private final RoleService roleService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
     public List<EmployeeDto> getAllEmployeesByMaster(Principal principal) {
@@ -119,34 +117,5 @@ public class EmployeeController implements EmployeeControllerApi {
         return roleService.findAll();
     }
 
-    @Override
-    public EmployeeDetailsDto getEmployeeDetailsToEdit(Long id) {
-        return employeeDetailsService.findDetailsByEmployeeId(id);
-    }
-
-    @Override
-    public void editEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
-        employeeDetailsService.saveOrUpdate(employeeDetailsDto);
-    }
-
-    @Override
-    public List<EmployeeSimpleDto> getAllSubordinateEmployeesByDepartmentId(Long id, Principal principal) {
-
-        return employeeServiceFacade.getEmployees(id, principal);
-    }
-
-    @Override
-    public void createEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
-        employeeDetailsService.create(employeeDetailsDto);
-    }
-
-    @Override
-    public List<EmployeeDetailsDto> getDetails() {
-        return employeeDetailsService.findAll();
-    }
-
-    @Override
-    public List<RoleDto> getRoles() {
-        return roleService.findAll();
-    }
+    
 }
