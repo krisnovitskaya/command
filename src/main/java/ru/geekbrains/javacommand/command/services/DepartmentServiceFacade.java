@@ -46,10 +46,10 @@ public class DepartmentServiceFacade {
             if(activeProfile.equals("prod")){
                 return departmentService.getSubordinateDepartments(employee.getDepartment().getId());
             } else {
-
                 return departmentService.findAllById(employee.getDepartment().getId());
             }
-
+        } else if(user.getListRoles().contains(roleService.findByName("ROLE_ADMIN"))){
+            return departmentService.findAllSimple();
         } else {
             return List.of(new DepartmentSimpleDto(employee.getDepartment()));
         }

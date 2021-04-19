@@ -27,10 +27,9 @@ public class EmployeeServiceFacade {
     @Transactional
     public List<EmployeeSimpleDto> getEmployees(Long id, Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User " + principal.getName() + " doesn't exist"));
-        Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee with username: " + principal.getName() + " doesn't exist"));
-        if(user.getListRoles().contains(roleService.findByName("ROLE_MASTER"))){
+        if(user.getListRoles().contains(roleService.findByName("ROLE_MASTER")) || user.getListRoles().contains(roleService.findByName("ROLE_ADMIN"))){
             return employeeService.findAllByDepartmentId(id).stream().map(EmployeeSimpleDto::new).collect(Collectors.toList());
-        }else {
+        } else {
             return List.of(new EmployeeSimpleDto(employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee with username: " + principal.getName() + " doesn't exist"))));
         }
     }

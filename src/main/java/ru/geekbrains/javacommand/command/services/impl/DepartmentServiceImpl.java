@@ -70,4 +70,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         return list.stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
     }
 
+    @Override
+    public List<DepartmentSimpleDto> findAllSimple() {
+        return departmentRepository.findAll().stream().map(DepartmentSimpleDto::new).collect(Collectors.toList());
+    }
+
 }
