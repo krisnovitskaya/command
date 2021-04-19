@@ -66,14 +66,14 @@
 
     <div ng-if="isEditDetails()" class="form-group col-md-6">
         <label>Детализация сотрудника</label><br/>
-        <input class="form-control" type="text" ng-model="employee.mail" id="elementMail">
+        <input class="form-control" type="text" ng-model="[employee.mail]" id="elementMail">
         <span  class="nullable">
                 <a class="btn btn-outline-primary" href="#!/employee_form/details/id?id={{employee.id}}">Изменить</a>
         </span><br/>
     </div>
     <div ng-if="isEditUser()" class="form-group col-md-6">
         <label>Учётная запись сотрудника</label><br/>
-        <input class="form-control" type="text" ng-model="employee.user_name" id="elementUser">
+        <input class="form-control" type="text" ng-model="[employee.user_name]" id="elementUser">
         <span  class="nullable">
                 <a class="btn btn-outline-primary" href="#!/employee_form/user/id?id={{employee.id}}">Изменить</a>
         </span><br/>
