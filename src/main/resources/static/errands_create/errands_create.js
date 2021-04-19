@@ -7,7 +7,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
             method: 'GET'
         })
             .then(function (response) {
-                console.log("Получение даных текущего сотрудника");
+                console.log("Получение данных текущего сотрудника");
                 $scope.Employee = response.data;
             });
     };
@@ -30,7 +30,6 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
  $scope.getDepartmentsList = function () {
                 $http({
                  url: contextPath + '/api/v1/departments/subordinate',
-//                    url: contextPath + '/api/v1/departments/all',
                     method: 'GET'
                 })
                     .then(function (response) {
@@ -63,7 +62,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
          $scope.getPlaceTypesList = function () {
                         $http({
-                               url: contextPath + '/api/v1/errands/get_place_types_list',
+                               url: contextPath + '/api/v1/errands/place_types',
                                method: 'GET'
                         })
                         .then(function (response) {
@@ -74,7 +73,7 @@ angular.module('app').controller('errandsCreateController', function ($scope, $h
 
          $scope.getPlacesList = function (placeType_id) {
                         $http({
-                                 url: contextPath + '/api/v1/errands/get_places_list/' + placeType_id,
+                                 url: contextPath + '/api/v1/errands/places/' + placeType_id,
                                  method: 'GET'
                         })
                         .then(function (response) {

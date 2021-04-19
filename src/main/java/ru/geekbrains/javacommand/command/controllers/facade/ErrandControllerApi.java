@@ -68,19 +68,19 @@ public interface ErrandControllerApi {
       produces = "application/json;charset=UTF-8")
   ResponseEntity<?> createList(@RequestBody List<ErrandDto> errandCreateDtoList);
 
-  /**
-   * @param newErrandDto
-   * @param principal
-   */
-  @PostMapping(
-      path = "/createerrand",
-      consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  void createErrand(ErrandDto newErrandDto, Principal principal);
+//  /**
+//   * @param newErrandDto
+//   * @param principal
+//   */
+//  @PostMapping(
+//      path = "/createerrand",
+//      consumes = MediaType.APPLICATION_JSON_VALUE,
+//      produces = MediaType.APPLICATION_JSON_VALUE)
+//  void createErrand(ErrandDto newErrandDto, Principal principal);
 
-	/** @param newErrandDto */
-  @PostMapping("/createerrandnew")
-  void createErrandNew(@RequestBody NewErrandDto newErrandDto);
+//	/** @param newErrandDto */
+//  @PostMapping("/createerrandnew")
+//  void createErrandNew(@RequestBody NewErrandDto newErrandDto);
 
   /**
    * Update entity Errand by id
@@ -172,14 +172,14 @@ public interface ErrandControllerApi {
   List<ErrandStatusTypeDto> getStatuses();
 
   /** @return */
-  @GetMapping("/get_place_types_list")
+  @GetMapping(value = "/place_types", produces = "application/json;charset=UTF-8")
   List<PlaceTypeDto> getPlaceTypes();
 
   /**
    * @param placeTypeId
    * @return
    */
-  @GetMapping("/get_places_list/{placeType_id}")
+  @GetMapping(value = "/places/{placeType_id}", produces = "application/json;charset=UTF-8")
   List<PlaceDto> getPlaces(@PathVariable(name = "placeType_id") Long placeTypeId);
 
   /**

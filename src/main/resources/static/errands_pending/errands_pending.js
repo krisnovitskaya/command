@@ -86,7 +86,7 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
             params: {
                 employee: $scope.filter ? $scope.filter.employee : null,
                 errandMatterType: $scope.filter ? $scope.filter.errandMatterType : null,
-                dateStart1: $scope.filter ? $scope.filter.dateStart1 : null,
+                dateStart: $scope.filter ? $scope.filter.dateStart : null,
                 dateStart2: $scope.filter ? $scope.filter.dateStart2 : null,
                 errandStatusType: $scope.filter ? $scope.filter.errandStatusType : null,
                 p: pageIndex

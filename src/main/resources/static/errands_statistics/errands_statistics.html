@@ -1,96 +1,181 @@
 <div>
-    <script>
-         $(document).ready(function(){
-                var date_input=$('input[name="datepicker"]');
-                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                var options={
-                format: 'dd-mm-yyyy',
-                container: container,
-                todayHighlight: true,
-                autoclose: true,
-                daysOfWeekDisabled: "0",
-                daysOfWeekHighlighted: "0",
-                language: "ru",
-                locale: "ru",
-            };
-                date_input.datepicker(options);
-            });
-    </script>
+<!--    <script>-->
+<!--         $(document).ready(function(){-->
+<!--                var date_input=$('input[name="datepicker"]');-->
+<!--                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";-->
+<!--                var options={-->
+<!--                format: 'dd-mm-yyyy',-->
+<!--                container: container,-->
+<!--                todayHighlight: true,-->
+<!--                autoclose: true,-->
+<!--                daysOfWeekDisabled: "0",-->
+<!--                daysOfWeekHighlighted: "0",-->
+<!--                language: "ru",-->
+<!--                locale: "ru",-->
+<!--            };-->
+<!--                date_input.datepicker(options);-->
+<!--            });-->
+<!--    </script>-->
 
     <h3>Статистика командировок</h3>
-    <div class="container">
-        <h3>Фильтр</h3>
-        <form novalidate ng-submit="fillTable()">
 
-            <div class="form-group col-md-6">
-                <select class="form-control" ng-model="filter.dep" id="dep">
-                    <option value="" selected>Подразделение</option>
-                    <option ng-repeat="d in DepsList" value="{{d.title}}">
-                        {{d.title}}
-                    </option>
-                </select>
-            </div>
 
-            <div class="form-group col-md-6" ng-model="filter.employee">
-                <select class="form-control">
-                    <option value="" selected>Сотрудники</option>
-                    <option ng-repeat="e in EmpList">
-                        {{e.first_name}} {{e.last_name}}
-                    </option>
-                </select>
-            </div>
+    <div class="column_box">
+        <h4 class="btn btn-dark extremum-click" style="width: 100px;" href="">Фильтр ↓</h4>
+        <h4 class="btn btn-warning" ng-click="fillTable()" style="width: 100px;" href="">Обновить</h4>
+        <div class="extremum-slide">
 
-            <div class="form-group col-md-6">
-                <select class="form-control" ng-model="filter.pl_type">
-                    <option value="" selected>Тип места</option>
-                    <option ng-repeat="p in PlaceTypes">
-                        {{p}}
-                    </option>
-                </select>
-            </div>
+            <form autocomplete="off" style="width: 600px;" novalidate ng-submit="fillTable()">
 
-            <div class="form-group col-md-6">
-                <select class="form-control" ng-model="filter.place">
-                    <option value="" selected>Место</option>
-                    <option ng-repeat="p in Places" value="{{p.title}}">
-                        {{p.title}}
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-6">
-                <select class="form-control" ng-model="filter.er_type">
-                    <option value="" selected>Тип командировки</option>
-                    <option ng-repeat="m in Matters" value="{{m.matter}}">
-                        {{m.matter}}
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-6">
-                <select class="form-control" ng-model="filter.er_status">
-                    <option value="" selected>Статус командировки</option>
-                    <option ng-repeat="s in Statuses">
-                        {{s}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <div class="row">
-                    <div class="col-sm">
-                        <input ng-model="filter.date_from" class="form-control" name="datepicker" placeholder="Дата от день-месяц-год" type="text"/>
-                    </div>
-
-                    <div class="col-sm">
-                        <input ng-model="filter.date_to" class="form-control"  name="datepicker" placeholder="Дата до день-месяц-год" type="text"/>
-                    </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Подразделение</span>
+                    <select id="department" class="form-control filter_box" ng-model="filter.department"
+                            ng-change="getEmployees(filter.department)">
+                        <option value="" selected></option>
+                        <option ng-repeat="department in Departments" ng-value="{{department.id}}">{{department.title}}</option>
+                    </select>
                 </div>
-            </div>
 
-            <div class="form-group col-md-6">
-                <button class="btn btn-success" type="submit">Найти</button>
-            </div>
-        </form>
+                <div ng-if="(Employees.length != 0) && (Employees != null)" class="input-group mb-3">
+                    <span class="input-group-text">ФИО сотрудника</span>
+                    <select id="employee" class="form-control filter_box" ng-model="filter.employee">
+                        <option value="" selected></option>
+                        <option ng-repeat="employee in Employees" ng-value="{{employee.id}}">{{employee.last_name}}
+                            {{employee.first_name}} {{employee.middle_name}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Тип</span>
+                    <select id="matterType" class="form-control filter_box" ng-model="filter.errandMatterType">
+                        <option value=""></option>
+                        <option ng-repeat="errandMatterType in Matters" ng-value="{{errandMatterType.id}}">
+                            {{errandMatterType.matter}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Статус</span>
+                    <select id="statusType" class="form-control filter_box" ng-model="filter.status">
+                        <option value=""></option>
+                        <option ng-repeat="errandStatusType in Statuses" ng-value="{{errandStatusType.id}}">
+                            {{errandStatusType.status}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Тип места назначения</span>
+                    <select id="placeType" class="form-control filter_box" ng-model="filter.placeType"
+                            ng-change="getPlaces(filter.placeType)">
+                        <option value=""></option>
+                        <option ng-repeat="placeType in PlaceTypes" ng-value="{{placeType.id}}">
+                            {{placeType.type}}
+                        </option>
+                    </select>
+                </div>
+
+                <div ng-if="(Places.length != 0) && (Places != null)" class="input-group mb-3">
+                    <span class="input-group-text">Место назначения</span>
+                    <select id="place" class="form-control filter_box" ng-model="filter.place">
+                        <option value=""></option>
+                        <option ng-repeat="place in Places" ng-value="{{place.id}}">
+                            {{place.title}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">с</span>
+                    <input class="form-control filter_box" style="margin-right: 10px;" type="date"
+                           ng-model="filter.dateStart">
+
+                    <span class="input-group-text" id="basic-addon2">по</span>
+                    <input class="form-control filter_box" type="date" ng-model="filter.dateStart2">
+                </div>
+
+                <input class="btn btn-warning" type="submit" value="Найти">
+
+            </form>
+            </p>
+        </div>
+
+
+<!--    <div class="container">-->
+<!--        <h3>Фильтр</h3>-->
+<!--        <form novalidate ng-submit="fillTable()">-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <select class="form-control" ng-model="filter.dep" id="dep">-->
+<!--                    <option value="" selected>Подразделение</option>-->
+<!--                    <option ng-repeat="d in DepsList" value="{{d.id}}">-->
+<!--                        {{d.title}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6" ng-model="filter.employee">-->
+<!--                <select class="form-control">-->
+<!--                    <option value="" selected>Сотрудники</option>-->
+<!--                    <option ng-repeat="e in EmpList">-->
+<!--                        {{e.first_name}} {{e.last_name}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <select class="form-control" ng-model="filter.pl_type">-->
+<!--                    <option value="" selected>Тип места</option>-->
+<!--                    <option ng-repeat="p in PlaceTypes">-->
+<!--                        {{p}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <select class="form-control" ng-model="filter.place">-->
+<!--                    <option value="" selected>Место</option>-->
+<!--                    <option ng-repeat="p in Places" value="{{p.title}}">-->
+<!--                        {{p.title}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <select class="form-control" ng-model="filter.er_type">-->
+<!--                    <option value="" selected>Тип командировки</option>-->
+<!--                    <option ng-repeat="m in Matters" value="{{m.matter}}">-->
+<!--                        {{m.matter}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <select class="form-control" ng-model="filter.er_status">-->
+<!--                    <option value="" selected>Статус командировки</option>-->
+<!--                    <option ng-repeat="s in Statuses">-->
+<!--                        {{s}}-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="form-group col-md-6">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-sm">-->
+<!--                        <input ng-model="filter.date_from" class="form-control" name="datepicker" placeholder="Дата от день-месяц-год" type="text"/>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-sm">-->
+<!--                        <input ng-model="filter.date_to" class="form-control"  name="datepicker" placeholder="Дата до день-месяц-год" type="text"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group col-md-6">-->
+<!--                <button class="btn btn-success" type="submit">Найти</button>-->
+<!--            </div>-->
+<!--        </form>-->
         <br>
 
         <table class="table table-hover" cellpadding="0" cellspacing="0">
@@ -121,6 +206,8 @@
                     <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
                 </li>
             </ul>
+        </nav>
     </div>
 
+</div>
 </div>
