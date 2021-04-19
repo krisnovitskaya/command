@@ -8,15 +8,14 @@ import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerAp
 import ru.geekbrains.javacommand.command.dtos.EmployeeDetailsDto;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.RoleDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
-import ru.geekbrains.javacommand.command.services.contracts.EmployeeDetailsService;
-import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
-import ru.geekbrains.javacommand.command.services.contracts.UserService;
+import ru.geekbrains.javacommand.command.services.contracts.*;
+
 import java.security.Principal;
 
 import java.util.stream.Collectors;
@@ -32,6 +31,7 @@ public class EmployeeController implements EmployeeControllerApi {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final EmployeeDetailsService employeeDetailsService;
+    private final RoleService roleService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
     public List<EmployeeDto> getAllEmployeesByMaster(Principal principal) {
@@ -100,5 +100,10 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public List<EmployeeDetailsDto> getDetails() {
         return employeeDetailsService.findAll();
+    }
+
+    @Override
+    public List<RoleDto> getRoles() {
+        return roleService.findAll();
     }
 }
