@@ -1,0 +1,47 @@
+<div class="container">
+    <a href="#!/employee_form/id?id={{empl.id}}" class="btn btn-secondary">Назад</a>
+</div>
+
+<div class="mb-3 text-center" ng-controller="administrationController">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-model="employeeDetails">
+            <td>{{employeeDetails}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Cотрудник</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-model="employee">
+            <td>{{employee}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="form-group col-md-6">
+        <h3>Детализация карточки сотрудника</h3>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="elementMail">"Электропочта"</label>
+        <input class="form-control" type="text" ng-model="employeeDetails.mail" id="elementMail">
+    </div>
+
+    <div>
+        <a ng-click="createDetails(employeeDetails)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Сохранить</a>
+    </div>
+
+</div>

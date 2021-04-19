@@ -3,11 +3,10 @@ package ru.geekbrains.javacommand.command.controllers.facade;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 
 import java.security.Principal;
@@ -43,5 +42,11 @@ public interface EmployeeControllerApi {
 
     @GetMapping(path = "/edit/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     EmployeeDto getEmployeeToEdit(@PathVariable(name = "id") Long id);
+
+    @GetMapping(path = "/editDetails/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    EmployeeDetailsDto getEmployeeDetailsToEdit(@PathVariable(name = "id") Long id);
+
+    @PostMapping(path = "/editDetails")
+    void editEmployeeDetails(@RequestBody EmployeeDetailsDto employeeDetailsDto);
 
 }

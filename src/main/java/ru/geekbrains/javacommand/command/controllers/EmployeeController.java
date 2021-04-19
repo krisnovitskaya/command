@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDetailsDto;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
@@ -13,6 +14,7 @@ import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeDetailsService;
 import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 import java.security.Principal;
@@ -29,6 +31,7 @@ public class EmployeeController implements EmployeeControllerApi {
     private final EmployeeService employeeService;
     private final UserService userService;
     private final DepartmentService departmentService;
+    private final EmployeeDetailsService employeeDetailsService;
 
     @GetMapping(value = "/by_master", produces = "application/json")
     public List<EmployeeDto> getAllEmployeesByMaster(Principal principal) {
@@ -77,5 +80,15 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public EmployeeDto getEmployeeToEdit(Long id) {
         return employeeService.findEmployeeById(id);
+    }
+
+    @Override
+    public EmployeeDetailsDto getEmployeeDetailsToEdit(Long id) {
+        return employeeDetailsService.findDetailsByEmployeeId(id);
+    }
+
+    @Override
+    public void editEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.saveOrUpdate(employeeDetailsDto);
     }
 }

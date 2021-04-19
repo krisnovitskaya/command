@@ -63,4 +63,14 @@ public class UserController implements UserControllerApi {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Override
+    public UserDto getUserToEdit(Long id) {
+        return userService.findByEmployeeId(id);
+    }
+
+    @Override
+    public void editUser(UserDto userDto) {
+        userService.saveOrUpdate(userDto);
+    }
 }

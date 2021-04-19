@@ -47,6 +47,14 @@
             .when('/employee_form/:employeeId', {
                 templateUrl: 'administration/employee_form.html',
                 controller: 'administrationController'
+            })
+            .when('/employee_form/details/:employeeId', {
+                templateUrl: 'administration/employee_details_form.html',
+                controller: 'administrationController'
+            })
+            .when('/employee_form/user/:employeeId', {
+                templateUrl: 'administration/user_form.html',
+                controller: 'administrationController'
             });
 
         $httpProvider.interceptors.push(function ($q, $location, $localStorage) {
