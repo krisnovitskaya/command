@@ -101,4 +101,14 @@ public class EmployeeController implements EmployeeControllerApi {
 
         return employeeServiceFacade.getEmployees(id, principal);
     }
+
+    @Override
+    public void createEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.create(employeeDetailsDto);
+    }
+
+    @Override
+    public List<EmployeeDetailsDto> getDetails() {
+        return employeeDetailsService.findAll();
+    }
 }

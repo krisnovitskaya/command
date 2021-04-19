@@ -3,6 +3,16 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.empl = $location.search();
 
+    $scope.getAllDetails = function() {
+        $http.get(contextPath + "/api/v1/employees/allDetails")
+            .then(resp => {
+                    $scope.detailsList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
     $scope.getAllEmployees = function() {
         $http.get(contextPath + "/api/v1/employees/all")
             .then(resp => {
@@ -38,6 +48,17 @@ angular.module('app').controller('administrationController', function ($scope, $
             .then(resp => {
                     $scope.employee = null;
                 },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.createNewDetails = function (details) {
+        $scope.employeeDetails.employee_id = $scope.employee.id;
+        $http.post(contextPath + "/api/v1/employees/createDetails", $scope.employeeDetails = details)
+            .then(
+                $scope.getAllEmployees(),
+                $scope.edit(),
                 resp => {
                     console.error(resp);
                 });
@@ -100,12 +121,20 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    $scope.isNew = function() {
-        return $scope.empl.id == null;
+    $scope.isNewDetails = function() {
+        return $scope.employee.mail == "def";
     }
 
-    $scope.isEdit = function() {
-        return $scope.empl.id > 0;
+    $scope.isEditDetails = function() {
+        return $scope.employeeDetails.id > 0;
+    }
+
+    $scope.isNewUser = function() {
+        return $scope.employee.user_name == "def";
+    }
+
+    $scope.isEditUser = function() {
+        return $scope.user.id > 0;
     }
 
     $scope.getAllEmployees();
@@ -114,6 +143,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.edit();
     $scope.editDetails();
     $scope.editUser();
+    $scope.getAllDetails();
 
 });
 
