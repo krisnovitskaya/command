@@ -9,6 +9,7 @@ import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.EmployeeDetails;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
@@ -23,6 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
+    private final EmployeeDetailsRepository employeeDetailsRepository;
 
     private final DepartmentService departmentService;
 

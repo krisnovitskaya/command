@@ -23,4 +23,8 @@ public interface UserService extends UserDetailsService {
 
     boolean isMaster(User user);
 
+    UserDto findByEmployeeId(Long id);
+
+    void saveOrUpdate(UserDto userDto);
+
 }

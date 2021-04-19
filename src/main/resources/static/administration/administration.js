@@ -3,7 +3,6 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.empl = $location.search();
 
-
     $scope.getAllEmployees = function() {
         $http.get(contextPath + "/api/v1/employees/all")
             .then(resp => {
@@ -44,6 +43,23 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
+    $scope.createDetails = function (details) {
+        $http.post(contextPath + "/api/v1/employees/editDetails", $scope.employeeDetails = details)
+            .then(
+                $scope.getAllEmployees(),
+                $scope.edit(),
+            resp => {
+                console.error(resp);
+            });
+    }
+
+    $scope.createUser = function (user) {
+        $http.post(contextPath + "/api/v1/users/edit", $scope.user = user)
+            .then(resp => {
+                    console.error(resp);
+                });
+    }
+
     $scope.delete = function (emp) {
         $http.delete(contextPath + "/api/v1/employees/delete/" + emp.id)
             .then(resp => {
@@ -64,6 +80,26 @@ angular.module('app').controller('administrationController', function ($scope, $
             });
     }
 
+    $scope.editDetails = function() {
+        $http.get(contextPath + "/api/v1/employees/editDetails/" + $scope.empl.id)
+            .then(resp => {
+                $scope.employeeDetails = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
+    }
+
+    $scope.editUser = function() {
+        $http.get(contextPath + "/api/v1/users/edit/" + $scope.empl.id)
+            .then(resp => {
+                    $scope.user = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
     $scope.isNew = function() {
         return $scope.empl.id == null;
     }
@@ -76,6 +112,8 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.getAllDepartments();
     $scope.getAllPositions();
     $scope.edit();
+    $scope.editDetails();
+    $scope.editUser();
 
 });
 

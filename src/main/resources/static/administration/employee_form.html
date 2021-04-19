@@ -1,3 +1,7 @@
+<div class="container">
+    <a href="#!/administration" class="btn btn-secondary">Назад</a>
+</div>
+
 <div class="mb-3 text-center" ng-controller="administrationController">
 
     <table class="table table-striped">
@@ -46,20 +50,23 @@
             </select>
         </span><br/>
     </div>
-    <div ng-if="isNew()" class="form-group col-md-6">
+    <div ng-if="isEdit()" class="form-group col-md-6">
         <label>Детализация сотрудника</label><br/>
+        <input class="form-control" type="text" ng-model="employee.mail" id="elementMail">
         <span  class="nullable">
-                <a class="btn btn-outline-primary" href="#!/employee_form/employee_details_form">Создать</a>
+                <a class="btn btn-outline-primary" href="#!/employee_form/details/id?id={{employee.id}}">Изменить</a>
         </span><br/>
     </div>
-    <div ng-if="isNew()" class="form-group col-md-6">
+    <div ng-if="isEdit()" class="form-group col-md-6">
         <label>Учётная запись сотрудника</label><br/>
+        <input class="form-control" type="text" ng-model="employee.user_name" id="elementUser">
         <span  class="nullable">
-                <a class="btn btn-outline-primary" href="#!/employee_form/employee_user_form">Создать</a>
+                <a class="btn btn-outline-primary" href="#!/employee_form/user/id?id={{employee.id}}">Изменить</a>
         </span><br/>
     </div>
 
     <div>
-        <button ng-click="create(employee)" class="btn btn-success">Сохранить</button>
+    <a ng-click="create(employee)" href="#!/administration" class="btn btn-success">Сохранить</a>
     </div>
+
 </div>

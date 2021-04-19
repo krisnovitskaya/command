@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
+import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.repositories.RoleRepository;
 import ru.geekbrains.javacommand.command.repositories.UserRepository;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -78,4 +81,24 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public UserDto findByEmployeeId(Long id) {
+        return new UserDto(userRepository.findUserByEmployee_Id(id));
+    }
+
+    @Override
+    public void saveOrUpdate(UserDto userDto) {
+        User newUser;
+        newUser = userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Аккаунт с id = %s не найден", userDto.getId()))
+                );
+        newUser.setUserName(userDto.getUserName());
+        newUser.setPassword(userDto.getPassword());
+        newUser.setListRoles(userDto.getRoles().stream()
+                .map(s -> roleRepository.findRoleByName(s)).collect(Collectors.toSet()));
+        userRepository.save(newUser);
+    }
+
 }
