@@ -28,6 +28,7 @@ springdoc:
     swagger-ui:
         path: /api-docs.html
         operationsSorter: method
+tmpdirpath: tmp
 ---
 #Security
 security:
