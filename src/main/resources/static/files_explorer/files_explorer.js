@@ -25,20 +25,21 @@ angular.module('app').controller('filesExplorerController', function ($scope, $h
     
     $scope.download = function (id) {
         console.log("ID - " + id);
-        $http({
+        return $http({
             url: contextPath + '/api/v1/files/download',
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             data: id
         }).then(function (response) {
             console.log("Скачивание файла.");
-            var file = new Blob([response.data]);
-            var url = window.URL || window.webkitURL;
-            var downloadLink = angular.element('<a></a>');
-            downloadLink.attr('href', url.createObjectURL(file));
-            downloadLink.attr('target', '_self');
-            downloadLink.attr('download', 'fileName');
-            downloadLink[0].click();
+//            var file = new Blob([response.data], {type : 'application/octet-stream'});
+//            var url = window.URL || window.webkitURL;
+//            var downloadLink = angular.element('<a></a>');
+//            downloadLink.attr('href',url.createObjectURL(file));
+//            downloadLink.attr('target','_self');
+//            downloadLink.attr('download', 'invoice');
+//            downloadLink[0].click();
+            return response.data;
         });
     };
 

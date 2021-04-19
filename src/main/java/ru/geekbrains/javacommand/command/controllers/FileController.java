@@ -42,8 +42,8 @@ public class FileController implements FileControllerApi {
 		File f = fileService.getFile(id);
 		HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/octet-stream");
-		headers.add("FileName", f.getName());
-    headers.add("Content-Disposition", "attachment; " + f.getName());
+		//headers.add("FileName", f.getName());
+    headers.add("Content-Disposition", "attachment; 'file.jpg'");
 		try {
 			return new ResponseEntity(FileUtils.readFileToByteArray(f), headers, HttpStatus.OK);
 		} catch (IOException ex) {
