@@ -32,15 +32,36 @@
     </table>
 
     <div class="form-group col-md-6">
+        <label for="employeeMail">Details list</label>
+        <span  class="nullable">
+            <select class="form-control" ng-model="employeeDetails.mail"
+                    ng-options="d.mail as d.mail for d in detailsList"  id="employeeMail">
+                <option value="">Details list</option>
+            </select>
+        </span><br/>
+    </div>
+
+    <div class="form-group col-md-6">
         <h3>Детализация карточки сотрудника</h3>
     </div>
+
+<!--    <div class="form-group col-md-6">-->
+<!--        <label for="elementMail">"Id"</label>-->
+<!--        <input class="form-control" type="text" ng-model="employeeDetails.employee_id" id="element">-->
+<!--    </div>-->
+
 
     <div class="form-group col-md-6">
         <label for="elementMail">"Электропочта"</label>
         <input class="form-control" type="text" ng-model="employeeDetails.mail" id="elementMail">
     </div>
 
-    <div>
+    <div ng-if="isNewDetails()">
+
+        <a ng-click="createNewDetails(employeeDetails)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Создать</a>
+    </div>
+
+    <div ng-if="isEditDetails()">
         <a ng-click="createDetails(employeeDetails)" href="#!/employee_form/id?id={{empl.id}}" class="btn btn-success">Сохранить</a>
     </div>
 

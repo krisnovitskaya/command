@@ -91,4 +91,14 @@ public class EmployeeController implements EmployeeControllerApi {
     public void editEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
         employeeDetailsService.saveOrUpdate(employeeDetailsDto);
     }
+
+    @Override
+    public void createEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.create(employeeDetailsDto);
+    }
+
+    @Override
+    public List<EmployeeDetailsDto> getDetails() {
+        return employeeDetailsService.findAll();
+    }
 }

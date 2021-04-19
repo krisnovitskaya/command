@@ -49,4 +49,10 @@ public interface EmployeeControllerApi {
     @PostMapping(path = "/editDetails")
     void editEmployeeDetails(@RequestBody EmployeeDetailsDto employeeDetailsDto);
 
+    @PostMapping(path = "/createDetails")
+    void createEmployeeDetails(@RequestBody EmployeeDetailsDto employeeDetailsDto);
+
+    @GetMapping(path = "/allDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<EmployeeDetailsDto> getDetails();
+
 }
