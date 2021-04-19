@@ -18,22 +18,9 @@ public class PlaceDto {
 
     @JsonProperty("title")
     private String title;
-    
-    private String type;
-
-    @JsonProperty("place_type_id")
-    private PlaceType placeType;
 
     public PlaceDto(Place p) {
         this.id = p.getId();
         this.title = p.getTitle();
-        this.type = p.getPlaceType() != null ? p.getPlaceType().getType() : "def";
-        this.placeType = p.getPlaceType();
-    }
-
-		public PlaceDto(Optional<Place> place){
-        this.id = place.get().getId();
-        this.title = place.get().getTitle();
-        this.placeType = place.get().getPlaceType();
     }
 }

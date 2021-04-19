@@ -33,10 +33,10 @@ public class EmployeeDto {
         this.firstName = e.getFirstName();
         this.middleName = e.getMiddleName();
         this.lastName = e.getLastName();
-        this.positionName = e.getPosition() != null ? e.getPosition().getPosition() : "def";
-        this.departmentName = e.getDepartment() != null ? e.getDepartment().getTitle() : "def";
-        this.userName = e.getUser() != null ? e.getUser().getUserName() : "def";
-        this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : "def";
+        this.positionName = e.getPosition() != null ? e.getPosition().getPosition() : null;
+        this.departmentName = e.getDepartment() != null ? e.getDepartment().getTitle() : null;
+        this.userName = e.getUser() != null ? e.getUser().getUserName() : null;
+        this.mail = e.getEmployeeDetails() != null ? e.getEmployeeDetails().getMail() : null;
     }
 
 }
