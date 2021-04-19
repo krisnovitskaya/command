@@ -3,8 +3,6 @@ angular.module('app').controller('administrationController', function ($scope, $
 
     $scope.empl = $location.search();
 
-    $scope.arrRoles = [];
-
     $scope.getAllDetails = function() {
         $http.get(contextPath + "/api/v1/employees/allDetails")
             .then(resp => {
@@ -15,10 +13,10 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    $scope.getAllUsers = function() {
-        $http.get(contextPath + "/api/v1/users/all")
+    $scope.getAllRoles = function() {
+        $http.get(contextPath + "/api/v1/employees/allRoles")
             .then(resp => {
-                    $scope.userList = resp.data;
+                    $scope.rolesList = resp.data;
                 },
                 resp => {
                     console.error(resp);
@@ -68,7 +66,6 @@ angular.module('app').controller('administrationController', function ($scope, $
         $http.post(contextPath + "/api/v1/employees/createDetails", $scope.employeeDetails = details)
             .then(
                 $scope.getAllEmployees(),
-                $scope.edit(),
                 resp => {
                     console.error(resp);
                 });
@@ -78,29 +75,28 @@ angular.module('app').controller('administrationController', function ($scope, $
         $http.post(contextPath + "/api/v1/employees/editDetails", $scope.employeeDetails = details)
             .then(
                 $scope.getAllEmployees(),
-                $scope.edit(),
             resp => {
                 console.error(resp);
             });
     }
 
     $scope.createNewUser = function (user) {
-        // $scope.user.roles = $scope.arrRoles;
-        $scope.user.roles = ["ROLE_EMPLOYEE"];
+        $scope.user.roles = [$scope.user.roles];
         $scope.user.employee_id = $scope.employee.id;
         $http.post(contextPath + "/api/v1/users/create", $scope.user = user)
             .then(
                 $scope.getAllEmployees(),
-                $scope.edit(),
                 resp => {
                     console.error(resp);
                 });
     }
 
     $scope.createUser = function (user) {
-        // $scope.user.roles = [$scope.arrRoles];
+        $scope.user.roles = [$scope.user.roles];
         $http.post(contextPath + "/api/v1/users/edit", $scope.user = user)
-            .then(resp => {
+            .then(
+                $scope.getAllEmployees(),
+                resp => {
                     console.error(resp);
                 });
     }
@@ -168,7 +164,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     $scope.editDetails();
     $scope.editUser();
     $scope.getAllDetails();
-    $scope.getAllUsers();
+    $scope.getAllRoles();
 
 });
 
