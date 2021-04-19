@@ -56,10 +56,6 @@ public interface EmployeeControllerApi {
     @GetMapping(path = "/allDetails", produces = MediaType.APPLICATION_JSON_VALUE)
     List<EmployeeDetailsDto> getDetails();
 
-
-    @GetMapping(path = "/subordinate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<EmployeeSimpleDto> getAllSubordinateEmployeesByDepartmentId(@NotNull @PathVariable(name = "id") Long id, Principal principal);
-
     @GetMapping(path = "/allRoles", produces = MediaType.APPLICATION_JSON_VALUE)
     List<RoleDto> getRoles();
 

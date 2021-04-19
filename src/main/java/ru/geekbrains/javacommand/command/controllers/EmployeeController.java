@@ -22,6 +22,8 @@ import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 import ru.geekbrains.javacommand.command.services.contracts.*;
 
+import ru.geekbrains.javacommand.command.services.contracts.*;
+
 import java.security.Principal;
 
 import java.util.stream.Collectors;
@@ -36,6 +38,8 @@ public class EmployeeController implements EmployeeControllerApi {
     private final EmployeeService employeeService;
     private final UserService userService;
     private final DepartmentService departmentService;
+    private final EmployeeDetailsService employeeDetailsService;
+    private final RoleService roleService;
     private final EmployeeServiceFacade employeeServiceFacade;
     private final EmployeeDetailsService employeeDetailsService;
     private final RoleService roleService;
@@ -88,6 +92,31 @@ public class EmployeeController implements EmployeeControllerApi {
     @Override
     public EmployeeDto getEmployeeToEdit(Long id) {
         return employeeService.findEmployeeById(id);
+    }
+
+    @Override
+    public EmployeeDetailsDto getEmployeeDetailsToEdit(Long id) {
+        return employeeDetailsService.findDetailsByEmployeeId(id);
+    }
+
+    @Override
+    public void editEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.saveOrUpdate(employeeDetailsDto);
+    }
+
+    @Override
+    public void createEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.create(employeeDetailsDto);
+    }
+
+    @Override
+    public List<EmployeeDetailsDto> getDetails() {
+        return employeeDetailsService.findAll();
+    }
+
+    @Override
+    public List<RoleDto> getRoles() {
+        return roleService.findAll();
     }
 
     @Override
