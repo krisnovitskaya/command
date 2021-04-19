@@ -44,8 +44,19 @@ public interface EmployeeControllerApi {
     @GetMapping(path = "/edit/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     EmployeeDto getEmployeeToEdit(@PathVariable(name = "id") Long id);
 
+    @GetMapping(path = "/editDetails/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    EmployeeDetailsDto getEmployeeDetailsToEdit(@PathVariable(name = "id") Long id);
 
-    @GetMapping(path = "/subordinate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<EmployeeSimpleDto> getAllSubordinateEmployeesByDepartmentId(@NotNull @PathVariable(name = "id") Long id, Principal principal);
+    @PostMapping(path = "/editDetails")
+    void editEmployeeDetails(@RequestBody EmployeeDetailsDto employeeDetailsDto);
+
+    @PostMapping(path = "/createDetails")
+    void createEmployeeDetails(@RequestBody EmployeeDetailsDto employeeDetailsDto);
+
+    @GetMapping(path = "/allDetails", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<EmployeeDetailsDto> getDetails();
+
+    @GetMapping(path = "/allRoles", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<RoleDto> getRoles();
 
 }

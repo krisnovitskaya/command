@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.controllers.facade.UserControllerApi;
 import ru.geekbrains.javacommand.command.dtos.ChangePasswordDto;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Role;
 import ru.geekbrains.javacommand.command.entities.User;
@@ -17,6 +18,7 @@ import ru.geekbrains.javacommand.command.exceptions.PasswordUpdateError;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.RoleRepository;
 import ru.geekbrains.javacommand.command.services.contracts.RoleService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
 
 import java.security.Principal;
@@ -28,6 +30,8 @@ public class UserController implements UserControllerApi {
     private final UserService userService;
     private final BCryptPasswordEncoder encoder;
     private final RoleService roleService;
+    private final RoleRepository roleRepository;
+    private final EmployeeService employeeService;
 
 
     public ResponseEntity<?> changePassword(@RequestBody @Validated ChangePasswordDto passwordDto, BindingResult bindingResult, Principal principal) {
@@ -63,5 +67,20 @@ public class UserController implements UserControllerApi {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public UserDto getUserToEdit(Long id) {
+        return userService.findByEmployeeId(id);
+    }
+
+    @Override
+    public void editUser(UserDto userDto) {
+        userService.saveOrUpdate(userDto);
+    }
+
+    @Override
+    public void createUser(UserDto userDto) {
+        employeeService.saveEmployeeUser(userDto);
     }
 }

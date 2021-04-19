@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.UserDto;
 import ru.geekbrains.javacommand.command.entities.Department;
 import ru.geekbrains.javacommand.command.entities.Employee;
+import ru.geekbrains.javacommand.command.entities.EmployeeDetails;
 import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.repositories.*;
@@ -23,6 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
+    private final RoleRepository roleRepository;
 
     private final DepartmentService departmentService;
 
@@ -61,11 +66,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         newEmployee.setLastName(employeeDto.getLastName());
         newEmployee.setPosition(positionRepository.findPositionByPosition(employeeDto.getPositionName()));
         newEmployee.setDepartment(departmentRepository.findDepartmentByTitle(employeeDto.getDepartmentName()).orElse(new Department()));
-//        newEmployee.setUser(userRepository.findByUserName(employeeDto.getUserName())
-//            .orElseThrow(() -> new ResourceNotFoundException(
-////                String.format("Учётная запись с userName = %s не найдена", employeeDto.getUserName()))
-//            )
-//        );
         employeeRepository.save(newEmployee);
     }
 
@@ -102,7 +102,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public void saveEmployeeUser(UserDto userDto) {
+        User newUser = new User();
+        Employee employee = employeeRepository.findById(userDto.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Сотрудник с id = %s не найден", userDto.getEmployeeId()))
+                );
+        newUser.setUserName(userDto.getUserName());
+        newUser.setPassword(encoder.encode(userDto.getPassword()));
+        newUser.setListRoles(userDto.getRoles().stream()
+                .map(s -> roleRepository.findRoleByName(s)).collect(Collectors.toSet()));
+        newUser.setEmployee(employee);
+        userRepository.save(newUser);
+        employee.setUser(newUser);
+        employeeRepository.save(employee);
+    }
+
+    @Override
 	public EmployeeDto findByUsername(String username) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
+
+
 }

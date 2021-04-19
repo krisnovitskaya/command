@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.javacommand.command.controllers.facade.EmployeeControllerApi;
+import ru.geekbrains.javacommand.command.dtos.EmployeeDetailsDto;
 import ru.geekbrains.javacommand.command.dtos.EmployeeDto;
 import ru.geekbrains.javacommand.command.dtos.EmployeeSimpleDto;
 import ru.geekbrains.javacommand.command.dtos.ProfileDto;
+import ru.geekbrains.javacommand.command.dtos.RoleDto;
 import ru.geekbrains.javacommand.command.entities.Employee;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.javacommand.command.entities.Role;
@@ -15,8 +17,13 @@ import ru.geekbrains.javacommand.command.entities.User;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
 import ru.geekbrains.javacommand.command.services.EmployeeServiceFacade;
 import ru.geekbrains.javacommand.command.services.contracts.DepartmentService;
+import ru.geekbrains.javacommand.command.services.contracts.EmployeeDetailsService;
 import ru.geekbrains.javacommand.command.services.contracts.EmployeeService;
 import ru.geekbrains.javacommand.command.services.contracts.UserService;
+import ru.geekbrains.javacommand.command.services.contracts.*;
+
+import ru.geekbrains.javacommand.command.services.contracts.*;
+
 import java.security.Principal;
 
 import java.util.stream.Collectors;
@@ -31,6 +38,8 @@ public class EmployeeController implements EmployeeControllerApi {
     private final EmployeeService employeeService;
     private final UserService userService;
     private final DepartmentService departmentService;
+    private final EmployeeDetailsService employeeDetailsService;
+    private final RoleService roleService;
     private final EmployeeServiceFacade employeeServiceFacade;
 
     @GetMapping(value = "/by_master", produces = "application/json")
@@ -72,8 +81,6 @@ public class EmployeeController implements EmployeeControllerApi {
         return employeeService.findAllByDepartmentId(departmentId);
     }
 
-
-
     @Override
     public EmployeeDto getEmployee(Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException(String.format("User '%s' not found", principal.getName())));
@@ -86,8 +93,29 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
-    public List<EmployeeSimpleDto> getAllSubordinateEmployeesByDepartmentId(Long id, Principal principal) {
-
-        return employeeServiceFacade.getEmployees(id, principal);
+    public EmployeeDetailsDto getEmployeeDetailsToEdit(Long id) {
+        return employeeDetailsService.findDetailsByEmployeeId(id);
     }
+
+    @Override
+    public void editEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.saveOrUpdate(employeeDetailsDto);
+    }
+
+    @Override
+    public void createEmployeeDetails(EmployeeDetailsDto employeeDetailsDto) {
+        employeeDetailsService.create(employeeDetailsDto);
+    }
+
+    @Override
+    public List<EmployeeDetailsDto> getDetails() {
+        return employeeDetailsService.findAll();
+    }
+
+    @Override
+    public List<RoleDto> getRoles() {
+        return roleService.findAll();
+    }
+
+    
 }

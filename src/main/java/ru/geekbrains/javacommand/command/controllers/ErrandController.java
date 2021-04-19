@@ -13,7 +13,6 @@ import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.*;
 import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
-import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpecifications;
 import ru.geekbrains.javacommand.command.services.contracts.*;
 import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;

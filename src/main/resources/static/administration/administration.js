@@ -1,14 +1,27 @@
-angular.module('app').controller('administrationController', function ($scope, $http, $routeParams) {
+angular.module('app').controller('administrationController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8989/errands';
 
+    $scope.empl = $location.search();
 
-    // $stateProvider
-    //     .state('employeeDetail', {
-    //         url: '/employee_form/:employeeId'
-    //     });
-    // $scope.id = $stateParams.employeeId;
+    $scope.getAllDetails = function() {
+        $http.get(contextPath + "/api/v1/employees/allDetails")
+            .then(resp => {
+                    $scope.detailsList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
 
-    const empId = $routeParams.employeeId;
+    $scope.getAllRoles = function() {
+        $http.get(contextPath + "/api/v1/employees/allRoles")
+            .then(resp => {
+                    $scope.rolesList = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
 
     $scope.getAllEmployees = function() {
         $http.get(contextPath + "/api/v1/employees/all")
@@ -40,14 +53,49 @@ angular.module('app').controller('administrationController', function ($scope, $
                 });
     }
 
-    // $scope.employee = null;
-
     $scope.create = function (employee) {
-
         $http.post(contextPath + "/api/v1/employees/new", $scope.employee = employee)
-            .then(resp => {
-                    $scope.employee = null;
-                },
+            .then(
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.createNewDetails = function (details) {
+        $scope.employeeDetails.employee_id = $scope.employee.id;
+        $http.post(contextPath + "/api/v1/employees/createDetails", $scope.employeeDetails = details)
+            .then(
+                $scope.getAllEmployees(),
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.createDetails = function (details) {
+        $http.post(contextPath + "/api/v1/employees/editDetails", $scope.employeeDetails = details)
+            .then(
+                $scope.getAllEmployees(),
+            resp => {
+                console.error(resp);
+            });
+    }
+
+    $scope.createNewUser = function (user) {
+        $scope.user.roles = [$scope.user.roles];
+        $scope.user.employee_id = $scope.employee.id;
+        $http.post(contextPath + "/api/v1/users/create", $scope.user = user)
+            .then(
+                $scope.getAllEmployees(),
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.createUser = function (user) {
+        $scope.user.roles = [$scope.user.roles];
+        $http.post(contextPath + "/api/v1/users/edit", $scope.user = user)
+            .then(
+                $scope.getAllEmployees(),
                 resp => {
                     console.error(resp);
                 });
@@ -64,18 +112,77 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.edit = function () {
-        $http.get(contextPath + "/api/v1/employees/edit/" + empId)
+        $http.get(contextPath + "/api/v1/employees/edit/" + $scope.empl.id)
         .then(resp => {
                 $scope.employee = resp.data;
             },
             resp => {
                 console.error(resp);
             });
+    }
 
+    $scope.editDetails = function() {
+        $http.get(contextPath + "/api/v1/employees/editDetails/" + $scope.empl.id)
+            .then(resp => {
+                $scope.employeeDetails = resp.data;
+            },
+            resp => {
+                console.error(resp);
+            });
+    }
+
+    $scope.editUser = function() {
+        $http.get(contextPath + "/api/v1/users/edit/" + $scope.empl.id)
+            .then(resp => {
+                    $scope.user = resp.data;
+                },
+                resp => {
+                    console.error(resp);
+                });
+    }
+
+    $scope.isNewDetails = function() {
+        return $scope.employee.mail == "def";
+    }
+
+    $scope.isEditDetails = function() {
+        return $scope.employeeDetails.id > 0;
+    }
+
+    $scope.isNewUser = function() {
+        return $scope.employee.user_name == "def";
+    }
+
+    $scope.isEditUser = function() {
+        return $scope.user.id > 0;
     }
 
     $scope.getAllEmployees();
     $scope.getAllDepartments();
     $scope.getAllPositions();
+    $scope.edit();
+    $scope.editDetails();
+    $scope.editUser();
+    $scope.getAllDetails();
+    $scope.getAllRoles();
 
 });
+
+// $stateProvider
+//     .state('employeeDetail', {
+//         url: '/employee_form/:employeeId',
+//         templateUrl: 'administration/employee_form.html',
+//         controller: function($scope, $stateParams, $http){
+//             const contextPath = 'http://localhost:8989/errands';
+//
+//             const empId = $stateParams;
+//
+//             $http.get(contextPath + "/api/v1/employees/edit/" + empId)
+//                 .then(resp => {
+//                         $scope.employee = resp.data;
+//                     },
+//                     resp => {
+//                         console.error(resp);
+//                     });
+//         }
+//     });

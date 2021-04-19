@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails, Long> {
 
+    //методы возвращающие сущность Employee лучше удалить
     @Query("select e from Employee e where e.user.id = ?1")
     Employee findByUserId(Long id);
 
@@ -21,4 +22,6 @@ public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails
     Employee findEmployeeByUsername(String username);
 
     Employee findEmployeeById(Long id);
+
+    EmployeeDetails findEmployeeDetailsByEmployeeId(Long id);
 }

@@ -1,17 +1,21 @@
+<div class="container">
+    <a href="#!/administration" class="btn btn-secondary">Назад</a>
+</div>
+
 <div class="mb-3 text-center" ng-controller="administrationController">
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Cотрудник</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-model="employee">
-            <td>{{employee}}</td>
-        </tr>
-        </tbody>
-    </table>
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">Cотрудник</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr ng-model="employee">-->
+<!--            <td>{{employee}}</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
     <div class="form-group col-md-6">
         <h3>Cотрудник</h3>
@@ -35,11 +39,6 @@
                     ng-options="p.position as p.position for p in positionList"  id="employeePositionName">
                 <option value="">Должность сотрудника</option>
             </select>
-<!--            <select class="form-control" ng-model="employee.position_id"-->
-<!--                    ng-options="p.id as p.position for p in positionList"  id="employeePositionId">-->
-<!--                <option value="">Должность сотрудника</option>-->
-<!--            </select>-->
-
         </span><br/>
     </div>
     <div class="form-group col-md-6">
@@ -49,20 +48,39 @@
                     ng-options="d.title as d.title for d in departmentList" id="employeeDepartmentName">
                 <option value="">Отдел сотрудника</option>
             </select>
-<!--            <select class="form-control" ng-model="employee.department_id"-->
-<!--                    ng-options="d.id as d.title for d in departmentList"  id="employeeDepartmentId">-->
-<!--                <option value="">Отдел сотрудника</option>-->
-<!--            </select>-->
-
         </span><br/>
     </div>
-<!--    <input type="hidden" ng-model="employee.user_name" value="def" id="user_name">-->
-<!--    <input type="hidden" ng-model="employee.mail" value="def" id="mail">-->
-<!--    <input type="hidden" ng-model="employee.position_id" value="100" id="position_id">-->
-<!--    <input type="hidden" ng-model="employee.department_id" value="100" id="department_id">-->
-<!--    <input type="hidden" ng-model="employee.user_id" value="100" id="user_id">-->
+
+    <div ng-if="isNewDetails()" class="form-group col-md-6">
+        <label>Детализация сотрудника</label><br/>
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/details/id?id={{employee.id}}">Создать</a>
+        </span><br/>
+    </div>
+    <div ng-if="isNewUser()" class="form-group col-md-6">
+        <label>Учётная запись сотрудника</label><br/>
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/user/id?id={{employee.id}}">Создать</a>
+        </span><br/>
+    </div>
+
+    <div ng-if="isEditDetails()" class="form-group col-md-6">
+        <label>Детализация сотрудника</label><br/>
+        <input class="form-control" type="text" ng-model="[employee.mail]" id="elementMail">
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/details/id?id={{employee.id}}">Изменить</a>
+        </span><br/>
+    </div>
+    <div ng-if="isEditUser()" class="form-group col-md-6">
+        <label>Учётная запись сотрудника</label><br/>
+        <input class="form-control" type="text" ng-model="[employee.user_name]" id="elementUser">
+        <span  class="nullable">
+                <a class="btn btn-outline-primary" href="#!/employee_form/user/id?id={{employee.id}}">Изменить</a>
+        </span><br/>
+    </div>
 
     <div>
-        <button ng-click="create(employee)" class="btn btn-success">Сохранить</button>
+    <a ng-click="create(employee)" href="#!/administration" class="btn btn-success">Сохранить</a>
     </div>
+
 </div>
