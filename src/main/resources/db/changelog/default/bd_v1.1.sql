@@ -46,6 +46,7 @@ create table if not exists employees(
     middle_name     	varchar(100),
     last_name       	varchar(100) not null,
     position_id     	bigint not null,
+    telegram_chat_id    varchar(100),
     department_id   	bigint not null,
     user_id         	bigint,
     created             timestamp default current_timestamp,

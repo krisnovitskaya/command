@@ -1,7 +1,6 @@
 package ru.geekbrains.javacommand.command.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,9 @@ public class Employee extends DefaultEntity {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "telegram_chat_id")
+    private String telegramChatId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "position_id")

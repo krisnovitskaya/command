@@ -72,3 +72,6 @@ spring:
           auth: true
           starttls:
             enable: true
+
+# Telegram notification
+bot-token: 1783218480:AAFMTNTnEtHCLfHJOgG9uLJkf7yiomMNeRo
