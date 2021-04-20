@@ -34,6 +34,7 @@ public class ErrandServiceFacade {
                 params.put("department", departmentService.getSubordinateDepartments(employee.getDepartment().getId()).stream().map(dto -> dto.getId().toString()).collect(Collectors.toList()));
             } else if(isEmployee(user)){
                 params.put("department", List.of(employee.getDepartment().getId().toString()));
+                params.put("employee", List.of(employee.getId().toString()));
             }
         }
 
