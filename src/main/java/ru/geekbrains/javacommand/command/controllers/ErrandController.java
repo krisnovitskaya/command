@@ -18,11 +18,13 @@ import ru.geekbrains.javacommand.command.services.ErrandServiceFacade;
 import ru.geekbrains.javacommand.command.services.contracts.*;
 import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
+import ru.geekbrains.javacommand.command.util.TelegramNotification;
 
 import java.security.Principal;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -42,7 +44,7 @@ public class ErrandController implements ErrandControllerApi {
     private final ErrandStatusTypeService errandStatusTypeService;
     private final RoleService roleService;
     private final ErrandServiceFacade errandServiceFacade;
-
+    private final TelegramNotification telegramNotification;
 
     @Override
     public List<ErrandStatisticDto> getStatistic(MultiValueMap<String, String> params, Principal principal) {
@@ -127,6 +129,9 @@ public class ErrandController implements ErrandControllerApi {
                 () -> new ResourceNotFoundException(String.format("%s status not found", status)));
         errandService.updateErrandStatus(errandId, errandStatusType);
 //        emailAlertWhenErrandUpdated(errandService.findErrandById(errandId)); //TODO тут какие то ошибки
+        String statusString = errandStatusType.getStatus().toLowerCase(Locale.ROOT);
+        if (statusString.equals("confirmed") || statusString.equals("rejected"))
+            telegramNotificationWhenErrandStatusUpdated(errandId, status);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -187,7 +192,8 @@ public class ErrandController implements ErrandControllerApi {
      * @see EmailService
      */
     private void emailAlertWhenErrandCreated(ErrandDto newErrandDto, String name) {
-        var user = userService.findByUsername(name).get();
+        var user = userService.findByUsername(name).orElseThrow(() -> new RuntimeException("not found"));
+
         var isMaster = user.getListRoles().stream().anyMatch(x -> x.getName().equals("MASTER"));
         if (!isMaster) {
             var dep =
@@ -212,6 +218,18 @@ public class ErrandController implements ErrandControllerApi {
         var emailMsg = ErrandEmailMessageAlertHelper.generateEmailMessage(errand);
         emailService.sendSimpleMessage(
                 employee.getEmployeeDetails().getMail(), "Статус командировки обновлен", emailMsg);
+    }
+
+    /**
+     * @see TelegramNotification
+     * @author owpk
+     * @param errandId
+     * @param status
+     */
+    private void telegramNotificationWhenErrandStatusUpdated(Long errandId, String status) {
+        ErrandDto errand = errandService.findErrandById(errandId);
+        Employee employee = employeeService.findById(errand.getEmployeeId());
+        telegramNotification.sendToTelegram(employee.getTelegramChatId(), "errand status updated : " + status);
     }
 
     @Override
