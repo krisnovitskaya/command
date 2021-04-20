@@ -111,6 +111,28 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
         $('#myInput').trigger('focus')
     })
 
+    $scope.createReport = function(){
+         $http({
+                url: contextPath + '/api/v1/errands/report',
+                method: 'GET',
+                params: {
+                    department: $scope.filter ? $scope.filter.department : null,
+                    employee: $scope.filter ? $scope.filter.employee : null,
+                    errandMatterType: $scope.filter ? $scope.filter.errandMatterType : null,
+                    errandStatusType: $scope.filter ? $scope.filter.errandStatusType : null,
+                    placeType: $scope.filter ? $scope.filter.placeType : null,
+                    place: $scope.filter ? $scope.filter.place : null,
+                    dateStart: $scope.filter ? $scope.filter.dateStart : null,
+                    dateEnd: $scope.filter ? $scope.filter.dateEnd : null
+                        }
+                    })
+                .then(function (response) {
+                    console.log(response);
+                    console.log("report send");
+                    window.alert("Ваш отчет успешно сформирован на диск D, имя файла: report<текущая дата и время>.xls!");
+                        });
+        };
+
     $scope.getErrandsMatters();
     $scope.getErrandStatuses();
     $scope.getPlaceTypes();
