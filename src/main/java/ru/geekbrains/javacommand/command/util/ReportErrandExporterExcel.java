@@ -80,7 +80,9 @@ public class ReportErrandExporterExcel {
             dataRow.createCell(5).setCellValue(errandList.get(i).getErrandDetails().getPlace().getTitle());
             dataRow.createCell(6).setCellValue(errandList.get(i).getErrandDetails().getComment());
             dataRow.createCell(7).setCellValue(errandList.get(i).getStatusType().getStatus());
-            dataRow.createCell(8).setCellValue(errandList.get(i).getErrandDetails().getConfirmedOrRejectedBy().getFIO());
+
+            dataRow.createCell(8).setCellValue(errandList.get(i).getErrandDetails().getConfirmedOrRejectedBy() != null ?
+                    errandList.get(i).getErrandDetails().getConfirmedOrRejectedBy().getFIO() : "");
         }
     }
 

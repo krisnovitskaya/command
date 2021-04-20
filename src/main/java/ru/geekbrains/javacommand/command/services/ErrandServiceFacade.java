@@ -1,6 +1,7 @@
 package ru.geekbrains.javacommand.command.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
@@ -23,16 +24,22 @@ public class ErrandServiceFacade {
     private final RoleService roleService;
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
+    @Value("${spring.profiles.active:Unknown}")
+    private String activeProfile;
 
     @Transactional
-    public List<ErrandStatisticDto> findAllByParams(MultiValueMap<String, String> params, Principal principal){
+    public List<ErrandStatisticDto> findAllByParams(MultiValueMap<String, String> params, Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User " + principal.getName() + " doesn't exist"));
         Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee with username: " + principal.getName() + " doesn't exist"));
 
-        if(!params.containsKey("department")){
-            if(isMaster(user)){
-                params.put("department", departmentService.getSubordinateDepartments(employee.getDepartment().getId()).stream().map(dto -> dto.getId().toString()).collect(Collectors.toList()));
-            } else if(isEmployee(user)){
+        if (!params.containsKey("department")) {
+            if (isMaster(user)) {
+                if (activeProfile.equals("prod")) {
+                    params.put("department", departmentService.getSubordinateDepartments(employee.getDepartment().getId()).stream().map(dto -> dto.getId().toString()).collect(Collectors.toList()));
+                } else {
+                    params.put("department", departmentService.findAllById(employee.getDepartment().getId()).stream().map(dto -> dto.getId().toString()).collect(Collectors.toList()));
+                }
+            } else if (isEmployee(user)) {
                 params.put("department", List.of(employee.getDepartment().getId().toString()));
                 params.put("employee", List.of(employee.getId().toString()));
             }
@@ -44,15 +51,15 @@ public class ErrandServiceFacade {
     }
 
 
-    private boolean isAdmin(User user){
+    private boolean isAdmin(User user) {
         return user.getListRoles().contains(roleService.findByName("ROLE_ADMIN"));
     }
 
-    private boolean isMaster(User user){
+    private boolean isMaster(User user) {
         return user.getListRoles().contains(roleService.findByName("ROLE_MASTER"));
     }
 
-    private boolean isEmployee(User user){
+    private boolean isEmployee(User user) {
         return user.getListRoles().contains(roleService.findByName("ROLE_EMPLOYEE"));
     }
 }
