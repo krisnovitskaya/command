@@ -111,6 +111,10 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
         $('#myInput').trigger('focus')
     })
 
+    $scope.clearFilter = function () {
+        $scope.filter = null;
+    }
+
     $scope.createReport = function(){
          $http({
                 url: contextPath + '/api/v1/errands/report',
