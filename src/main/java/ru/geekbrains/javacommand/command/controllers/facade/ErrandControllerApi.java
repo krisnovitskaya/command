@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.dtos.*;
 import ru.geekbrains.javacommand.command.util.PageImpl;
@@ -16,7 +17,7 @@ import ru.geekbrains.javacommand.command.util.PageImpl;
 public interface ErrandControllerApi {
 
   @GetMapping(value = "/statistic", produces = "application/json;charset=UTF-8")
-  List<ErrandStatisticDto> getStatistic(@RequestParam Map<String, String> params,
+  List<ErrandStatisticDto> getStatistic(@RequestParam MultiValueMap<String, String> params,
                                Principal principal);
 
   /**
@@ -29,7 +30,7 @@ public interface ErrandControllerApi {
   @GetMapping(value = "/pending", produces = "application/json")
   ResponseEntity<?> getAllErrands(
       @RequestParam(defaultValue = "1", name = "p") Integer page,
-      @RequestParam Map<String, String> params,
+      @RequestParam MultiValueMap<String, String> params,
       Principal principal);
 
   /**
@@ -177,7 +178,7 @@ public interface ErrandControllerApi {
    * @return report file
    */
   @GetMapping(value = "/report")
-  ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
+  ResponseEntity<?> getReportFile(@RequestParam MultiValueMap<String, String> params);
 
   @PostMapping("/create_errand")
   public void createNewErrand(@RequestBody CreatedErrandDto errandDto, Principal principal);

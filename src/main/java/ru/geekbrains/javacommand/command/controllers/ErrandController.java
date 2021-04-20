@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import ru.geekbrains.javacommand.command.controllers.facade.ErrandControllerApi;
 import ru.geekbrains.javacommand.command.dtos.*;
 import ru.geekbrains.javacommand.command.entities.*;
 import ru.geekbrains.javacommand.command.exceptions.ResourceNotFoundException;
+import ru.geekbrains.javacommand.command.services.ErrandServiceFacade;
 import ru.geekbrains.javacommand.command.services.contracts.*;
 import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
@@ -39,11 +41,12 @@ public class ErrandController implements ErrandControllerApi {
     private final ErrandDetailsService errandDetailsService;
     private final ErrandStatusTypeService errandStatusTypeService;
     private final RoleService roleService;
+    private final ErrandServiceFacade errandServiceFacade;
 
 
     @Override
-    public List<ErrandStatisticDto> getStatistic(Map<String, String> params, Principal principal) {
-        return errandService.findAllByParams(params, principal);
+    public List<ErrandStatisticDto> getStatistic(MultiValueMap<String, String> params, Principal principal) {
+        return errandServiceFacade.findAllByParams(params, principal);
     }
 
     /**
@@ -58,7 +61,7 @@ public class ErrandController implements ErrandControllerApi {
     @Override
     public ResponseEntity<?> getAllErrands(
             @RequestParam(defaultValue = "1", name = "p") Integer page,
-            @RequestParam Map<String, String> params,
+            @RequestParam MultiValueMap<String, String> params,
             Principal principal) {
 
         if (page < 1) {
@@ -212,7 +215,7 @@ public class ErrandController implements ErrandControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params) {
+    public ResponseEntity<?> getReportFile(@RequestParam MultiValueMap<String, String> params) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=report.xlsx");

@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
 import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
@@ -72,7 +73,7 @@ public class ErrandServiceImpl implements ErrandService {
     }
 
     @Override
-    public PageImpl<ErrandDto> findErrandsByMaster(int page, Map<String, String> params, User user) {
+    public PageImpl<ErrandDto> findErrandsByMaster(int page, MultiValueMap<String, String> params, User user) {
 
         // get masterEmployee from Principal
         Employee master =
@@ -86,7 +87,7 @@ public class ErrandServiceImpl implements ErrandService {
 
         // Force Add departmentId to FilterSpec for nonAdmin Users
         if (!userService.isAdmin(user)) {
-            spec = spec.and(ErrandSpecifications.departmentIdIs(master.getDepartment().getId()));
+            spec = spec.and(ErrandSpecifications.departmentIdIs(List.of(master.getDepartment().getId())));
         }
 
         return findAll(spec, page - 1, PAGE_SIZE);
@@ -229,10 +230,9 @@ public class ErrandServiceImpl implements ErrandService {
 
     @Override
     @Transactional
-    public List<ErrandStatisticDto> findAllByParams(Map<String, String> params, Principal principal) {
+    public List<ErrandStatisticDto> findAllByParams(Specification<Errand> spec) {
 
-        ErrandFilter filter = new ErrandFilter(params);
-        return errandRepository.findAll(filter.getSpec()).stream().map(ErrandStatisticDto::new).collect(Collectors.toList());
+        return errandRepository.findAll(spec).stream().map(ErrandStatisticDto::new).collect(Collectors.toList());
     }
 
 }
