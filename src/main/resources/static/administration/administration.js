@@ -142,7 +142,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.isNewDetails = function() {
-        return $scope.employee.mail == "def";
+        return $scope.employee.mail == null && $scope.employee.id > 0;
     }
 
     $scope.isEditDetails = function() {
@@ -150,7 +150,7 @@ angular.module('app').controller('administrationController', function ($scope, $
     }
 
     $scope.isNewUser = function() {
-        return $scope.employee.user_name == "def";
+        return $scope.employee.user_name == null && $scope.employee.id > 0;
     }
 
     $scope.isEditUser = function() {
