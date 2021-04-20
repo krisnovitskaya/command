@@ -17,6 +17,7 @@ import ru.geekbrains.javacommand.command.repositories.specifications.ErrandSpeci
 import ru.geekbrains.javacommand.command.services.contracts.*;
 import ru.geekbrains.javacommand.command.util.ErrandEmailMessageAlertHelper;
 import ru.geekbrains.javacommand.command.util.ErrandFilter;
+import ru.geekbrains.javacommand.command.util.ErrandsStatisticSpecificationResolver;
 
 import java.security.Principal;
 import java.time.OffsetDateTime;
@@ -279,6 +280,7 @@ public class ErrandController implements ErrandControllerApi {
 
     @Override
     public ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params) {
+        var resolvedSpecs = new ErrandsStatisticSpecificationResolver(params).resolve();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=report.xlsx");
@@ -288,7 +290,11 @@ public class ErrandController implements ErrandControllerApi {
         .headers(headers)
         .body(
             new InputStreamResource(
-                errandService.findAllForReport(new ErrandFilter(params).getSpec())));
+                //errandService.findAllForReport(new ErrandFilter(params).getSpec())
+                    errandService.findAllForReport(resolvedSpecs)
+            )
+
+        );
   }
 
   @Override
@@ -307,7 +313,8 @@ public class ErrandController implements ErrandControllerApi {
       errandDto.setEmployeeId(employee.getId());
     }
     errandDto.setCreatedById(employee.getId());
-
+      System.out.println(errandDto.getEmployeeId());
+      System.out.println(employee.getId());
     errandService.saveErrand(errandDto);
   }
 }

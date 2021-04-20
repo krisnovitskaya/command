@@ -5,16 +5,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.geekbrains.javacommand.command.entities.Errand;
 import ru.geekbrains.javacommand.command.exceptions.ExcelExportException;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class ReportErrandExporterExcel {
     public static ByteArrayInputStream errandsToExcel(List<Errand> errandList){
         try(Workbook workbook = new XSSFWorkbook()){
             Sheet sheet = workbook.createSheet("Errands");
+
+            Date dateNow = new Date();
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
 
             CellStyle headerCellStyle = workbook.createCellStyle();
             headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -26,6 +29,12 @@ public class ReportErrandExporterExcel {
             createDataRows(sheet, errandList);
             createFooter(sheet);
             setAuthosize(sheet);
+
+            try (FileOutputStream out = new FileOutputStream(new File("D:\\report" + formatForDateNow.format(dateNow) + ".xls"))) {
+                workbook.write(out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);

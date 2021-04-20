@@ -89,6 +89,7 @@
 
             <div class="form-group col-md-6">
                 <button class="btn btn-success" type="submit">Найти</button>
+                <button class="btn btn-success" type="submit" ng-click="createReport()">Создать отчет</button>
             </div>
         </form>
         <br>
@@ -105,7 +106,7 @@
             <tbody>
 
             <tr ng-repeat="e in ErrandsPage.content">
-                <td>{{e.statusType}}</td>
+                <td ng-model="">{{e.statusType}}</td>
                 <td>{{e.departmentTitle}}</td>
                 <td>{{e.employeeFirstName}} {{e.employeeLastName}}</td>
                 <td>{{e.detailPlace}}</td>

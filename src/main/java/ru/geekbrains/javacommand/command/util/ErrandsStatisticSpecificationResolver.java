@@ -15,6 +15,7 @@ import java.util.Map;
  * @author owpk
  */
 @Slf4j
+
 public class ErrandsStatisticSpecificationResolver {
 
     private final Map<String, String> specs;

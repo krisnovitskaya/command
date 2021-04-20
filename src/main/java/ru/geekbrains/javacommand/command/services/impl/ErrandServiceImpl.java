@@ -192,6 +192,7 @@ public class ErrandServiceImpl implements ErrandService {
 
     @Override
     public ByteArrayInputStream findAllForReport(Specification<Errand> spec) {
+
         return ReportErrandExporterExcel.errandsToExcel(errandRepository.findAll(spec));
     }
 

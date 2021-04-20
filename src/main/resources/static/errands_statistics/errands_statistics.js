@@ -94,6 +94,28 @@ angular.module('app').controller('errandsStatisticsController', function ($scope
         return arr;
     }
 
+    $scope.createReport = function(){
+     $http({
+            url: contextPath + '/api/v1/errands/report',
+            method: 'GET',
+            params: {
+                        dep: $scope.filter ? $scope.filter.dep : null,
+                        empl: $scope.filter ? $scope.filter.empl : null,
+                        pl_type: $scope.filter ? $scope.filter.pl_type : null,
+                        place: $scope.filter ? $scope.filter.place : null,
+                        er_type: $scope.filter ? $scope.filter.er_type : null,
+                        er_status: $scope.filter ? $scope.filter.er_status : null,
+                        date_from: $scope.filter ? $scope.filter.date_from : null,
+                        date_to: $scope.filter ? $scope.filter.date_to : null,
+                    }
+                })
+            .then(function (response) {
+                        console.log(response);
+                        console.log("report send");
+                        window.alert("Ваш отчет успешно сформирован на диск D, имя файла: report<текущая дата и время>.xls!");
+                    });
+    };
+
     $scope.getDepsList();
     $scope.getEmployeesList();
     $scope.getPlaceTypeList();
