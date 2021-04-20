@@ -1,5 +1,6 @@
 package ru.geekbrains.javacommand.command.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +17,10 @@ public class CurrentErrandDto {
     @JsonProperty("fio")
     private String fio;
     @JsonProperty("date_start")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateStart;
     @JsonProperty("date_end")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateEnd;
     @JsonProperty("department")
     private String department;

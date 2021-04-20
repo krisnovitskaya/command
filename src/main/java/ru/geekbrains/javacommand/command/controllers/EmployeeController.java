@@ -93,6 +93,12 @@ public class EmployeeController implements EmployeeControllerApi {
     }
 
     @Override
+    public List<EmployeeSimpleDto> getAllSubordinateEmployeesByDepartmentId(Long id, Principal principal) {
+
+        return employeeServiceFacade.getEmployees(id, principal);
+    }
+
+    @Override
     public EmployeeDetailsDto getEmployeeDetailsToEdit(Long id) {
         return employeeDetailsService.findDetailsByEmployeeId(id);
     }

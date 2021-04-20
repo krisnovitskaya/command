@@ -1,9 +1,13 @@
 package ru.geekbrains.javacommand.command.repositories.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
+import ru.geekbrains.javacommand.command.entities.Department;
+import ru.geekbrains.javacommand.command.entities.Employee;
 import ru.geekbrains.javacommand.command.entities.Errand;
 
+import javax.persistence.criteria.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class ErrandSpecifications {
 
@@ -27,9 +31,18 @@ public class ErrandSpecifications {
         return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("dateStart"), dateStart2);
     }
 
-    public static Specification<Errand> departmentIdIs(Long departmentId) {
-        return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("employee").get("department").get("id"), departmentId);
+    public static Specification<Errand> departmentIdIs(List<Long> departmentIds) {
+        return new Specification<Errand>() {
+            public Predicate toPredicate(Root<Errand> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                criteriaQuery.distinct(true);
+                Join<Errand, Employee> errandEmployeeJoin = root.join("employee");
+                Join<Employee, Department> employeeDepartmentJoin = errandEmployeeJoin.join("department");
+
+                return employeeDepartmentJoin.get("id").in(departmentIds);
+            }
+        };
     }
+
 
     public static Specification<Errand> dateEndLessOrEqualsThan(OffsetDateTime dateEnd) {
         return (Specification<Errand>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("dateEnd"), dateEnd);

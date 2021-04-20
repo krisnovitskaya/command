@@ -42,16 +42,24 @@ public class DepartmentServiceFacade {
         Employee employee = employeeService.findByUser(user).orElseThrow(() -> new ResourceNotFoundException("Employee with username: " + principal.getName() + " doesn't exist"));
 
         //TODO Костыль для H2 неправильной обработки рекурсивных вызовов
-        if(user.getListRoles().contains(roleService.findByName("ROLE_MASTER"))){
+        if(isMaster(user)){
             if(activeProfile.equals("prod")){
                 return departmentService.getSubordinateDepartments(employee.getDepartment().getId());
             } else {
-
                 return departmentService.findAllById(employee.getDepartment().getId());
             }
-
+        } else if(isAdmin(user)){
+            return departmentService.findAllSimple();
         } else {
             return List.of(new DepartmentSimpleDto(employee.getDepartment()));
         }
+    }
+
+    private boolean isAdmin(User user){
+        return user.getListRoles().contains(roleService.findByName("ROLE_ADMIN"));
+    }
+
+    private boolean isMaster(User user){
+        return user.getListRoles().contains(roleService.findByName("ROLE_MASTER"));
     }
 }

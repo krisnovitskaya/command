@@ -10,7 +10,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.util.MultiValueMap;
 import ru.geekbrains.javacommand.command.dtos.CreatedErrandDto;
+import ru.geekbrains.javacommand.command.dtos.CurrentErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandDto;
 import ru.geekbrains.javacommand.command.dtos.ErrandStatisticDto;
 import ru.geekbrains.javacommand.command.entities.Errand;
@@ -65,7 +67,7 @@ public interface ErrandService {
     /**
      * @return List ErrandDto
      */
-    List<ErrandDto> getListCurrent();
+    List<CurrentErrandDto> getListCurrent();
 
     /**
      * @param spec
@@ -81,7 +83,7 @@ public interface ErrandService {
      * @param user
      * @return PageImpl ErrandDto
      */
-    PageImpl<ErrandDto> findErrandsByMaster(int page, Map<String, String> params, User user);
+    PageImpl<ErrandDto> findErrandsByMaster(int page, MultiValueMap<String, String> params, User user);
 
     /**
      * @param spec
@@ -105,5 +107,5 @@ public interface ErrandService {
 
 	void saveErrand(CreatedErrandDto errandDto);
 
-    List<ErrandStatisticDto> findAllByParams(Map<String, String> params, Principal principal);
+    List<ErrandStatisticDto> findAllByParams(Specification<Errand> spec);
 }
