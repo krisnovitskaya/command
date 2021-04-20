@@ -31,7 +31,6 @@ public class ErrandDto {
     private String departmentMasterFirstName;
     private String departmentMasterMiddleName;
     private String departmentMasterLastName;
-    private String departmentMasterUserName;
 //    private String detailMatterType;
 //    private String detailPlace;
 //    private String detailPlaceType;
@@ -60,7 +59,6 @@ public class ErrandDto {
     private Long placeTypeId;
     private Long createdById;
     private Long confirmedOrRejectedById;
-    private ErrandDetails errandDetails;
 
     public ErrandDto(Errand errand) {
         this.id = errand.getId();
@@ -77,7 +75,9 @@ public class ErrandDto {
                 + errand.getEmployee().getMiddleName();
         this.departmentTitle = errand.getEmployee().getDepartment().getTitle();
         this.matter = errand.getErrandDetails().getMatter().getMatter();
+        this.matterId = errand.getErrandDetails().getMatter().getId();
         this.place = errand.getErrandDetails().getPlace().getTitle();
+        this.placeId = errand.getErrandDetails().getPlace().getId();
         this.placeType = errand.getErrandDetails().getPlace().getPlaceType().getType();
         this.placeTypeId = errand.getErrandDetails().getPlace().getPlaceType().getId();
         this.comment = errand.getErrandDetails().getComment();

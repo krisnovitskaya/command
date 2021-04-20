@@ -40,17 +40,29 @@
                     <td><label style="width: 150px">Дата окончания</label></td>
                     <td>
                         <input id="dateEnd" class="form-control filter_box" style="margin-right: 10px;"
-                               type="date" ng-model="ErrandDetails.dateEndRAW">
+                               type="datetime-local" ng-model="ErrandDetails.dateEndRAW">
                     </td>
                 </tr>
+
+                <tr>
+                    <td><label style="width: 150px" for="placeType">Тип места</label></td>
+                    <td>
+                        <select id="placeType" class="form-control filter_box" ng-model="ErrandDetails.placeTypeId" ng-change="getPlacesList(ErrandDetails.placeTypeId)">
+                            <option value="">Тип</option>
+                            <option ng-repeat="placeType in PlaceTypesList"
+                                    ng-value="{{placeType.id}}">
+                                {{placeType.type}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+
                 <tr>
                     <td><label style="width: 150px" for="place">Место назначения</label></td>
                     <td>
-                        <select id="place" class="form-control filter_box" ng-value="ErrandDetails.place">
-                            <option ng-repeat="place in PlacesList"
-                                    ng-value="{{place.id}}">
-                                {{place.title}}
-                            </option>
+                        <select id="place" class="form-control filter_box" ng-model="ErrandDetails.placeId">
+                            <option value="">Место</option>
+                            <option ng-repeat="place in PlacesList" ng-value="{{place.id}}">{{place.title}}</option>
                         </select>
                     </td>
                 </tr>
@@ -58,6 +70,11 @@
                     <td><label style="width: 150px" for="createdBy">Кем создана</label></td>
                     <td><input style="width: 100%" type="text" value="{{ErrandDetails.createdByFIO}}" id="createdBy"
                                disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label style="width: 150px" for="comment">Комментарий</label></td>
+                    <td><input style="width: 100%" type="text" value="{{ErrandDetails.comment}}" id="comment">
                     </td>
                 </tr>
                 </tbody>

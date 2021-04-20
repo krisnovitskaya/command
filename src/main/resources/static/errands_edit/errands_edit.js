@@ -12,7 +12,8 @@ angular.module('app').controller('errandsEditController', function ($rootScope, 
             .then(function (response) {
 
                 alert('Данные обновлены');
-                window.location.href = '#!/errands_pending';            });
+                window.location.href = '#!/errands_pending';
+            });
     };
 
     let getErrandMatterTypes = function () {
@@ -48,9 +49,9 @@ angular.module('app').controller('errandsEditController', function ($rootScope, 
             });
     };
 
-    let getPlacesList = function (placeType_id) {
+    $scope.getPlacesList = function (placeTypeId) {
         $http({
-            url: contextPath + '/api/v1/errands/get_places_list/' + placeType_id,
+            url: contextPath + '/api/v1/errands/get_places_list/' + placeTypeId,
             method: 'GET'
         })
             .then(function (response) {
@@ -62,6 +63,6 @@ angular.module('app').controller('errandsEditController', function ($rootScope, 
     getErrandMatterTypes();
     getErrandStatusTypes();
     getPlaceTypesList();
-    getPlacesList($scope.ErrandDetails.placeTypeId);
+    $scope.getPlacesList($scope.ErrandDetails.placeTypeId);
 
 });
