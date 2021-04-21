@@ -1,8 +1,17 @@
 angular.module('app').controller('filesExplorerController',
     function ($scope, $http) {
+        
         $scope.setFiles = function (uFiles) {
             $scope.uFiles = uFiles;
-        }
+        };
+        
+        $scope.setAuthorId = function (authorId) {
+            $scope.authorId = authorId;
+        };
+
+        $scope.setErrandId = function (errandId) {
+            $scope.errandId = errandId;
+        };
 
         $scope.uploadFiles = function () {
             var files = $scope.uFiles;
@@ -25,8 +34,8 @@ angular.module('app').controller('filesExplorerController',
                 'id': '',
                 'fileName': fileName,
                 'fileData': fileData,
-                'authorId': 2,
-                'errandId': 2,
+                'authorId': $scope.authorId,
+                'errandId': $scope.errandId,
                 'deleted': false
             }];
             return data;
@@ -88,6 +97,6 @@ angular.module('app').controller('filesExplorerController',
                 $scope.fillFilesList([]);
             });
         };
-        $scope.fillFilesList([]);
+
     }
 );

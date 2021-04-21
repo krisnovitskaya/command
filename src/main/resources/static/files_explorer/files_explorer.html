@@ -26,6 +26,9 @@
             </table>
         </div>
         <div class="form-group col-md-6">
+            <button class="btn btn-success" ng-click="setAuthorId(3);setErrandId(3);fillFilesList([]);">Обновить список</button>
+        </div>
+        <div class="form-group col-md-6">
             <input ng-model = "uFiles" type="file" multiple onchange="angular.element(this).scope().setFiles(this.files)"/>
             <button class="btn btn-success" ng-click="uploadFiles();">Загрузить</button>
         </div>
