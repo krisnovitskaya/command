@@ -176,13 +176,11 @@ public class ErrandServiceImpl implements ErrandService {
         //Заполняем Детали из ДТО
         ErrandDetails errandDetails = errand.getErrandDetails();
 
-        errand.getErrandDetails().setMatter(errandMatterTypeRepository.findErrandMatterTypeByMatter(errandDto.getMatter()));
-        errand.getErrandDetails().setPlace(placeRepository.findPlaceByTitle(errandDto.getPlace()));
-        errand.getErrandDetails().setComment(errandDto.getComment());
+        errandDetails.setMatter(errandMatterTypeRepository.findErrandMatterTypeById(errandDto.getMatterId()));
+        errandDetails.setPlace(placeRepository.findPlaceById(errandDto.getPlaceId()));
+        errandDetails.setComment(errandDto.getComment());
         errandDetails.setCreatedBy(employeeRepository.findEmployeeById(errandDto.getCreatedById()));
         errandDetails.setConfirmedOrRejectedBy(employeeRepository.findEmployeeById(errandDto.getConfirmedOrRejectedById()));
-        errand.setErrandDetails(errandDetails);
-
         errand.setDateStart(errandDto.getDateStart());
         errand.setDateEnd(errandDto.getDateEnd());
 
