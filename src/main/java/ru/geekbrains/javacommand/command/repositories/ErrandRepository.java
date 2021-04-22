@@ -1,6 +1,3 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,14 +8,10 @@ import ru.geekbrains.javacommand.command.entities.Errand;
 import java.util.List;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ErrandRepository extends JpaRepository<Errand, Long>, JpaSpecificationExecutor<Errand> {
-
-    Errand findErrandById(Long id);
-
-    @Override
-    Errand save(Errand errand);
 
     @Query(
             "select e from Errand e join fetch e.employee emp join fetch emp.department"

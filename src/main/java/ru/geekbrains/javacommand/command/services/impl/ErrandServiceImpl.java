@@ -57,7 +57,7 @@ public class ErrandServiceImpl implements ErrandService {
 
     @Override
     public ErrandDto findErrandById(Long id) {
-        return new ErrandDto(errandRepository.findErrandById(id));
+        return new ErrandDto(errandRepository.findById(id).get());
     }
 
 	@Override
@@ -129,7 +129,7 @@ public class ErrandServiceImpl implements ErrandService {
         if (!idsList.isEmpty()) {
             for (Long id : idsList) {
                 ErrandDto errandDto = null;
-                Errand errand = errandRepository.findErrandById(id);
+                Errand errand = errandRepository.findById(id).get();
                 if (errand != null) {
                     errand.setDeleted(true);
                     errandRepository.save(errand);
@@ -145,8 +145,7 @@ public class ErrandServiceImpl implements ErrandService {
         ArrayList<ErrandDto> resultErrandDtoList = new ArrayList<>();
         if (!idsList.isEmpty()) {
             for (Long id : idsList) {
-                ErrandDto errandDto = null;
-                Errand errand = errandRepository.findErrandById(id);
+                Errand errand = errandRepository.findById(id).get();
                 if (errand != null) {
                     errandRepository.delete(errand);
                     resultErrandDtoList.add(new ErrandDto(errand));
@@ -163,7 +162,7 @@ public class ErrandServiceImpl implements ErrandService {
         Errand errand;
         if (errandDto.getId() == null) {
             errand = new Errand();
-        } else errand = errandRepository.findErrandById(errandDto.getId());
+        } else errand = errandRepository.findById(errandDto.getId()).get();
 
         //Находим сотрудника по айди и записываем
         Employee employee = employeeRepository.findEmployeeById(errandDto.getEmployeeId());
@@ -203,7 +202,7 @@ public class ErrandServiceImpl implements ErrandService {
 
     @Override
     public void updateErrandStatus(Long errandId, ErrandStatusType errandStatusType) {
-        Errand errand = errandRepository.findErrandById(errandId);
+        Errand errand = errandRepository.findById(errandId).get();
         errand.setStatusType(errandStatusType);
         errandRepository.save(errand);
     }

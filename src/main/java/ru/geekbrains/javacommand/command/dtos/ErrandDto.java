@@ -6,22 +6,14 @@ import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ru.geekbrains.javacommand.command.entities.Errand;
-import ru.geekbrains.javacommand.command.entities.ErrandDetails;
 
 @Data
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrandDto {
 
-    //TODO закомментированный код дублирует имеющийся
-
     private Long id;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateStart;
-    private OffsetDateTime dateStartRAW;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime dateEnd;
-    private OffsetDateTime dateEndRAW;
     private String employeeFirstName;
     private String employeeMiddleName;
     private String employeeLastName;
@@ -31,10 +23,6 @@ public class ErrandDto {
     private String departmentMasterFirstName;
     private String departmentMasterMiddleName;
     private String departmentMasterLastName;
-//    private String detailMatterType;
-//    private String detailPlace;
-//    private String detailPlaceType;
-//    private String detailComment;
     private String createdByFirstName;
     private String createdByMiddleName;
     private String createdByLastName;
@@ -66,9 +54,7 @@ public class ErrandDto {
         this.updated = errand.getUpdated();
         this.statusType = errand.getStatusType().getStatus();
         this.dateStart = errand.getDateStart();
-        this.dateStartRAW = errand.getDateStart();
         this.dateEnd = errand.getDateEnd();
-        this.dateEndRAW = errand.getDateEnd();
         this.employeeId = errand.getEmployee().getId();
         this.employeeFIO = errand.getEmployee().getLastName() + " "
                 + errand.getEmployee().getFirstName() + " "
@@ -89,7 +75,6 @@ public class ErrandDto {
         this.confirmedOrRejectedByFIO = errand.getErrandDetails().getConfirmedOrRejectedBy().getLastName() + " " +
                 errand.getErrandDetails().getConfirmedOrRejectedBy().getFirstName() + " " +
                 errand.getErrandDetails().getConfirmedOrRejectedBy().getMiddleName();
-
         this.employeeFirstName = errand.getEmployee().getFirstName();
         this.employeeMiddleName = errand.getEmployee().getMiddleName();
         this.employeeLastName = errand.getEmployee().getLastName();
@@ -99,10 +84,6 @@ public class ErrandDto {
         this.departmentMasterFirstName = errand.getEmployee().getDepartment().getMaster().getFirstName();
         this.departmentMasterMiddleName = errand.getEmployee().getDepartment().getMaster().getMiddleName();
         this.departmentMasterLastName = errand.getEmployee().getDepartment().getMaster().getLastName();
-//        this.detailMatterType = errand.getErrandDetails().getMatter().getMatter();
-//        this.detailPlace = errand.getErrandDetails().getPlace().getTitle();
-//        this.detailPlaceType = errand.getErrandDetails().getPlace().getPlaceType().getType();
-//        this.detailComment = errand.getErrandDetails().getComment();
         this.createdByFirstName = errand.getErrandDetails().getCreatedBy().getFirstName();
         this.createdByMiddleName = errand.getErrandDetails().getCreatedBy().getMiddleName();
         this.createdByLastName = errand.getErrandDetails().getCreatedBy().getLastName();

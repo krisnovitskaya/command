@@ -40,10 +40,6 @@
                 templateUrl: 'errands_current/errands_current.html',
                 controller: 'postController'
             })
-            .when('/errands_edit', {
-                templateUrl: 'errands_edit/errands_edit.html',
-                controller: 'errandsEditController'
-            })
             .when('/auth', {
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'

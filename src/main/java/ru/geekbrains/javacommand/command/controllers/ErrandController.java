@@ -80,7 +80,7 @@ public class ErrandController implements ErrandControllerApi {
      */
     @Override
     public ResponseEntity<?> getErrandDetails(Long id) {
-        return ResponseEntity.ok(findById(id));
+        return findById(id);
     }
 
     @Override

@@ -1,68 +1,114 @@
 <div>
     <h3>Запрошенные</h3>
 
-    <!--    Всплывающее окно дополнительной информации  -->
+    <!--    Всплывающее окно редактирования командировки  -->
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="width: auto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Детали командировки</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Редактирование командировки</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
 
-                    <table class="table table-dark" cellpadding="0" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>Сотрудник</td>
-                            <td>{{ErrandDetails.employeeFIO}}</td>
-                        </tr>
-                        <tr>
-                            <td>Тип</td>
-                            <td>{{ErrandDetails.matter}}</td>
-                        </tr>
-                        <tr>
-                            <td>Дата начала</td>
-                            <td>{{ErrandDetails.dateStart}}</td>
-                        </tr>
-                        <tr>
-                            <td>Дата окончания</td>
-                            <td>{{ErrandDetails.dateEnd}}</td>
-                        </tr>
-                        <tr>
-                            <td>Место назначения</td>
-                            <td>{{ErrandDetails.place}}</td>
-                        </tr>
-                        <tr>
-                            <td>Статус</td>
-                            <td>{{ErrandDetails.statusType}}</td>
-                        </tr>
-                        <tr>
-                            <td>Дата создания</td>
-                            <td>{{ErrandDetails.created}}</td>
-                        </tr>
-                        <tr>
-                            <td>Подразделение</td>
-                            <td>{{ErrandDetails.departmentTitle}}</td>
-                        </tr>
-                        <tr>
-                            <td>Кем создан</td>
-                            <td>{{ErrandDetails.createdByFIO}}</td>
-                        </tr>
-                        <tr>
-                            <td>Комментарий</td>
-                            <td>{{ErrandDetails.comment}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="container">
+                        <form novalidate ng-submit="updateErrand()">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <table class="table table-hover" cellpadding="0" cellspacing="0" style="width: 500px">
+                                <tbody>
+                                <tr>
+                                    <td><label style="width: 150px" for="fio">ФИО</label></td>
+                                    <td><input style="width: 100%" type="text" value="{{ErrandDto.employeeFIO}}"
+                                               id="fio" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px" for="type">Тип</label></td>
+                                    <td>
+                                        <select id="type" class="form-control filter_box"
+                                                ng-model="ErrandDto.matterId">
+                                            <option ng-repeat="errandMatterType in ErrandMatterTypes"
+                                                    ng-value="{{errandMatterType.id}}">
+                                                {{errandMatterType.matter}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px" for="status">Статус</label></td>
+                                    <td>
+                                        <input style="width: 100%" type="text" ng-value="ErrandDto.statusType"
+                                               id="status"
+                                               disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px">Дата начала</label></td>
+                                    <td>
+                                        <input id="dateStart" class="form-control filter_box"
+                                               style="margin-right: 10px;"
+                                               type="datetime-local" ng-model="ErrandDto.dateStart">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px">Дата окончания</label></td>
+                                    <td>
+                                        <input id="dateEnd" class="form-control filter_box"
+                                               style="margin-right: 10px;"
+                                               type="datetime-local" ng-model="ErrandDto.dateEnd">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label style="width: 150px" for="placeType">Тип места</label></td>
+                                    <td>
+                                        <select id="placeType" class="form-control filter_box"
+                                                ng-model="ErrandDto.placeTypeId"
+                                                ng-change="getPlacesList(ErrandDto.placeTypeId)">
+                                            <option value="">Тип</option>
+                                            <option ng-repeat="placeType in PlaceTypesList"
+                                                    ng-value="{{placeType.id}}">
+                                                {{placeType.type}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><label style="width: 150px" for="place">Место назначения</label></td>
+                                    <td>
+                                        <select id="place" class="form-control filter_box"
+                                                ng-model="ErrandDto.placeId">
+                                            <option value="">Место</option>
+                                            <option ng-repeat="place in PlacesList" ng-value="{{place.id}}">
+                                                {{place.title}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px" for="createdBy">Кем создана</label></td>
+                                    <td><input style="width: 100%" type="text"
+                                               value="{{ErrandDto.createdByFIO}}" id="createdBy"
+                                               disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px" for="comment">Комментарий</label></td>
+                                    <td><input style="width: 100%" type="text" value="{{ErrandDto.comment}}"
+                                               id="comment">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input class="btn btn-primary" type="submit" value="Сохранить">
+                            <button class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,7 +178,7 @@
                     <td>дата окончания</td>
                     <td>подразделение</td>
                     <td>куда</td>
-                    <td style="width: 275px; margin-right: 10px"></td>
+                    <td style="margin-right: 10px"></td>
                 </tr>
                 <tbody>
 
@@ -145,13 +191,11 @@
                     <td>{{e.departmentTitle}}</td>
                     <td>{{e.place}}</td>
                     <td>
+                        <button class="btn btn-success" ng-click="confirmErrand(e.id)">&#10004;</button>
+                        <button class="btn btn-danger" ng-click="rejectErrand(e.id)">&#10006;</button>
                         <button type="button" class="btn btn-primary" ng-click="errandDetails(e.id)" data-toggle="modal"
-                                data-target="#exampleModalCenter">Детали
+                                data-target="#exampleModalCenter">&#9999;
                         </button>
-                        <button type="button" class="btn btn-warning" ng-click="errandEdit(e.id)">Редактировать
-                        </button>
-                        <button class="btn btn-success" ng-click="confirmErrand(e.id)">Подтвердить</button>
-                        <button class="btn btn-danger" ng-click="rejectErrand(e.id)">Отклонить</button>
                     </td>
                 </tr>
                 </tbody>

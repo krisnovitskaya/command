@@ -1,4 +1,4 @@
-angular.module('app').controller('errandsPendingController', function ($rootScope, $scope, $http) {
+angular.module('app').controller('errandsPendingController', function ($scope, $http) {
     const contextPath = 'http://localhost:8989/errands';
 
     const PAGINATION_DIAPASON = 2;
@@ -36,6 +36,28 @@ angular.module('app').controller('errandsPendingController', function ($rootScop
             });
     }
 
+    let getPlaceTypesList = function () {
+        $http({
+            url: contextPath + '/api/v1/errands/get_place_types_list',
+            method: 'GET'
+        })
+            .then(function (response) {
+                $scope.PlaceTypesList = response.data;
+                console.log($scope.PlaceTypesList.length + ' place types loaded');
+            });
+    };
+
+    $scope.getPlacesList = function (placeTypeId) {
+        $http({
+            url: contextPath + '/api/v1/errands/get_places_list/' + placeTypeId,
+            method: 'GET'
+        })
+            .then(function (response) {
+                $scope.PlacesList = response.data;
+                console.log($scope.PlacesList.length + ' places loaded');
+            });
+    };
+
 
     $scope.errandDetails = function (errandId) {
         $http({
@@ -46,23 +68,10 @@ angular.module('app').controller('errandsPendingController', function ($rootScop
             }
         })
             .then(function (response) {
-                $rootScope.ErrandDetails = response.data.body;
+                $scope.ErrandDto = response.data;
+                $scope.getPlacesList($scope.ErrandDto.placeTypeId);
                 console.log('Details loaded');
-                console.log($rootScope.ErrandDetails);
-            });
-    }
-
-    $scope.errandEdit = function (errandId) {
-        $http({
-            url: contextPath + '/api/v1/errands/get_details',
-            method: 'POST',
-            params: {
-                errandId: errandId,
-            }
-        })
-            .then(function (response) {
-                $rootScope.ErrandDetails = response.data.body;
-                window.location.href = '#!/errands_edit';
+                console.log($scope.ErrandDto);
             });
     }
 
@@ -93,6 +102,14 @@ angular.module('app').controller('errandsPendingController', function ($rootScop
                 $scope.fillTable();
             });
     }
+
+    $scope.updateErrand = function () {
+        $http.post(contextPath + '/api/v1/errands/update', $scope.ErrandDto)
+            .then(function (response) {
+                alert('Данные обновлены');
+                window.location.href = '#!/errands_pending';
+            });
+    };
 
     $scope.fillTable = function (pageIndex = 1) {
         $http({
@@ -138,6 +155,7 @@ angular.module('app').controller('errandsPendingController', function ($rootScop
     getEmployees();
     getErrandMatterTypes();
     getErrandStatusTypes();
+    getPlaceTypesList();
     $scope.fillTable();
 
 });
