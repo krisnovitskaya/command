@@ -98,6 +98,18 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><label style="width: 150px" for="created">Создана</label></td>
+                                    <td><input style="width: 100%" type="text" value="{{ErrandDto.created | date:'dd.MM.yyyy HH:ss'}}"
+                                               id="created" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label style="width: 150px" for="updated">Изменена</label></td>
+                                    <td><input style="width: 100%" type="text" value="{{ErrandDto.updated | date:'dd.MM.yyyy HH:ss'}}"
+                                               id="updated" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><label style="width: 150px" for="comment">Комментарий</label></td>
                                     <td><input style="width: 100%" type="text" value="{{ErrandDto.comment}}"
                                                id="comment">
