@@ -107,7 +107,6 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
         $http.post(contextPath + '/api/v1/errands/update', $scope.ErrandDto)
             .then(function (response) {
                 alert('Данные обновлены');
-                window.location.href = '#!/errands_pending';
             });
     };
 

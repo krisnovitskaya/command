@@ -1,6 +1,3 @@
-/*
- * License Headers.
- */
 package ru.geekbrains.javacommand.command.controllers.facade;
 
 import java.security.Principal;
@@ -11,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.javacommand.command.dtos.*;
-import ru.geekbrains.javacommand.command.util.PageImpl;
 
 @RequestMapping("/api/v1/errands")
 public interface ErrandControllerApi {
@@ -195,5 +191,5 @@ public interface ErrandControllerApi {
     ResponseEntity<?> getReportFile(@RequestParam Map<String, String> params);
 
     @PostMapping("/create_errand")
-    public void createNewErrand(@RequestBody CreatedErrandDto errandDto, Principal principal);
+    void createNewErrand(@RequestBody CreatedErrandDto errandDto, Principal principal);
 }
