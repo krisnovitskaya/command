@@ -186,8 +186,8 @@
                     <td>{{e.employeeLastName}} {{e.employeeFirstName}} {{e.employeeMiddleName}}</td>
                     <td>{{e.matter}}</td>
                     <td>{{e.statusType}}</td>
-                    <td>{{e.dateStart}}</td>
-                    <td>{{e.dateEnd}}</td>
+                    <td>{{e.dateStart | date:'dd.MM.yyyy HH:ss'}}</td>
+                    <td>{{e.dateEnd | date:'dd.MM.yyyy HH:ss'}}</td>
                     <td>{{e.departmentTitle}}</td>
                     <td>{{e.place}}</td>
                     <td>

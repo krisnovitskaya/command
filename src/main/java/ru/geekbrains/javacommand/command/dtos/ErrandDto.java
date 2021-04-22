@@ -3,7 +3,6 @@ package ru.geekbrains.javacommand.command.dtos;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import ru.geekbrains.javacommand.command.entities.Errand;
 
 @Data

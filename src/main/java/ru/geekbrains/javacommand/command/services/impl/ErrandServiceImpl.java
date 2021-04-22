@@ -4,6 +4,7 @@
 package ru.geekbrains.javacommand.command.services.impl;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -197,6 +198,7 @@ public class ErrandServiceImpl implements ErrandService {
     @Override
     public ErrandDto updateErrand(ErrandDto errandDto) {
         Errand errand = convertToErrand(errandDto);
+        errand.setUpdated(OffsetDateTime.now());
         return new ErrandDto(errandRepository.save(errand));
     }
 

@@ -104,9 +104,11 @@ angular.module('app').controller('errandsPendingController', function ($scope, $
     }
 
     $scope.updateErrand = function () {
+        $scope.ErrandDto.updated = new Date();
         $http.post(contextPath + '/api/v1/errands/update', $scope.ErrandDto)
             .then(function (response) {
                 alert('Данные обновлены');
+                window.location.reload();
             });
     };
 
