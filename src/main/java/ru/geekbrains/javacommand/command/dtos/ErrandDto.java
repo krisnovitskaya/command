@@ -3,7 +3,6 @@ package ru.geekbrains.javacommand.command.dtos;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ru.geekbrains.javacommand.command.entities.Errand;
 
@@ -13,11 +12,7 @@ public class ErrandDto {
 
     private Long id;
     private OffsetDateTime dateStart;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private OffsetDateTime dateStartFormatted;
     private OffsetDateTime dateEnd;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private OffsetDateTime dateEndFormatted;
     private String employeeFirstName;
     private String employeeMiddleName;
     private String employeeLastName;
@@ -36,9 +31,7 @@ public class ErrandDto {
     private String confirmedOrRejectedByFIO;
     private String createdByFIO;
     private String comment;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime created;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private OffsetDateTime updated;
     private String statusType;
     private Long employeeId;
@@ -58,9 +51,7 @@ public class ErrandDto {
         this.updated = errand.getUpdated();
         this.statusType = errand.getStatusType().getStatus();
         this.dateStart = errand.getDateStart();
-        this.dateStartFormatted = errand.getDateStart();
         this.dateEnd = errand.getDateEnd();
-        this.dateEndFormatted = errand.getDateEnd();
         this.employeeId = errand.getEmployee().getId();
         this.employeeFIO = errand.getEmployee().getLastName() + " "
                 + errand.getEmployee().getFirstName() + " "
